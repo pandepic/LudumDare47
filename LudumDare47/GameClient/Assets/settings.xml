@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Settings>
+  <Section Name="window">
+    <Setting Name="width" Value="1600" />
+    <Setting Name="height" Value="900" />
+  </Section>
+  <Section Name="sound">
+    <Setting Name="musicvolume" Value="0" />
+    <Setting Name="sfxvolume" Value="0.5" />
+    <Setting Name="uivolume" Value="0.5" />
+  </Section>
+</Settings>
