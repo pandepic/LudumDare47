@@ -17,21 +17,17 @@ namespace GameCore.Entities
         public Enemy()
         {
             hp = 5;
-            posX = 0;
-            posY = 0;
+            pos = new Vector2(0);
         }
         public Enemy(int new_hp, int new_posX, int new_posY)
         {
             hp = new_hp;
-            posX = new_posX;
-            posY = new_posY;
+            pos = new Vector2(new_posX, new_posY);
         }
 
         public void Update(GameTime gameTime)
         {
-            
-            posX += velX;
-            posY += velY;
+            pos += vel;
 
         }
 
@@ -46,8 +42,8 @@ namespace GameCore.Entities
         public void Kill(GameTime gameTime)
         {
             if (dead) return;
-            velX = 0;
-            velY = 0;
+            vel.X = 0;
+            vel.Y = 0;
             dead = true;
             ignore_collision = true;
         }

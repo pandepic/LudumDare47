@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PandaMonogame;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,39 +24,40 @@ namespace GameCore.Entities
             // Shoot the bullet from the player's location in the direction he is facing
             height = 10;
             width = 10;
-            speed = 10;
+            speed = 1000;
             Shoot(player);
         }
 
         public void Shoot(Player player)
         {
             SetPosCentre(player.Centre());
+            vel = new Vector2(0);
             if (player.facing == Directions.Up)
             {
-                velX = 0;
-                velY = -speed;
+                vel.Y--;
+                facing = Directions.Up;
             }
-            else if (player.facing == Directions.Down)
+            if (player.facing == Directions.Down)
             {
-                velX = 0;
-                velY = speed;
+                vel.Y++;
+                facing = Directions.Down;
             }
-            else if (player.facing == Directions.Left)
+            if (player.facing == Directions.Left)
             {
-                velX = -speed;
-                velY = 0;
+                vel.X--;
+                facing = Directions.Left;
             }
-            else if (player.facing == Directions.Right)
+            if (player.facing == Directions.Right)
             {
-                velX = speed;
-                velY = 0;
+                vel.X++;
+                facing = Directions.Right;
             }
+            vel *= speed;
         }
 
         public void Update(GameTime gameTime)
         {
-            posX += velX;
-            posY += velY;
+            pos += vel * gameTime.DeltaTime();
         }
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
@@ -68,8 +70,7 @@ namespace GameCore.Entities
         public void Kill(GameTime gameTime)
         {
             dead = true;
-            velX = 0;
-            velY = 0;
+            vel = new Vector2(0);
             ignore_collision = true;
             dead = true;
         }

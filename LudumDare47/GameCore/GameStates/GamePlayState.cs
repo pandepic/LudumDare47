@@ -37,7 +37,7 @@ namespace GameCore
             // Placeholder rooms
             all_rooms = new List<Room>();
             all_rooms.Add(new Room(320, 180, new List<Enemy>(), new List<Door>(), 0, "Test Room 1"));
-            all_rooms[0].enemies.Add(new Enemy(5, 50, 50));
+            all_rooms[0].enemies.Add(new Enemy(5, 100, 100));
             all_rooms[0].enemies.Add(new Enemy(5, 20, 20));
             all_rooms[0].doors.Add(new Door(1,-24, 72, 280, 72));
             // all_rooms[0].doors.Add(new Door(0, -15, 0));
@@ -56,9 +56,9 @@ namespace GameCore
         public override int Update(GameTime gameTime)
         {
             // 128 per second update limit
-            if (gameTime.TotalGameTime.TotalMilliseconds - last_frame_time < (double)1000/128)
-               return (int)_nextState;
-            last_frame_time = gameTime.TotalGameTime.TotalMilliseconds;
+            //if (gameTime.TotalGameTime.TotalMilliseconds - last_frame_time < (double)1000/128)
+            //   return (int)_nextState;
+            //last_frame_time = gameTime.TotalGameTime.TotalMilliseconds;
             
 
             current_room.Update(gameTime);
@@ -77,8 +77,7 @@ namespace GameCore
                         Bullets.Clear();
                         current_room = Room.GetRoomByID(all_rooms, d.next_room_id);
                         player.SetPos(d.next_posX, d.next_posY);
-                        player.velX = 0;
-                        player.velY = 0;
+                        player.vel = new Vector2(0);
                     }
                 }
             }
@@ -132,7 +131,7 @@ namespace GameCore
             }
             DrawEntities.Sort(delegate (Entity a, Entity b)
             {
-                if (a.posY + a.height > b.posY + b.height) return 1;
+                if (a.pos.Y + a.height > b.pos.Y + b.height) return 1;
                 else return -1;
             });
 

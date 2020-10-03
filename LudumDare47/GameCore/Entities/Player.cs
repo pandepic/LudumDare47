@@ -19,49 +19,69 @@ namespace GameCore.Entities
         public bool shooting = false;
         public Texture2D playerIdle;
         public int animation_int = 0;
+
         public Player()
         {
             width = 32;
             height = 32;
-            speed = 1;
+            speed = 100;
             hp = 3;
         }
 
         public void Update(GameTime gameTime)
         {
             // Basic movement
-            if (moveup && !movedown)
+            /*if (moveup && !movedown)
             {
                 facing = Directions.Up;
-                velY = -1 * speed;
+                vel.Y = -1 * speed;
             }
             if (!moveup && movedown)
             {
                 facing = Directions.Down;
-                velY = speed;
+                vel.Y = speed;
             }
             if (!(moveup ^ movedown))
             {
-                velY = 0;
+                vel.Y = 0;
             }
             if (moveleft && !moveright) 
             {
                 facing = Directions.Left;
-                velX = -1 * speed;
+                vel.X = -1 * speed;
             }
             if (!moveleft && moveright) 
             {
                 facing = Directions.Right;
-                velX = 1 * speed; 
+                vel.X = 1 * speed; 
             }
             if (!(moveleft ^ moveright)) 
             { 
-                velX = 0; 
+                vel.X = 0; 
+            }*/
+            vel = new Vector2(0);
+            if (moveup)
+            {
+                vel.Y--;
+                facing = Directions.Up;
             }
-
-            posX += velX;
-            posY += velY;
-
+            if (movedown)
+            {
+                vel.Y++;
+                facing = Directions.Down;
+            }
+            if (moveleft)
+            {
+                vel.X--;
+                facing = Directions.Left;
+            }
+            if (moveright)
+            {
+                vel.X++;
+                facing = Directions.Right;
+            }
+            
+            pos += vel * speed * gameTime.DeltaTime();
         }
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
@@ -107,7 +127,7 @@ namespace GameCore.Entities
                 PlaceholderTextureInit(graphics, Color.Green);
             spriteBatch.Draw(
                         draw_texture,
-                        new Vector2(posX, posY),
+                        pos,
                         new Rectangle(animation_int * width, face_int * height, width, height),
                         Color.White,
                         MathHelper.ToRadians(0.0f),

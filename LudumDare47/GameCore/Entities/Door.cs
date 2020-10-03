@@ -24,8 +24,8 @@ namespace GameCore.Entities
         public Door(int new_next_room_id, int new_posX, int new_posY, int new_next_posX = 0, int new_next_posY = 0)
         {
             next_room_id = new_next_room_id;
-            posX = new_posX;
-            posY = new_posY;
+            pos.X = new_posX;
+            pos.Y = new_posY;
 
             next_posX = new_next_posX;
             next_posY = new_next_posY;

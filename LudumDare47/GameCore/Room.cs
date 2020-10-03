@@ -137,20 +137,20 @@ namespace GameCore.Entities
         public static bool CheckOOB(Room room, Entity entity)
         {
             // Check if entity is within bounds of room
-            return (entity.posX + entity.width > room.room_width) || (entity.posY < 0) || (entity.posY + entity.height > room.room_height) || (entity.posX < 0);
+            return (entity.pos.X + entity.width > room.room_width) || (entity.pos.Y < 0) || (entity.pos.Y + entity.height > room.room_height) || (entity.pos.X < 0);
         }
 
         public static Entity NudgeOOB(Room room, Entity entity)
         {
             // Nudge the entity back into bounds if OOB
-            if (entity.posX + entity.width > room.room_width)
-                entity.posX = room.room_width - entity.width;
-            if (entity.posX < 0)
-                entity.posX = 0;
-            if (entity.posY + entity.height > room.room_height)
-                entity.posY = room.room_height - entity.height;
-            if (entity.posY < 0)
-                entity.posY = 0;
+            if (entity.pos.X + entity.width > room.room_width)
+                entity.pos.X = room.room_width - entity.width;
+            if (entity.pos.X < 0)
+                entity.pos.X = 0;
+            if (entity.pos.Y + entity.height > room.room_height)
+                entity.pos.Y = room.room_height - entity.height;
+            if (entity.pos.Y < 0)
+                entity.pos.Y = 0;
             return entity;
         }
     }
