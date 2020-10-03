@@ -78,17 +78,6 @@ namespace GameCore.Entities
                         0.0f
                         );
 
-            /*//Draw enemies and doors
-            foreach (var e in enemies)
-            {
-                e.Draw(gameTime, graphics, spriteBatch);
-            }
-            foreach (var d in doors)
-            {
-                d.Draw(gameTime, graphics, spriteBatch);
-            }
-            */
-
         }
 
         public void OnEntry()
@@ -137,18 +126,18 @@ namespace GameCore.Entities
         public static bool CheckOOB(Room room, Entity entity)
         {
             // Check if entity is within bounds of room
-            return (entity.pos.X + entity.width > room.room_width) || (entity.pos.Y < 0) || (entity.pos.Y + entity.height > room.room_height) || (entity.pos.X < 0);
+            return (entity.pos.X + entity.draw_width > room.room_width) || (entity.pos.Y < 0) || (entity.pos.Y + entity.draw_height > room.room_height) || (entity.pos.X < 0);
         }
 
         public static Entity NudgeOOB(Room room, Entity entity)
         {
             // Nudge the entity back into bounds if OOB
-            if (entity.pos.X + entity.width > room.room_width)
-                entity.pos.X = room.room_width - entity.width;
+            if (entity.pos.X + entity.draw_width > room.room_width)
+                entity.pos.X = room.room_width - entity.draw_width;
             if (entity.pos.X < 0)
                 entity.pos.X = 0;
-            if (entity.pos.Y + entity.height > room.room_height)
-                entity.pos.Y = room.room_height - entity.height;
+            if (entity.pos.Y + entity.draw_height > room.room_height)
+                entity.pos.Y = room.room_height - entity.draw_height;
             if (entity.pos.Y < 0)
                 entity.pos.Y = 0;
             return entity;

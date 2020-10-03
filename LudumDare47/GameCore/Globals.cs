@@ -7,6 +7,14 @@ using System.Text;
 
 namespace GameCore
 {
+
+    public enum EnemyType
+    {
+        Null,
+        Caveman
+
+    }
+
     public enum Directions
     {
         Up,

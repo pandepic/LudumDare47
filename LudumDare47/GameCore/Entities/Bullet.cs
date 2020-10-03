@@ -11,19 +11,19 @@ namespace GameCore.Entities
     public class Bullet : Entity
     {
         public int damage = 1;
-
+        public float duration = 10000;
         public Bullet()
         {
-            height = 10;
-            width = 10;
+            draw_height = 10;
+            draw_width = 10;
             speed = 10;
         }
 
         public Bullet(Player player)
         {
             // Shoot the bullet from the player's location in the direction he is facing
-            height = 10;
-            width = 10;
+            draw_height = 10;
+            draw_width = 10;
             speed = 1000;
             Shoot(player);
         }
@@ -52,12 +52,18 @@ namespace GameCore.Entities
                 vel.X++;
                 facing = Directions.Right;
             }
-            vel *= speed;
         }
 
         public void Update(GameTime gameTime)
         {
-            pos += vel * gameTime.DeltaTime();
+            pos += vel * speed * gameTime.DeltaTime();
+            duration -= gameTime.DeltaTime() * 1000;
+            if (duration <= 0)
+            {
+                dead = true;
+                vel = new Vector2(0);
+                ignore_collision = true;
+            }
         }
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
@@ -72,7 +78,6 @@ namespace GameCore.Entities
             dead = true;
             vel = new Vector2(0);
             ignore_collision = true;
-            dead = true;
         }
     }
         

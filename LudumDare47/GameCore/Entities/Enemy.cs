@@ -13,7 +13,9 @@ namespace GameCore.Entities
 {
     public class Enemy : Entity
     {
-
+        public EnemyType enemyType = EnemyType.Null;
+        public int range;
+        public int damage;
         public Enemy()
         {
             hp = 5;
@@ -27,7 +29,7 @@ namespace GameCore.Entities
 
         public void Update(GameTime gameTime)
         {
-            pos += vel;
+            //pos += speed * vel * gameTime.DeltaTime();
 
         }
 

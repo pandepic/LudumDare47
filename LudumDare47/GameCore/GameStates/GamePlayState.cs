@@ -26,7 +26,7 @@ namespace GameCore
         public Double last_frame_time;
 
         public List<Bullet> Bullets = new List<Bullet>();
-
+        public List<Bullet> EnemyBullets = new List<Bullet>();
         Texture2D playerIdle;
 
         public override void Load(ContentManager Content, GraphicsDevice graphics)
@@ -34,16 +34,21 @@ namespace GameCore
             // Assets
             playerIdle = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle");
 
+            // Rooms
+            RoomMaps roomMaps = new RoomMaps();
+
             // Placeholder rooms
             all_rooms = new List<Room>();
             all_rooms.Add(new Room(320, 180, new List<Enemy>(), new List<Door>(), 0, "Test Room 1"));
             all_rooms[0].enemies.Add(new Enemy(5, 100, 100));
             all_rooms[0].enemies.Add(new Enemy(5, 20, 20));
             all_rooms[0].doors.Add(new Door(1,-24, 72, 280, 72));
-            // all_rooms[0].doors.Add(new Door(0, -15, 0));
             current_room = all_rooms[0];
+            current_room.doors[0].locked = true;
             all_rooms.Add(new Room(320, 180, new List<Enemy>(), new List<Door>(), 1, "Test Room 2"));
             all_rooms[1].doors.Add(new Door(0, 312, 72, 40, 72));
+            all_rooms.Add(Room.GetRoomByID(roomMaps.rooms, 100));
+            current_room = all_rooms[2];
 
             // Load the player
             player = new Player();
@@ -55,12 +60,15 @@ namespace GameCore
 
         public override int Update(GameTime gameTime)
         {
-            // 128 per second update limit
-            //if (gameTime.TotalGameTime.TotalMilliseconds - last_frame_time < (double)1000/128)
-            //   return (int)_nextState;
-            //last_frame_time = gameTime.TotalGameTime.TotalMilliseconds;
-            
 
+            //Enemy AI
+            foreach (var e in current_room.enemies)
+            {
+                if (!e.dead)
+                {
+                    if (e.enemyType == EnemyType.Caveman) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
+                }
+            }
             current_room.Update(gameTime);
 
             // Player
@@ -71,7 +79,11 @@ namespace GameCore
             {
                 if (Entity.Collision(player, d))
                 {
-                    if (Room.GetRoomByID(all_rooms, d.next_room_id).room_id != -1)
+                    if(d.locked == true)
+                    {
+                        player.pos -= player.vel;
+                    }
+                    else if (Room.GetRoomByID(all_rooms, d.next_room_id).room_id != -1)
                     {
                         // Transition to next room
                         Bullets.Clear();
@@ -103,8 +115,21 @@ namespace GameCore
                 b.Update(gameTime);
             }
 
+            // Enemy bullets
+            foreach (var b in EnemyBullets)
+            {
+                if (Entity.Collision(player, b))
+                {
+                    player.hp -= b.damage;
+                    // If player.hp <= 0
+                    b.ignore_collision = true;
+                    Console.WriteLine(player.hp);
+                }
+                b.Update(gameTime);
+            }
 
-            // Shoot a bullet - to add shooting cooldown?
+
+            // Shoot a bullet
             if (player.shooting == true)
             {
                 player.shooting = false;
@@ -122,7 +147,7 @@ namespace GameCore
             List<Entity> DrawEntities = new List<Entity>();
             DrawEntities.Add(player);
             foreach (var e in current_room.enemies)
-            {
+            {   
                 DrawEntities.Add(e);
             }
             foreach (var d in current_room.doors)
@@ -131,7 +156,7 @@ namespace GameCore
             }
             DrawEntities.Sort(delegate (Entity a, Entity b)
             {
-                if (a.pos.Y + a.height > b.pos.Y + b.height) return 1;
+                if (a.pos.Y + a.draw_height > b.pos.Y + b.draw_height) return 1;
                 else return -1;
             });
 
@@ -147,18 +172,12 @@ namespace GameCore
             {
                 b.Draw(gameTime, graphics, spriteBatch);
             }
+            foreach (var b in EnemyBullets)
+            {
+                b.Draw(gameTime, graphics, spriteBatch);
+            }
+
             spriteBatch.End();
-
-
-            /* graphics.Clear(Color.Black);
-             spriteBatch.Begin(sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
-             current_room.Draw(gameTime, graphics, spriteBatch);
-             player.Draw(gameTime, graphics, spriteBatch);
-             foreach(var b in Bullets)
-             {
-                 b.Draw(gameTime, graphics, spriteBatch);
-             }
-             spriteBatch.End(); */
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
             _menu.Draw(spriteBatch);

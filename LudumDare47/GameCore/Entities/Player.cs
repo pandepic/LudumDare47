@@ -22,8 +22,8 @@ namespace GameCore.Entities
 
         public Player()
         {
-            width = 32;
-            height = 32;
+            draw_width = 32;
+            draw_height = 32;
             speed = 100;
             hp = 3;
         }
@@ -128,7 +128,7 @@ namespace GameCore.Entities
             spriteBatch.Draw(
                         draw_texture,
                         pos,
-                        new Rectangle(animation_int * width, face_int * height, width, height),
+                        new Rectangle(animation_int * draw_width, face_int * draw_height, draw_width, draw_height),
                         Color.White,
                         MathHelper.ToRadians(0.0f),
                         new Vector2(0),

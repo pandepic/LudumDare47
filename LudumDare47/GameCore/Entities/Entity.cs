@@ -15,8 +15,10 @@ namespace GameCore.Entities
     {
         public int hp = 3;
         public Vector2 pos = new Vector2(0);
-        public int width = 32;
-        public int height = 32;
+        public int draw_width = 32;
+        public int draw_height = 32;
+        public int col_width = 20;
+        public int col_height = 20;
         public Vector2 vel = new Vector2(0);
         public int speed = 5;
         public bool moveup;
@@ -31,10 +33,11 @@ namespace GameCore.Entities
         public Texture2D draw_texture;
         public double animation_timer;
         public double animation_speed;
+        public float attack_cooldown = 0;
 
         public Vector2 Centre()
         {
-            return new Vector2(pos.X + width / 2, pos.Y + height / 2);
+            return new Vector2(pos.X + draw_width / 2, pos.Y + draw_height / 2);
         }
 
         public void SetPos(int x, int y)
@@ -49,12 +52,12 @@ namespace GameCore.Entities
 
         public void SetPosCentre(int x, int y)
         {
-            pos = new Vector2(x - width / 2, y - height / 2);
+            pos = new Vector2(x - draw_width / 2, y - draw_height / 2);
         }
 
         public void SetPosCentre(Vector2 xy)
         {
-            pos = new Vector2((int)xy.X - width / 2, (int)xy.Y - height / 2);
+            pos = new Vector2((int)xy.X - draw_width / 2, (int)xy.Y - draw_height / 2);
         }
 
         public void PlaceholderTextureInit(GraphicsDevice graphics, Color pcolor)
@@ -78,7 +81,7 @@ namespace GameCore.Entities
                 spriteBatch.Draw(
                         draw_texture,
                         pos,
-                        new Rectangle(0, 0, width, height),
+                        new Rectangle(0, 0, draw_width, draw_height),
                         Color.White,
                         MathHelper.ToRadians(0.0f),
                         new Vector2(0),
@@ -93,7 +96,7 @@ namespace GameCore.Entities
         {
             if (use_ignore_collisions && (a.ignore_collision || b.ignore_collision)) 
                 return false;
-            return (!((a.pos.X > b.pos.X + b.width) || (a.pos.X + a.width < b.pos.X)) && !((a.pos.Y > b.pos.Y + b.height) || (a.pos.Y + a.height < b.pos.Y)));
+            return (!((a.pos.X > b.pos.X + b.col_width) || (a.pos.X + a.col_width < b.pos.X)) && !((a.pos.Y > b.pos.Y + b.col_height) || (a.pos.Y + a.col_height < b.pos.Y)));
         }
     }
 }
