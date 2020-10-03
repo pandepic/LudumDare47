@@ -10,40 +10,19 @@ using System.Text;
 
 namespace GameCore
 {
-    public class MenuState : GameState
+    public class GameOverState : GameState
     {
         protected GameStateType _nextState = GameStateType.None;
         protected PUIMenu _menu = new PUIMenu();
 
-        #region Python Methods
-        protected void StartNewGame(params object[] args)
-        {
-            _nextState = GameStateType.GamePlay;
-        }
-
-        protected void Settings(params object[] args)
-        {
-            _nextState = GameStateType.Settings;
-        }
-
-        protected void Exit(params object[] args)
-        {
-            _nextState = GameStateType.Exit;
-        }
-        #endregion
-
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
-            _menu.AddMethod(StartNewGame);
-            _menu.AddMethod(Settings);
-            _menu.AddMethod(Exit);
-            _menu.Load(graphics, "MainMenuDefinition", "UITemplates");
+            _menu.Load(graphics, "GameOverMenuDefinition", "UITemplates");
         }
 
         public override int Update(GameTime gameTime)
         {
-            return (int)GameStateType.GamePlay;
-            //return (int)_nextState;
+            return (int)_nextState;
         }
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)

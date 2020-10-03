@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Menu>
+  <Font AssetName="LatoBlack" />
+
+  <Script>
+    <Name>GameOverMenuScript</Name>
+    <AssetName>GameOverMenuScript</AssetName>
+    <Class Name="GameOverMenu" />
+  </Script>
+
+  <Scene Name="mainScene">
+    <Frame Name="mainFrame">
+      <Position>
+        <X>0</X>
+        <Y>0</Y>
+      </Position>
+      <Size>
+        <Width>fill</Width>
+        <Height>fill</Height>
+      </Size>
+
+      <Widgets>
+      </Widgets>
+    </Frame>
+  </Scene>
+</Menu>

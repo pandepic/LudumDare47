@@ -42,4 +42,25 @@
     <FontSize>24</FontSize>
     <Color>#FFFFFF</Color>
   </Template>
+
+  <Template TemplateName="SettingsScrollbar">
+    <Label>
+      <FontName>LatoBlack</FontName>
+      <FontSize>16</FontSize>
+      <Position>
+        <X>center</X>
+        <Y>30</Y>
+      </Position>
+      <Color>#ffffff</Color>
+    </Label>
+    <Background>
+      <Width>500</Width>
+      <Left>SettingsScrollbarLeft</Left>
+      <Right>SettingsScrollbarRight</Right>
+      <Center>SettingsScrollbarCenter</Center>
+    </Background>
+    <AssetNameSlider>SettingsScrollSlider</AssetNameSlider>
+    <AssetNameSliderHover>SettingsScrollSlider</AssetNameSliderHover>
+    <SliderOffsetX>0</SliderOffsetX>
+  </Template>
 </Templates>

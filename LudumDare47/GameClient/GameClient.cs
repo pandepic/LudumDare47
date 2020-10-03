@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PandaMonogame;
+using PandaMonogame.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,6 +41,8 @@ namespace GameClient
             Content.RootDirectory = "";
             IsMouseVisible = true;
 
+            PandaMonogameConfig.UISoundType = (int)SoundType.UI;
+
 #if DEBUG
             PandaMonogameConfig.Logging = true;
             IsFixedTimeStep = false;
@@ -54,6 +57,14 @@ namespace GameClient
             _graphics.PreferredBackBufferHeight = SettingsManager.Instance.GetSetting<int>("window", "height");
             _graphics.ApplyChanges();
 
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.Music, SettingsManager.Instance.GetSetting<float>("sound", "musicvolume"));
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.SoundEffect, SettingsManager.Instance.GetSetting<float>("sound", "sfxvolume"));
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.UI, SettingsManager.Instance.GetSetting<float>("sound", "uivolume"));
+
+            Globals.Load(GraphicsDevice);
+            
+            PUITooltipManager.Setup(GraphicsDevice, Globals.DefaultFont);
+
             Window.TextInput += Window_TextInput;
 
             base.Initialize();
@@ -67,6 +78,7 @@ namespace GameClient
 
         protected override void UnloadContent()
         {
+            SettingsManager.Instance.Save("Assets\\settings.xml");
             PandaUtil.Cleanup();
         }
 
@@ -139,7 +151,7 @@ namespace GameClient
             _drawMS = watch.ElapsedMilliseconds;
 #endif
         }
-
+        
         private void ChangeGameState(int newState)
         {
             ModManager.Instance.AssetManager.Clear();
@@ -155,6 +167,18 @@ namespace GameClient
                 case (int)GameStateType.GamePlay:
                     {
                         _currentGameState = new GamePlayState();
+                    }
+                    break;
+
+                case (int)GameStateType.Settings:
+                    {
+                        _currentGameState = new SettingsState();
+                    }
+                    break;
+
+                case (int)GameStateType.GameOver:
+                    {
+                        _currentGameState = new GameOverState();
                     }
                     break;
             }

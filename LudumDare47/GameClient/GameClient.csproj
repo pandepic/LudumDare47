@@ -15,13 +15,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Mods\Base\UI\gameover_menu.py" />
+    <None Remove="Mods\Base\UI\gameover_menu.xml" />
+    <None Remove="Mods\Base\UI\gameplay_menu.py" />
+    <None Remove="Mods\Base\UI\gameplay_menu.xml" />
+    <None Remove="Mods\Base\UI\settings_menu.py" />
+    <None Remove="Mods\Base\UI\settings_menu.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
     <PackageReference Include="TextCopy" Version="3.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\PandaMonogame.Core\PandaMonogame\PandaMonogame\PandaMonogame.csproj" />
     <ProjectReference Include="..\GameCore\GameCore.csproj" />
+    <ProjectReference Include="..\PandaMonogame\PandaMonogame.csproj" />
   </ItemGroup>
 
 </Project>

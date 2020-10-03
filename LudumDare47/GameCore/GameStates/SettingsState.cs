@@ -10,40 +10,51 @@ using System.Text;
 
 namespace GameCore
 {
-    public class MenuState : GameState
+    public class SettingsState : GameState
     {
         protected GameStateType _nextState = GameStateType.None;
         protected PUIMenu _menu = new PUIMenu();
 
-        #region Python Methods
-        protected void StartNewGame(params object[] args)
+        #region python bound methods
+        protected void UpdateMusicVolume(params object[] args)
         {
-            _nextState = GameStateType.GamePlay;
+            var volume = float.Parse(args[0].ToString());
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.Music, volume);
+            SettingsManager.Instance.UpdateSetting("sound", "musicvolume", volume.ToString());
         }
 
-        protected void Settings(params object[] args)
+        protected void UpdateSFXVolume(params object[] args)
         {
-            _nextState = GameStateType.Settings;
+            var volume = float.Parse(args[0].ToString());
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.SoundEffect, volume);
+            SettingsManager.Instance.UpdateSetting("sound", "sfxvolume", volume.ToString());
         }
 
-        protected void Exit(params object[] args)
+        protected void UpdateUIVolume(params object[] args)
         {
-            _nextState = GameStateType.Exit;
+            var volume = float.Parse(args[0].ToString());
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.UI, volume);
+            SettingsManager.Instance.UpdateSetting("sound", "uivolume", volume.ToString());
+        }
+
+        protected void BackToMenu(params object[] args)
+        {
+            _nextState = GameStateType.Menu;
         }
         #endregion
 
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
-            _menu.AddMethod(StartNewGame);
-            _menu.AddMethod(Settings);
-            _menu.AddMethod(Exit);
-            _menu.Load(graphics, "MainMenuDefinition", "UITemplates");
+            _menu.AddMethod(UpdateMusicVolume);
+            _menu.AddMethod(UpdateSFXVolume);
+            _menu.AddMethod(UpdateUIVolume);
+            _menu.AddMethod(BackToMenu);
+            _menu.Load(graphics, "SettingsMenuDefinition", "UITemplates");
         }
 
         public override int Update(GameTime gameTime)
         {
-            return (int)GameStateType.GamePlay;
-            //return (int)_nextState;
+            return (int)_nextState;
         }
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
