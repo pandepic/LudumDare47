@@ -41,7 +41,8 @@ namespace GameCore
 
         public override int Update(GameTime gameTime)
         {
-            return (int)_nextState;
+            return (int)GameStateType.GamePlay;
+            //return (int)_nextState;
         }
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)

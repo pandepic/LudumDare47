@@ -27,5 +27,6 @@
   <Asset Name="SFXButtonClick" FilePath="Audio/buttonclick.wav" />
 
   <!-- Sprites -->
+  <Asset Name="PlayerIdle" FilePath = "SoldierIdle.png" />
   
 </Assets>
