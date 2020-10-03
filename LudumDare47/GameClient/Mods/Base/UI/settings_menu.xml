@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Menu>
+  <Font AssetName="LatoBlack" />
+
+  <Script>
+    <Name>SettingsMenuScript</Name>
+    <AssetName>SettingsMenuScript</AssetName>
+    <Class Name="SettingsMenu" />
+  </Script>
+
+  <Scene Name="mainScene">
+    <Frame Name="mainFrame">
+      <Position>
+        <X>0</X>
+        <Y>0</Y>
+      </Position>
+      <Size>
+        <Width>fill</Width>
+        <Height>fill</Height>
+      </Size>
+
+      <Widgets>
+        <Label Name="lblTitle">
+          <Text>Settings</Text>
+          <FontName>LatoBlack</FontName>
+          <FontSize>60</FontSize>
+          <Position>
+            <X>center</X>
+            <Y>70</Y>
+          </Position>
+          <Color>#FFFFFF</Color>
+          <UpdateMethod></UpdateMethod>
+        </Label>
+        
+        <Label Name="lblMusicVolume">
+          <Text>Music Volume</Text>
+          <FontName>LatoBlack</FontName>
+          <FontSize>24</FontSize>
+          <Position>
+            <X>center</X>
+            <Y>275</Y>
+          </Position>
+          <Color>#ffffff</Color>
+          <UpdateMethod></UpdateMethod>
+        </Label>
+
+        <HScrollBar Name="scrlMusicVolume" Template="SettingsScrollbar" StartValue="0" MinValue="0" MaxValue="100" Increment="1">
+          <Label>
+            <Template>{value}%</Template>
+          </Label>
+          <Position>
+            <X>center</X>
+            <Y>300</Y>
+          </Position>
+          <OnValueChanged>SettingsMenuScript.SettingsMenu.UpdateMusicVolume({fvalue})</OnValueChanged>
+        </HScrollBar>
+
+        <Label Name="lblSFXVolume">
+          <Text>Effect Volume</Text>
+          <FontName>LatoBlack</FontName>
+          <FontSize>24</FontSize>
+          <Position>
+            <X>center</X>
+            <Y>375</Y>
+          </Position>
+          <Color>#ffffff</Color>
+          <UpdateMethod></UpdateMethod>
+        </Label>
+
+        <HScrollBar Name="scrlSFXVolume" Template="SettingsScrollbar" StartValue="0" MinValue="0" MaxValue="100" Increment="1">
+          <Label>
+            <Template>{value}%</Template>
+          </Label>
+          <Position>
+            <X>center</X>
+            <Y>400</Y>
+          </Position>
+          <OnValueChanged>SettingsMenuScript.SettingsMenu.UpdateSFXVolume({fvalue})</OnValueChanged>
+        </HScrollBar>
+
+        <Label Name="lblUIVolume">
+          <Text>UI Volume</Text>
+          <FontName>LatoBlack</FontName>
+          <FontSize>24</FontSize>
+          <Position>
+            <X>center</X>
+            <Y>475</Y>
+          </Position>
+          <Color>#ffffff</Color>
+          <UpdateMethod></UpdateMethod>
+        </Label>
+
+        <HScrollBar Name="scrlUIVolume" Template="SettingsScrollbar" StartValue="0" MinValue="0" MaxValue="100" Increment="1">
+          <Label>
+            <Template>{value}%</Template>
+          </Label>
+          <Position>
+            <X>center</X>
+            <Y>500</Y>
+          </Position>
+          <OnValueChanged>SettingsMenuScript.SettingsMenu.UpdateUIVolume({fvalue})</OnValueChanged>
+        </HScrollBar>
+
+        <Button Name="btnBackToMenu" Template="StandardButton">
+          <Label>
+            <Text>BACK</Text>
+          </Label>
+          <OnClick>SettingsMenuScript.SettingsMenu.BackToMenuClicked</OnClick>
+          <Position>
+            <X>center</X>
+            <Y>750</Y>
+          </Position>
+        </Button>
+      </Widgets>
+    </Frame>
+  </Scene>
+</Menu>

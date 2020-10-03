@@ -15,8 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Mods\Base\UI\gameover_menu.py" />
+    <None Remove="Mods\Base\UI\gameover_menu.xml" />
     <None Remove="Mods\Base\UI\gameplay_menu.py" />
     <None Remove="Mods\Base\UI\gameplay_menu.xml" />
+    <None Remove="Mods\Base\UI\settings_menu.py" />
+    <None Remove="Mods\Base\UI\settings_menu.xml" />
   </ItemGroup>
 
   <ItemGroup>

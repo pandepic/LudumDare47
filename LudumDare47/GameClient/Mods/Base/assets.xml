@@ -10,6 +10,10 @@
   <Asset Name="MainMenuScript" FilePath="UI/main_menu.py" />
   <Asset Name="GameplayMenuDefinition" FilePath="UI/gameplay_menu.xml" />
   <Asset Name="GameplayMenuScript" FilePath="UI/gameplay_menu.py" />
+  <Asset Name="SettingsMenuDefinition" FilePath="UI/settings_menu.xml" />
+  <Asset Name="SettingsMenuScript" FilePath="UI/settings_menu.py" />
+  <Asset Name="GameOverMenuDefinition" FilePath="UI/gameover_menu.xml" />
+  <Asset Name="GameOverMenuScript" FilePath="UI/gameover_menu.py" />
 
   <!-- UI Textures -->
   <Asset Name="StandardButton" FilePath="Image/standard_button.png" />

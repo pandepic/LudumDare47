@@ -78,6 +78,7 @@ namespace GameClient
 
         protected override void UnloadContent()
         {
+            SettingsManager.Instance.Save("Assets\\settings.xml");
             PandaUtil.Cleanup();
         }
 
@@ -166,6 +167,18 @@ namespace GameClient
                 case (int)GameStateType.GamePlay:
                     {
                         _currentGameState = new GamePlayState();
+                    }
+                    break;
+
+                case (int)GameStateType.Settings:
+                    {
+                        _currentGameState = new SettingsState();
+                    }
+                    break;
+
+                case (int)GameStateType.GameOver:
+                    {
+                        _currentGameState = new GameOverState();
                     }
                     break;
             }

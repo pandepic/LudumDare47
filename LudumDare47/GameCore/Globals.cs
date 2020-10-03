@@ -20,6 +20,7 @@ namespace GameCore
         Menu,
         GamePlay,
         Settings,
+        GameOver,
         Exit,
     }
 
