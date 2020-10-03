@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\PandaMonogame.Core\PandaMonogame\PandaMonogame\PandaMonogame.csproj" />
+    <ProjectReference Include="..\PandaMonogame\PandaMonogame.csproj" />
   </ItemGroup>
 
 </Project>

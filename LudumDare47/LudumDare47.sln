@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameClient", "GameClient\GameClient.csproj", "{19CF3B23-9F9F-46BC-A64F-CFA8C76B250A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameClient", "GameClient\GameClient.csproj", "{19CF3B23-9F9F-46BC-A64F-CFA8C76B250A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaMonogame", "..\PandaMonogame.Core\PandaMonogame\PandaMonogame\PandaMonogame.csproj", "{0460220B-31B6-4FDF-994F-F51CB96A85BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameCore", "GameCore\GameCore.csproj", "{A02EEA18-E50D-427B-8FED-6616F7A45DDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameCore", "GameCore\GameCore.csproj", "{A02EEA18-E50D-427B-8FED-6616F7A45DDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaMonogame", "PandaMonogame\PandaMonogame.csproj", "{3858A7A4-00EF-4898-B179-44E846040D99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{19CF3B23-9F9F-46BC-A64F-CFA8C76B250A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19CF3B23-9F9F-46BC-A64F-CFA8C76B250A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19CF3B23-9F9F-46BC-A64F-CFA8C76B250A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0460220B-31B6-4FDF-994F-F51CB96A85BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0460220B-31B6-4FDF-994F-F51CB96A85BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0460220B-31B6-4FDF-994F-F51CB96A85BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0460220B-31B6-4FDF-994F-F51CB96A85BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A02EEA18-E50D-427B-8FED-6616F7A45DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A02EEA18-E50D-427B-8FED-6616F7A45DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A02EEA18-E50D-427B-8FED-6616F7A45DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A02EEA18-E50D-427B-8FED-6616F7A45DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3858A7A4-00EF-4898-B179-44E846040D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3858A7A4-00EF-4898-B179-44E846040D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3858A7A4-00EF-4898-B179-44E846040D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3858A7A4-00EF-4898-B179-44E846040D99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
