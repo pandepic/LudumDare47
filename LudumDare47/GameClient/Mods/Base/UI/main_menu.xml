@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Menu>
+  <Font AssetName="LatoBlack" />
+
+  <Script>
+    <Name>MainMenuScript</Name>
+    <AssetName>MainMenuScript</AssetName>
+    <Class Name="MainMenu" />
+  </Script>
+
+  <Scene Name="mainScene">
+    <Frame Name="mainFrame">
+      <Position>
+        <X>center</X>
+        <Y>0</Y>
+      </Position>
+      <Size>
+        <Width>auto</Width>
+        <Height>auto</Height>
+      </Size>
+
+      <Widgets>
+        <Label Name="lblTitle">
+          <Text>Broken Time Machine</Text>
+          <FontName>LatoBlack</FontName>
+          <FontSize>60</FontSize>
+          <Position>
+            <X>center</X>
+            <Y>70</Y>
+          </Position>
+          <Color>#FFFFFF</Color>
+          <UpdateMethod></UpdateMethod>
+        </Label>
+
+        <Label Name="lblSubTitle">
+          <Text>Ludum Dare 47</Text>
+          <FontName>LatoBlack</FontName>
+          <FontSize>36</FontSize>
+          <Position>
+            <X>center</X>
+            <Y>150</Y>
+          </Position>
+          <Color>#FFFFFF</Color>
+          <UpdateMethod></UpdateMethod>
+        </Label>
+      </Widgets>
+    </Frame>
+  </Scene>
+</Menu>

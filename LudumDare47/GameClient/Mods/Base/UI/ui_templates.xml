@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Templates>
+  <Template TemplateName="StandardButton">
+    <Label>
+      <FontName>LatoBlack</FontName>
+      <FontSize>28</FontSize>
+      <Position>
+        <X>center</X>
+        <Y>center</Y>
+      </Position>
+      <Color>#ffffff</Color>
+    </Label>
+    <AssetName>StandardButton</AssetName>
+    <AssetNamePressed>StandardButton</AssetNamePressed>
+    <AssetNameHover>StandardButton</AssetNameHover>
+    <AssetNameDisabled>StandardButton</AssetNameDisabled>
+    <PreMultiplyAlpha>True</PreMultiplyAlpha>
+    <ClickSound>SFXButtonClick</ClickSound>
+  </Template>
+
+  <Template TemplateName="MenuButton">
+    <Label>
+      <FontName>LatoBlack</FontName>
+      <FontSize>28</FontSize>
+      <Position>
+        <X>center</X>
+        <Y>center</Y>
+      </Position>
+      <Color>#ffffff</Color>
+    </Label>
+    <AssetName>MenuButton</AssetName>
+    <AssetNamePressed>MenuButton</AssetNamePressed>
+    <AssetNameHover>MenuButton</AssetNameHover>
+    <AssetNameDisabled>MenuButton</AssetNameDisabled>
+    <PreMultiplyAlpha>True</PreMultiplyAlpha>
+    <ClickSound>SFXButtonClick</ClickSound>
+  </Template>
+
+  <Template TemplateName="DebugLabel">
+    <FontName>LatoBlack</FontName>
+    <FontSize>24</FontSize>
+    <Color>#FFFFFF</Color>
+  </Template>
+</Templates>

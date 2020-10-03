@@ -9,6 +9,7 @@ namespace GameCore
         None,
         Menu,
         GamePlay,
+        Settings,
         Exit,
     }
 }

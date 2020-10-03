@@ -1,4 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Assets>
+  <!-- Fonts -->
+  <Asset Name="LatoBlack" FilePath="UI/Lato-Bold.ttf" />
+
+  <!-- UI Definitions -->
+  <Asset Name="UITemplates" FilePath="UI/ui_templates.xml" />
+  <Asset Name="MainMenuDefinition" FilePath="UI/main_menu.xml" />
+  <Asset Name="MainMenuScript" FilePath="UI/main_menu.py" />
+  <Asset Name="GameplayMenuDefinition" FilePath="UI/gameplay_menu.xml" />
+  <Asset Name="GameplayMenuScript" FilePath="UI/gameplay_menu.py" />
+
+  <!-- UI Textures -->
+  <Asset Name="StandardButton" FilePath="Image/standard_button.png" />
+  <Asset Name="StandardButton2" FilePath="Image/standard_button_2.png" />
+  <Asset Name="UIFrame" FilePath="Image/frame.png" />
+  <Asset Name="UIPanel" FilePath="Image/panel.png" />
+  <Asset Name="MenuButton" FilePath="Image/menu_button.png" />
+
+  <Asset Name="SettingsScrollbarLeft" FilePath="Image/scrollbar_left.png" />
+  <Asset Name="SettingsScrollbarRight" FilePath="Image/scrollbar_right.png" />
+  <Asset Name="SettingsScrollbarCenter" FilePath="Image/scrollbar_center.png" />
+  <Asset Name="SettingsScrollSlider" FilePath="Image/scrollbar_slider.png" />
+
+  <!-- Audio -->
+  <Asset Name="SFXButtonClick" FilePath="Audio/buttonclick.wav" />
+
+  <!-- Sprites -->
+  
 </Assets>
