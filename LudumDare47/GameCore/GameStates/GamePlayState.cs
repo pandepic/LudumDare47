@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameCore
 {
-    public class MenuState : GameState
+    public class GamePlayState : GameState
     {
         protected GameStateType _nextState = GameStateType.None;
 

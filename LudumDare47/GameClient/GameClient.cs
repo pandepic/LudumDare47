@@ -8,13 +8,6 @@ using System.Text;
 
 namespace GameClient
 {
-    public enum GameStateType
-    {
-        None,
-        Menu,
-        Exit,
-    }
-
     public class GameClient : Game
     {
         readonly GraphicsDeviceManager _graphics;
@@ -156,6 +149,12 @@ namespace GameClient
                 case (int)GameStateType.Menu:
                     {
                         _currentGameState = new MenuState();
+                    }
+                    break;
+
+                case (int)GameStateType.GamePlay:
+                    {
+                        _currentGameState = new GamePlayState();
                     }
                     break;
             }
