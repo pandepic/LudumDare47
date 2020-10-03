@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PandaMonogame;
+using PandaMonogame.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,6 +41,8 @@ namespace GameClient
             Content.RootDirectory = "";
             IsMouseVisible = true;
 
+            PandaMonogameConfig.UISoundType = (int)SoundType.UI;
+
 #if DEBUG
             PandaMonogameConfig.Logging = true;
             IsFixedTimeStep = false;
@@ -53,6 +56,14 @@ namespace GameClient
             _graphics.PreferredBackBufferWidth = SettingsManager.Instance.GetSetting<int>("window", "width");
             _graphics.PreferredBackBufferHeight = SettingsManager.Instance.GetSetting<int>("window", "height");
             _graphics.ApplyChanges();
+
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.Music, SettingsManager.Instance.GetSetting<float>("sound", "musicvolume"));
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.SoundEffect, SettingsManager.Instance.GetSetting<float>("sound", "sfxvolume"));
+            ModManager.Instance.SoundManager.SetVolume((int)SoundType.UI, SettingsManager.Instance.GetSetting<float>("sound", "uivolume"));
+
+            Globals.Load(GraphicsDevice);
+            
+            PUITooltipManager.Setup(GraphicsDevice, Globals.DefaultFont);
 
             Window.TextInput += Window_TextInput;
 
