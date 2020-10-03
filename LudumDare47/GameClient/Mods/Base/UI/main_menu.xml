@@ -44,6 +44,39 @@
           <Color>#FFFFFF</Color>
           <UpdateMethod></UpdateMethod>
         </Label>
+
+        <Button Name="btnNewGame" Template="StandardButton">
+          <Label>
+            <Text>NEW GAME</Text>
+          </Label>
+          <OnClick>MainMenuScript.MainMenu.StartNewGameClicked</OnClick>
+          <Position>
+            <X>center</X>
+            <Y>250</Y>
+          </Position>
+        </Button>
+
+        <Button Name="btnSettings" Template="StandardButton">
+          <Label>
+            <Text>SETTINGS</Text>
+          </Label>
+          <OnClick>MainMenuScript.MainMenu.SettingsClicked</OnClick>
+          <Position>
+            <X>center</X>
+            <Y>325</Y>
+          </Position>
+        </Button>
+
+        <Button Name="btnExit" Template="StandardButton">
+          <Label>
+            <Text>EXIT</Text>
+          </Label>
+          <OnClick>MainMenuScript.MainMenu.ExitClicked</OnClick>
+          <Position>
+            <X>center</X>
+            <Y>400</Y>
+          </Position>
+        </Button>
       </Widgets>
     </Frame>
   </Scene>

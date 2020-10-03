@@ -139,7 +139,7 @@ namespace GameClient
             _drawMS = watch.ElapsedMilliseconds;
 #endif
         }
-
+        
         private void ChangeGameState(int newState)
         {
             ModManager.Instance.AssetManager.Clear();
