@@ -160,10 +160,16 @@ namespace GameCore
                  b.Draw(gameTime, graphics, spriteBatch);
              }
              spriteBatch.End(); */
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+            _menu.Draw(spriteBatch);
+            spriteBatch.End();
         }
 
         public override void OnKeyPressed(Keys key, GameTime gameTime, CurrentKeyState currentKeyState)
         {
+            _menu.OnKeyPressed(key, gameTime, currentKeyState);
+
             if (key == Keys.W || key == Keys.Up)
             {
                 player.moveup = true;
@@ -180,11 +186,6 @@ namespace GameCore
             {
                 player.moveright = true;
             }
-
-            
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
-            _menu.Draw(spriteBatch);
-            spriteBatch.End();
         }
 
         public override void OnMouseMoved(Vector2 originalPosition, GameTime gameTime)
@@ -204,11 +205,6 @@ namespace GameCore
         public override void OnMouseScroll(MouseScrollDirection direction, int scrollValue, GameTime gameTime)
         {
             _menu.OnMouseScroll(direction, scrollValue, gameTime);
-        }
-
-        public override void OnKeyPressed(Keys key, GameTime gameTime, CurrentKeyState currentKeyState)
-        {
-            _menu.OnKeyPressed(key, gameTime, currentKeyState);
         }
 
         public override void OnKeyReleased(Keys key, GameTime gameTime, CurrentKeyState currentKeyState)
