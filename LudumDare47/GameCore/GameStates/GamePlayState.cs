@@ -53,8 +53,9 @@ namespace GameCore
             // Load the player
             player = new Player();
             player.SetPosCentre(current_room.room_width / 2, current_room.room_height / 2);
-            player.playerIdle = playerIdle;
+            player.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle"), 32, 32);
             player.facing = Directions.Left;
+            player.Sprite.PlayAnimation(player.AnimIdleLeft);
             player.SetPosCentre(280, 90);
 
             _menu.Load(graphics, "GameplayMenuDefinition", "UITemplates");

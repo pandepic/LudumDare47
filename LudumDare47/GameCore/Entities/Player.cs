@@ -17,8 +17,13 @@ namespace GameCore.Entities
     {
 
         public bool shooting = false;
-        public Texture2D playerIdle;
+        public AnimatedSprite Sprite;
         public int animation_int = 0;
+
+        public Animation AnimIdleDown = new Animation(1, 4, 1000);
+        public Animation AnimIdleUp = new Animation(5, 8, 1000);
+        public Animation AnimIdleLeft = new Animation(9, 12, 1000);
+        public Animation AnimIdleRight = new Animation(13, 16, 1000);
 
         public Player()
         {
@@ -30,84 +35,53 @@ namespace GameCore.Entities
 
         public void Update(GameTime gameTime)
         {
+            var prevFacing = facing;
             // Basic movement
             vel = new Vector2(0);
             if (moveup)
             {
                 vel.Y--;
                 facing = Directions.Up;
+
+                if (prevFacing != facing)
+                    Sprite.PlayAnimation(AnimIdleUp);
             }
             if (movedown)
             {
                 vel.Y++;
                 facing = Directions.Down;
+
+                if (prevFacing != facing)
+                    Sprite.PlayAnimation(AnimIdleDown);
             }
             if (moveleft)
             {
                 vel.X--;
                 facing = Directions.Left;
+
+                if (prevFacing != facing)
+                    Sprite.PlayAnimation(AnimIdleLeft);
             }
             if (moveright)
             {
                 vel.X++;
                 facing = Directions.Right;
+
+                if (prevFacing != facing)
+                    Sprite.PlayAnimation(AnimIdleRight);
             }
             
             pos += vel * speed * gameTime.DeltaTime();
+
+            Sprite.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
         {
-
-            // Idle vs running textures
-            draw_texture = playerIdle;
-
-            // Used to track which of the 4 animation textures to use from the sprite
-            
-            animation_speed = (double)500; //ms per frame
-            int max_frames = 3;
-            if (gameTime.TotalGameTime.TotalMilliseconds - animation_timer > animation_speed)
-            {
-                animation_timer = gameTime.TotalGameTime.TotalMilliseconds;
-                animation_int = animation_int + 1;
-            }
-
-            if (animation_int > max_frames)
-                animation_int = 0;            
-            
-
-            int face_int = 0;
-            if (facing == Directions.Down)
-            {
-                face_int = 0;
-            }
-            else if (facing == Directions.Up)
-            {
-                face_int = 1;
-            }
-            else if (facing == Directions.Left)
-            {
-                face_int = 2;
-            }
-            else if (facing == Directions.Right)
-            {
-                face_int = 3;
-            }
-            
-
             if (PlaceHolderTexture == null)
                 PlaceholderTextureInit(graphics, Color.Green);
-            spriteBatch.Draw(
-                        draw_texture,
-                        pos,
-                        new Rectangle(animation_int * draw_width, face_int * draw_height, draw_width, draw_height),
-                        Color.White,
-                        MathHelper.ToRadians(0.0f),
-                        new Vector2(0),
-                        new Vector2(1),
-                        SpriteEffects.None,
-                        0.0f
-                        ) ;
+
+            Sprite.Draw(spriteBatch, pos);
         }
     }
 }
