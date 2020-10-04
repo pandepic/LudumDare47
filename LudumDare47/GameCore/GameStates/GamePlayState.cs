@@ -16,7 +16,7 @@ namespace GameCore
 {
     public class GamePlayState : GameState
     {
-        public const float PlayerAttackCooldown = 500.0f;
+        public const float PlayerAttackCooldown = 300.0f;
 
         protected GameStateType _nextState = GameStateType.None;
         protected PUIMenu _menu = new PUIMenu();
@@ -33,14 +33,12 @@ namespace GameCore
 
         public List<Clutter> Clutter = new List<Clutter>();
 
-        Texture2D playerIdle;
-
         readonly RoomMaps roomMaps = new RoomMaps();
 
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
             // Assets
-            playerIdle = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle");
+            //playerIdle = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle");
 
             // Rooms
             all_rooms = new List<Room>();
@@ -203,19 +201,19 @@ namespace GameCore
 
             if (key == Keys.W || key == Keys.Up)
             {
-                player.moveup = true;
+                player.StartMoving(Directions.Up);
             }
             else if (key == Keys.S || key == Keys.Down)
             {
-                player.movedown = true;
+                player.StartMoving(Directions.Down);
             }
             else if (key == Keys.A || key == Keys.Left)
             {
-                player.moveleft = true;
+                player.StartMoving(Directions.Left);
             }
             else if (key == Keys.D || key == Keys.Right)
             {
-                player.moveright = true;
+                player.StartMoving(Directions.Right);
             }
             
             if (key == Keys.Space)
@@ -247,19 +245,19 @@ namespace GameCore
         {
             if (key == Keys.W || key == Keys.Up)
             {
-                player.moveup = false;
+                player.StopMoving(Directions.Up);
             }
             else if (key == Keys.S || key == Keys.Down)
             {
-                player.movedown = false;
+                player.StopMoving(Directions.Down);
             }
             else if (key == Keys.A || key == Keys.Left)
             {
-                player.moveleft = false;
+                player.StopMoving(Directions.Left);
             }
             else if (key == Keys.D || key == Keys.Right)
             {
-                player.moveright = false;
+                player.StopMoving(Directions.Right);
             }
 
             if (key == Keys.Space)
