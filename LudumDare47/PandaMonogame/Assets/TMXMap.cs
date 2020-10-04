@@ -105,14 +105,14 @@ namespace PandaMonogame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Draw(spriteBatch, Vector2.One, false);
+            Draw(spriteBatch, Vector2.Zero);
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition, bool useCamera = true)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             foreach (var texture in LayerTextures.Where(t => t.Texture != null).OrderBy(t => t.DrawOrder))
             {
-                spriteBatch.Draw(texture.Texture, (useCamera ? texture.DrawPosition + cameraPosition : texture.DrawPosition), texture.SourceRect, Color.White);
+                spriteBatch.Draw(texture.Texture, texture.DrawPosition + position, texture.SourceRect, Color.White);
             }
         }
 
@@ -133,6 +133,9 @@ namespace PandaMonogame
 
                 foreach (var tile in layer.Tiles)
                 {
+                    if (tile.Gid == 0)
+                        continue;
+
                     TMXTilesheet tilesheet = null;
 
                     foreach (var ts in this._tilesheets)

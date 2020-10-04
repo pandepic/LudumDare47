@@ -34,7 +34,7 @@
   <Asset Name="PlayerIdle" FilePath = "SoldierIdle.png" />
   
   <!-- TileMaps -->
-  <Asset Name="TileMap100" FilePath = "Tilemaps/100.tmx" />
+  <Asset Name="TileMap100" FilePath = "Tilemaps/100asd.tmx" />
   
   <!-- TileSheets -->
   <Asset Name="testsheet" FilePath = "Tilemaps/testsheet.png" />
