@@ -33,7 +33,7 @@ namespace PandaMonogame
         protected GraphicsDevice _graphics;
         protected List<TMXTilesheet> _tilesheets;
 
-        public TMXMap(GraphicsDevice graphics, string assetName, ContentManager Content)
+        public TMXMap(GraphicsDevice graphics, string assetName)
         {
             _graphics = graphics;
 
