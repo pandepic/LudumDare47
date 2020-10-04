@@ -38,7 +38,7 @@ namespace GameClient
 
         protected override void Initialize()
         {
-            Content.RootDirectory = "";
+            Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
             PandaMonogameConfig.UISoundType = (int)SoundType.UI;
@@ -61,8 +61,8 @@ namespace GameClient
             ModManager.Instance.SoundManager.SetVolume((int)SoundType.SoundEffect, SettingsManager.Instance.GetSetting<float>("sound", "sfxvolume"));
             ModManager.Instance.SoundManager.SetVolume((int)SoundType.UI, SettingsManager.Instance.GetSetting<float>("sound", "uivolume"));
 
-            Globals.Load(GraphicsDevice);
-            
+            Globals.Load(GraphicsDevice, Content);
+
             PUITooltipManager.Setup(GraphicsDevice, Globals.DefaultFont);
 
             Window.TextInput += Window_TextInput;
@@ -151,7 +151,7 @@ namespace GameClient
             _drawMS = watch.ElapsedMilliseconds;
 #endif
         }
-        
+
         private void ChangeGameState(int newState)
         {
             ModManager.Instance.AssetManager.Clear();

@@ -22,6 +22,7 @@ namespace GameCore
         protected PUIMenu _menu = new PUIMenu();
         protected Camera _camera = new Camera(new Vector2(160, 90), (320, 160));
         protected RenderTarget2D _gameTarget;
+        protected bool isRipple = false;
 
         public List<Room> all_rooms;
         public Room current_room;
@@ -148,6 +149,10 @@ namespace GameCore
                 }
             }
 
+            if (isRipple) {
+                Globals.Ripple.Parameters["phase"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 100);
+            }
+
             return (int)_nextState;
         }
 
@@ -193,8 +198,17 @@ namespace GameCore
 
             graphics.SetRenderTarget(null);
 
+            if (isRipple) {
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, effect: Globals.Ripple);
+                spriteBatch.Draw(_gameTarget, Vector2.Zero, Color.White);
+                spriteBatch.End();
+            } else {
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+                spriteBatch.Draw(_gameTarget, Vector2.Zero, Color.White);
+                spriteBatch.End();
+            }
+
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
-            spriteBatch.Draw(_gameTarget, Vector2.Zero, Color.White);
             _menu.Draw(spriteBatch);
             spriteBatch.End();
         }

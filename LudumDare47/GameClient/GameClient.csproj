@@ -26,12 +26,19 @@
   <ItemGroup>
     <PackageReference Include="Dcrew.Camera" Version="1.5.3" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
     <PackageReference Include="TextCopy" Version="3.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GameCore\GameCore.csproj" />
     <ProjectReference Include="..\PandaMonogame\PandaMonogame.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Shaders.mgcb">
+      <Link>Content\Shaders.mgcb</Link>
+    </MonoGameContentReference>
   </ItemGroup>
 
 </Project>
