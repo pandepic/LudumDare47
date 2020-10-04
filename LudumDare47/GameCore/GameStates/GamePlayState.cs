@@ -56,6 +56,7 @@ namespace GameCore
             player = new Player();
             player.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle"), 32, 32);
             player.facing = Directions.None;
+            player.SetAnimations();
             player.Sprite.PlayAnimation(player.AnimIdleLeft);
             player.SetPosCentre(280, 90);
             player.active = true;

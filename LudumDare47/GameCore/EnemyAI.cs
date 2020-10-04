@@ -64,23 +64,31 @@ namespace GameCore
             enemy.vel = new Vector2(0);
             if (move_vector.X > 0)
             {
-                enemy.vel.X = 1;
+                //enemy.vel.X = 1;
+                enemy.moveright = true;
             }
             else  if (move_vector.X < 0)
             {
-                enemy.vel.X = -1;
+                //enemy.vel.X = -1;
+                enemy.moveleft = true;
             }
             if (move_vector.Y > 0)
             {
-                enemy.vel.Y = 1;
+                //enemy.vel.Y = 1;
+                enemy.movedown = true;
             }
             else if (move_vector.Y < 0)
             {
-                enemy.vel.Y = -1;
+                //enemy.vel.Y = -1;
+                enemy.moveup = true;
             }
             if (Vector2.Distance(player.pos, enemy.pos) < enemy.range / 2 || enemy.attack_cooldown > 0)
             {
                 enemy.vel = new Vector2(0);
+                enemy.moveup = false;
+                enemy.movedown = false;
+                enemy.moveleft = false;
+                enemy.moveright = false;
             }
         }
     }
