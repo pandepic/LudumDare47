@@ -176,16 +176,16 @@ namespace GameCore
             current_room.Draw(gameTime, graphics, spriteBatch);
             foreach (var e in DrawEntities)
             {
-                e.Draw(gameTime, graphics, spriteBatch);
+                e.Draw(gameTime, spriteBatch, Color.White);
             }
 
             foreach (var b in Bullets)
             {
-                b.Draw(gameTime, graphics, spriteBatch);
+                b.Draw(gameTime, spriteBatch, Color.White);
             }
             foreach (var b in EnemyBullets)
             {
-                b.Draw(gameTime, graphics, spriteBatch);
+                b.Draw(gameTime, spriteBatch, Color.White);
             }
             spriteBatch.End();
 
@@ -216,7 +216,7 @@ namespace GameCore
             {
                 player.StartMoving(Directions.Right);
             }
-            
+
             if (key == Keys.Space)
             {
                 player.shooting = true;

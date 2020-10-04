@@ -66,12 +66,10 @@ namespace GameCore.Entities
             }
         }
 
-        public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
         {
-            if (PlaceHolderTexture == null) 
-                PlaceholderTextureInit(graphics, Color.White);
-            if (!dead) 
-                base.Draw(gameTime, graphics, spriteBatch);
+            if (!dead)
+                base.Draw(gameTime, spriteBatch, Color.White);
         }
         public void Kill(GameTime gameTime)
         {
@@ -80,6 +78,5 @@ namespace GameCore.Entities
             ignore_collision = true;
         }
     }
-        
-}
 
+}

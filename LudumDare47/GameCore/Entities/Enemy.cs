@@ -33,12 +33,9 @@ namespace GameCore.Entities
             pos += speed * vel * gameTime.DeltaTime();
         }
 
-        public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
         {
-            if (PlaceHolderTexture == null)
-                PlaceholderTextureInit(graphics, Color.Red);
-            
-            if (!dead) base.Draw(gameTime, graphics, spriteBatch);
+            if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
         }
 
         public void Kill(GameTime gameTime)

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PandaMonogame;
 using SpriteFontPlus;
 using System;
@@ -31,7 +32,7 @@ namespace GameCore
         Left,
         Right
     }
-    
+
     public enum SoundType
     {
         Music,
@@ -52,10 +53,20 @@ namespace GameCore
     public static class Globals
     {
         public static DynamicSpriteFont DefaultFont;
+        public static Texture2D PlaceholderTexture;
 
         public static void Load(GraphicsDevice graphics)
         {
             DefaultFont = ModManager.Instance.AssetManager.LoadDynamicSpriteFont("LatoBlack");
+            PlaceholderTextureInit(graphics);
+        }
+
+        private static void PlaceholderTextureInit(GraphicsDevice graphics)
+        {
+            PlaceholderTexture = new RenderTarget2D(graphics, 1, 1);
+            graphics.SetRenderTarget((RenderTarget2D)PlaceholderTexture);
+            graphics.Clear(Color.White);
+            graphics.SetRenderTarget(null);
         }
     }
 }

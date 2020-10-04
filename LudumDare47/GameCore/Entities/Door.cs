@@ -18,7 +18,7 @@ namespace GameCore.Entities
 
         public Door()
         {
-            
+
         }
 
         public Door(int new_next_room_id, int new_posX, int new_posY, int new_next_posX = 0, int new_next_posY = 0, bool is_locked = false)
@@ -37,10 +37,9 @@ namespace GameCore.Entities
 
         }
 
-        public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
         {
-            PlaceholderTextureInit(graphics, Color.Blue);
-            base.Draw(gameTime, graphics, spriteBatch);
+            base.Draw(gameTime, spriteBatch, Color.Blue);
         }
 
         public void Unlock()

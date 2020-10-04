@@ -8,19 +8,15 @@ namespace GameCore.Entities
 {
     public class Clutter : Entity
     {
-        
+
         public void update(GameTime gameTime)
         {
 
         }
 
-        public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
         {
-            base.Draw(gameTime, graphics, spriteBatch);
-            if (PlaceHolderTexture == null)
-                PlaceholderTextureInit(graphics, Color.DarkGray);
-
-            base.Draw(gameTime, graphics, spriteBatch);
+            base.Draw(gameTime, spriteBatch, Color.DarkGray);
         }
     }
 

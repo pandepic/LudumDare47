@@ -153,11 +153,8 @@ namespace GameCore.Entities
             Sprite.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
         {
-            if (PlaceHolderTexture == null)
-                PlaceholderTextureInit(graphics, Color.Green);
-
             Sprite.Draw(spriteBatch, pos);
         }
     }
