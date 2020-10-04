@@ -158,6 +158,8 @@ namespace GameCore
                 enemyType = EnemyType.Caveman,
                 attack_cooldown = 2000
             };
+            caveman.SetSprite();
+            caveman.SetAnimations();
             return caveman;
         }
 

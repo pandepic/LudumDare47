@@ -38,6 +38,8 @@ namespace GameClient
 
         protected override void Initialize()
         {
+            Globals.GraphicsDevice = GraphicsDevice;
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 

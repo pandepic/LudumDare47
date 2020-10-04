@@ -34,8 +34,40 @@ namespace GameCore.Entities
             pos = new Vector2(new_posX, new_posY);
         }
 
+        public void SetSprite()
+        {
+            switch (enemyType)
+            {
+                case EnemyType.Caveman:
+                    {
+                        Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Caveman"), 32, 32);
+                    }
+                    break;
+            }
+        }
+
+        public void SetAnimations()
+        {
+            switch (enemyType)
+            {
+                case EnemyType.Caveman:
+                    {
+                        AnimIdleUp = new Animation(1, 4, 1000);
+                        AnimIdleDown = new Animation(5, 8, 1000);
+                        AnimIdleLeft = new Animation(9, 12, 1000);
+                        AnimIdleRight = new Animation(13, 16, 1000);
+                        AnimRunUp = new Animation(1, 4, 1000);
+                        AnimRunDown = new Animation(5, 8, 1000);
+                        AnimRunLeft = new Animation(9, 12, 1000);
+                        AnimRunRight = new Animation(13, 16, 1000);
+                    }
+                    break;
+            }
+        }
+
         public void Update(GameTime gameTime)
         {
+            UpdateMoveVec();
             attack_cooldown -= gameTime.DeltaTime() * 1000;
             pos += speed * vel * gameTime.DeltaTime();
 

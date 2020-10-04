@@ -13,6 +13,8 @@ namespace GameCore.Entities
 {
     public class Entity
     {
+        public AnimatedSprite Sprite;
+
         public int hp = 3;
         public Vector2 pos = new Vector2(0);
         public int draw_width = 32;
@@ -35,7 +37,17 @@ namespace GameCore.Entities
         public double animation_speed;
         public float attack_cooldown = 0;
         public AnimationState animationState = AnimationState.Idle;
-        
+
+        public Animation AnimIdleDown;
+        public Animation AnimIdleUp;
+        public Animation AnimIdleLeft;
+        public Animation AnimIdleRight;
+
+        public Animation AnimRunUp;
+        public Animation AnimRunDown;
+        public Animation AnimRunLeft;
+        public Animation AnimRunRight;
+
         /// <summary>
         /// If this is false ignore collisions etc.
         /// </summary>
@@ -68,18 +80,25 @@ namespace GameCore.Entities
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
         {
-            if (draw_texture == null) draw_texture = Globals.PlaceholderTexture;
-            spriteBatch.Draw(
-                    draw_texture,
-                    pos,
-                    new Rectangle(0, 0, draw_width, draw_height),
-                    color,
-                    MathHelper.ToRadians(0.0f),
-                    new Vector2(0),
-                    new Vector2(1),
-                    SpriteEffects.None,
-                    0.0f
-                    );
+            if (Sprite == null)
+            {
+                if (draw_texture == null) draw_texture = Globals.PlaceholderTexture;
+                spriteBatch.Draw(
+                        draw_texture,
+                        pos,
+                        new Rectangle(0, 0, draw_width, draw_height),
+                        color,
+                        MathHelper.ToRadians(0.0f),
+                        new Vector2(0),
+                        new Vector2(1),
+                        SpriteEffects.None,
+                        0.0f
+                        );
+            }
+            else
+            {
+                Sprite.Draw(spriteBatch, pos);
+            }
         }
 
         public static bool Collision(Entity a, Entity b, bool use_ignore_collisions = true)
@@ -87,6 +106,170 @@ namespace GameCore.Entities
             if (use_ignore_collisions && (a.ignore_collision || b.ignore_collision))
                 return false;
             return (!((a.pos.X > b.pos.X + b.col_width) || (a.pos.X + a.col_width < b.pos.X)) && !((a.pos.Y > b.pos.Y + b.col_height) || (a.pos.Y + a.col_height < b.pos.Y)));
+        }
+
+        public void StartMoving(Directions direction)
+        {
+            facing = direction;
+
+            switch (facing)
+            {
+                case Directions.Up:
+                    {
+                        moveup = true;
+                    }
+                    break;
+
+                case Directions.Down:
+                    {
+                        movedown = true;
+                    }
+                    break;
+
+                case Directions.Left:
+                    {
+                        moveleft = true;
+                    }
+                    break;
+
+                case Directions.Right:
+                    {
+                        moveright = true;
+                    }
+                    break;
+            }
+        }
+
+        public void StopMoving(Directions direction)
+        {
+            switch (direction)
+            {
+                case Directions.Up:
+                    {
+                        moveup = false;
+                    }
+                    break;
+
+                case Directions.Down:
+                    {
+                        movedown = false;
+                    }
+                    break;
+
+                case Directions.Left:
+                    {
+                        moveleft = false;
+                    }
+                    break;
+
+                case Directions.Right:
+                    {
+                        moveright = false;
+                    }
+                    break;
+            }
+        }
+
+        protected void UpdateMoveVec()
+        {
+            var prevVel = vel;
+            vel = Vector2.Zero;
+            var newFacing = Directions.None;
+
+            if (moveup)
+            {
+                vel.Y = -1;
+                newFacing = Directions.Up;
+            }
+            else if (movedown)
+            {
+                vel.Y = 1;
+                newFacing = Directions.Down;
+            }
+
+            if (moveleft)
+            {
+                vel.X = -1;
+                if (newFacing == Directions.None)
+                    newFacing = Directions.Left;
+            }
+            else if (moveright)
+            {
+                vel.X = 1;
+                if (newFacing == Directions.None)
+                    newFacing = Directions.Right;
+            }
+
+            if (newFacing != Directions.None)
+                facing = newFacing;
+
+            if (prevVel != vel)
+            {
+                if (vel == Vector2.Zero)
+                    PlayIdle();
+                else
+                    PlayMoving();
+            }
+        }
+
+        protected void PlayMoving()
+        {
+            switch (facing)
+            {
+                case Directions.Up:
+                    {
+                        Sprite.PlayAnimation(AnimRunUp);
+                    }
+                    break;
+
+                case Directions.Down:
+                    {
+                        Sprite.PlayAnimation(AnimRunDown);
+                    }
+                    break;
+
+                case Directions.Left:
+                    {
+                        Sprite.PlayAnimation(AnimRunLeft);
+                    }
+                    break;
+
+                case Directions.Right:
+                    {
+                        Sprite.PlayAnimation(AnimRunRight);
+                    }
+                    break;
+            }
+        }
+
+        protected void PlayIdle()
+        {
+            switch (facing)
+            {
+                case Directions.Up:
+                    {
+                        Sprite.PlayAnimation(AnimIdleUp);
+                    }
+                    break;
+
+                case Directions.Down:
+                    {
+                        Sprite.PlayAnimation(AnimIdleDown);
+                    }
+                    break;
+
+                case Directions.Left:
+                    {
+                        Sprite.PlayAnimation(AnimIdleLeft);
+                    }
+                    break;
+
+                case Directions.Right:
+                    {
+                        Sprite.PlayAnimation(AnimIdleRight);
+                    }
+                    break;
+            }
         }
     }
 }

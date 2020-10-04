@@ -53,6 +53,8 @@ namespace GameCore
 
     public static class Globals
     {
+        public static GraphicsDevice GraphicsDevice;
+
         public static readonly float SpawnEffectDuration = 2000;
         public static Texture2D SpawnEffectTexture;
         public static Animation SpawnEffectAnimation = new Animation(1, 21, SpawnEffectDuration);
@@ -60,6 +62,7 @@ namespace GameCore
         public static DynamicSpriteFont DefaultFont;
         public static Texture2D PlaceholderTexture;
         public static Effect Ripple;
+        public static Effect Wind;
 
         public static void Load(GraphicsDevice graphics, ContentManager content)
         {
@@ -82,6 +85,11 @@ namespace GameCore
             Ripple.Parameters["amplitude"].SetValue(0.05f);
             Ripple.Parameters["frequency"].SetValue(100f);
             Ripple.Parameters["size"].SetValue(1f);
+
+            Wind = content.Load<Effect>("Wind");
+            Wind.Parameters["wind_strength"].SetValue(0.01f);
+            Wind.Parameters["magic_number"].SetValue(20f);
+            Wind.Parameters["wind_direction"].SetValue(new Vector2(1f, 1f));
         }
     }
 }
