@@ -35,6 +35,11 @@ namespace GameCore.Entities
         public double animation_speed;
         public float attack_cooldown = 0;
         public AnimationState animationState = AnimationState.Idle;
+        
+        /// <summary>
+        /// If this is false ignore collisions etc.
+        /// </summary>
+        public bool active = false;
 
         public Vector2 Centre()
         {

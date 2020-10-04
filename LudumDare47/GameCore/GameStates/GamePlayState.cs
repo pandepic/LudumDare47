@@ -40,6 +40,8 @@ namespace GameCore
             // Assets
             //playerIdle = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle");
 
+            Globals.SpawnEffectTexture = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "EnemySpawn");
+
             // Rooms
             roomMaps.LoadTileMaps(graphics);
             all_rooms = new List<Room>();
@@ -48,6 +50,7 @@ namespace GameCore
                 all_rooms.Add(r);
             }
             current_room = Room.GetRoomByID(all_rooms, 100);
+            SetRoom(current_room);
 
             // Load the player
             player = new Player();
@@ -55,10 +58,25 @@ namespace GameCore
             player.facing = Directions.None;
             player.Sprite.PlayAnimation(player.AnimIdleLeft);
             player.SetPosCentre(280, 90);
+            player.active = true;
 
             _menu.Load(graphics, "GameplayMenuDefinition", "UITemplates");
 
             _gameTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
+        }
+
+        public void SetRoom(Room room)
+        {
+            foreach (var e in room.enemies)
+            {
+                if (!e.spawned && !e.spawnFinished)
+                {
+                    e.spawned = true;
+                    e.SpawnEffectDuration = Globals.SpawnEffectDuration;
+                    e.SpawnEffectSprite = new AnimatedSprite(Globals.SpawnEffectTexture, 64, 64);
+                    e.SpawnEffectSprite.PlayAnimation(Globals.SpawnEffectAnimation);
+                }
+            }
         }
 
         public override int Update(GameTime gameTime)
@@ -85,6 +103,8 @@ namespace GameCore
                         player.SetPos(d.next_posX, d.next_posY);
                         //player.vel = new Vector2(0);
                         //player.ResetMoving();
+                        SetRoom(current_room);
+
                         Console.WriteLine(current_room.room_id);
                     }
                 }
@@ -93,7 +113,7 @@ namespace GameCore
 
             foreach (var e in current_room.enemies)
             {
-                if (!e.dead)
+                if (!e.dead && e.spawnFinished)
                 {
                     //Enemy AI
                     if (e.enemyType == EnemyType.Caveman) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
@@ -112,6 +132,9 @@ namespace GameCore
                 }
                 foreach (var e in current_room.enemies)
                 {
+                    if (!e.active)
+                        continue;
+
                     if (Entity.Collision(e, b))
                     {
                         e.hp -= b.damage;
