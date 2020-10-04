@@ -81,6 +81,28 @@ namespace PandaMonogame
             }
         }
 
+        public void DrawToLayerIndex(SpriteBatch spriteBatch, int index)
+        {
+            var layers = LayerTextures.Where(t => t.Texture != null).OrderBy(t => t.DrawOrder).ToList();
+
+            for (var i = 0; i <= index && i < layers.Count; i++)
+            {
+                var layer = layers[i];
+                spriteBatch.Draw(layer.Texture, layer.DrawPosition, layer.SourceRect, Color.White);
+            }
+        }
+
+        public void DrawFromLayerIndex(SpriteBatch spriteBatch, int index)
+        {
+            var layers = LayerTextures.Where(t => t.Texture != null).OrderBy(t => t.DrawOrder).ToList();
+
+            for (var i = index; i < layers.Count; i++)
+            {
+                var layer = layers[i];
+                spriteBatch.Draw(layer.Texture, layer.DrawPosition, layer.SourceRect, Color.White);
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             Draw(spriteBatch, Vector2.One, false);
