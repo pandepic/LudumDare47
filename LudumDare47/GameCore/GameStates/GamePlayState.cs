@@ -134,13 +134,13 @@ namespace GameCore
                 b.Update(gameTime);
             }
 
+            player.attack_cooldown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            // Shoot a bullet
-            if (player.shooting == true)
+            if (player.attack_cooldown <= 0)
             {
-                player.attack_cooldown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                player.attack_cooldown = 0;
 
-                if (player.attack_cooldown <= 0)
+                if (player.shooting == true)
                 {
                     player.attack_cooldown = PlayerAttackCooldown;
                     Bullets.Add(new Bullet(player));

@@ -45,8 +45,8 @@ namespace GameClient
 
 #if DEBUG
             PandaMonogameConfig.Logging = true;
-            IsFixedTimeStep = false;
-            _graphics.SynchronizeWithVerticalRetrace = false;
+            //IsFixedTimeStep = false;
+            //_graphics.SynchronizeWithVerticalRetrace = false;
 #endif
 
             ModManager.Instance.Init(Content);
