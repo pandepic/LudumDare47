@@ -21,8 +21,7 @@ namespace GameCore
         protected GameStateType _nextState = GameStateType.None;
         protected PUIMenu _menu = new PUIMenu();
         protected Camera _camera = new Camera(new Vector2(160, 90), (320, 160));
-
-        public static GraphicsDevice Graphics;
+        protected RenderTarget2D _gameTarget;
 
         public List<Room> all_rooms;
         public Room current_room;
@@ -57,6 +56,8 @@ namespace GameCore
             player.SetPosCentre(280, 90);
 
             _menu.Load(graphics, "GameplayMenuDefinition", "UITemplates");
+
+            _gameTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
         }
 
         public override int Update(GameTime gameTime)
@@ -152,6 +153,7 @@ namespace GameCore
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
         {
+            graphics.SetRenderTarget(_gameTarget);
             graphics.Clear(Color.Black);
 
             // Determine draw order by sorting by y value + height
@@ -189,9 +191,10 @@ namespace GameCore
             }
             spriteBatch.End();
 
-
+            graphics.SetRenderTarget(null);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+            spriteBatch.Draw(_gameTarget, Vector2.Zero, Color.White);
             _menu.Draw(spriteBatch);
             spriteBatch.End();
         }
