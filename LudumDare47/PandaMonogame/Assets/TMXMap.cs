@@ -133,9 +133,6 @@ namespace PandaMonogame
 
                 foreach (var tile in layer.Tiles)
                 {
-                    if (tile.Gid == 0)
-                        continue;
-
                     TMXTilesheet tilesheet = null;
 
                     foreach (var ts in this._tilesheets)
@@ -146,8 +143,11 @@ namespace PandaMonogame
                         }
                     }
 
-                    tilesheet.Sheet.SetFrame(tile.Gid);
-                    tilesheet.Sheet.Draw(spriteBatch, new Vector2(x, y));
+                    if (tile.Gid != 0)
+                    {
+                        tilesheet.Sheet.SetFrame(tile.Gid);
+                        tilesheet.Sheet.Draw(spriteBatch, new Vector2(x, y));
+                    }
 
                     x += Map.TileWidth;
 
