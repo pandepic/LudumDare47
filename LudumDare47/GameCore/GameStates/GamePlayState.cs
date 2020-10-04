@@ -52,7 +52,7 @@ namespace GameCore
             player = new Player();
             player.SetPosCentre(current_room.room_width / 2, current_room.room_height / 2);
             player.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle"), 32, 32);
-            player.facing = Directions.Left;
+            player.facing = Directions.None;
             player.Sprite.PlayAnimation(player.AnimIdleLeft);
             player.SetPosCentre(280, 90);
 
@@ -81,7 +81,8 @@ namespace GameCore
                         Bullets.Clear();
                         current_room = Room.GetRoomByID(all_rooms, d.next_room_id);
                         player.SetPos(d.next_posX, d.next_posY);
-                        player.vel = new Vector2(0);
+                        //player.vel = new Vector2(0);
+                        //player.ResetMoving();
                         Console.WriteLine(current_room.room_id);
                     }
                 }

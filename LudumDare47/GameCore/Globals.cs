@@ -25,6 +25,7 @@ namespace GameCore
 
     public enum Directions
     {
+        None,
         Up,
         Down,
         Left,
