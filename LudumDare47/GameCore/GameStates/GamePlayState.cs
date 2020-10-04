@@ -238,6 +238,10 @@ namespace GameCore
             {
                 player.shooting = true;
             }
+
+            if (key == Keys.F1) {
+                isRipple = !isRipple;
+            }
         }
 
         public override void OnMouseMoved(Vector2 originalPosition, GameTime gameTime)
