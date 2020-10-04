@@ -173,7 +173,7 @@ namespace GameCore
 
             // Draw
             spriteBatch.Begin(sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp, transformMatrix: _camera.View());
-            current_room.Draw(gameTime, graphics, spriteBatch);
+            current_room.Draw(gameTime, spriteBatch);
             foreach (var e in DrawEntities)
             {
                 e.Draw(gameTime, spriteBatch, Color.White);

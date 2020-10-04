@@ -52,7 +52,7 @@ namespace GameCore.Entities
             }
         }
 
-        public void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             // Draw the room
             spriteBatch.Draw(
