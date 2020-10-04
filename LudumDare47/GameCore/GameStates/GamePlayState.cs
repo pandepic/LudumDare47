@@ -216,7 +216,8 @@ namespace GameCore
             {
                 player.moveright = true;
             }
-            else if (key == Keys.Space)
+            
+            if (key == Keys.Space)
             {
                 player.shooting = true;
             }
