@@ -32,22 +32,26 @@ namespace GameCore.Entities
         {
             SetPosCentre(player.Centre());
             vel = new Vector2(0);
-            if (player.facing == Directions.Up)
+            var playerFacing = player.facing;
+            if (playerFacing == Directions.None)
+                playerFacing = Directions.Left;
+
+            if (playerFacing == Directions.Up)
             {
                 vel.Y--;
                 facing = Directions.Up;
             }
-            if (player.facing == Directions.Down)
+            if (playerFacing == Directions.Down)
             {
                 vel.Y++;
                 facing = Directions.Down;
             }
-            if (player.facing == Directions.Left)
+            if (playerFacing == Directions.Left)
             {
                 vel.X--;
                 facing = Directions.Left;
             }
-            if (player.facing == Directions.Right)
+            if (playerFacing == Directions.Right)
             {
                 vel.X++;
                 facing = Directions.Right;

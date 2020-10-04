@@ -30,6 +30,7 @@ namespace GameCore.Entities
         public bool invulnerable = false;
         public bool dead = false;
         public Directions facing = Directions.Down;
+        public Directions moving = Directions.None;
         public Texture2D draw_texture;
         public double animation_timer;
         public double animation_speed;

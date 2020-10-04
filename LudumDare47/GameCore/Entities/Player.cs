@@ -30,6 +30,8 @@ namespace GameCore.Entities
         public Animation AnimRunLeft = new Animation(49, 56, 1000);
         public Animation AnimRunRight = new Animation(57, 64, 1000);
 
+        public SimpleStateMachine StateMachine = new SimpleStateMachine();
+
         public Player()
         {
             draw_width = 32;
@@ -46,40 +48,29 @@ namespace GameCore.Entities
             {
                 case Directions.Up:
                     {
-                        vel.Y--;
-                        Sprite.PlayAnimation(AnimRunUp);
+                        moveup = true;
                     }
                     break;
 
                 case Directions.Down:
                     {
-                        vel.Y++;
-                        Sprite.PlayAnimation(AnimRunDown);
+                        movedown = true;
                     }
                     break;
 
                 case Directions.Left:
                     {
-                        vel.X--;
-                        Sprite.PlayAnimation(AnimRunLeft);
+                        moveleft = true;
                     }
                     break;
 
                 case Directions.Right:
                     {
-                        vel.X++;
-                        Sprite.PlayAnimation(AnimRunRight);
+                        moveright = true;
                     }
                     break;
             }
         }
-
-        //public void ResetMoving()
-        //{
-        //    vel = Vector2.Zero;
-        //    PlayIdle();
-        //    facing = Directions.None;
-        //}
 
         public void StopMoving(Directions direction)
         {
@@ -87,32 +78,99 @@ namespace GameCore.Entities
             {
                 case Directions.Up:
                     {
-                        vel.Y++;
+                        moveup = false;
                     }
                     break;
 
                 case Directions.Down:
                     {
-                        vel.Y--;
+                        movedown = false;
                     }
                     break;
 
                 case Directions.Left:
                     {
-                        vel.X++;
+                        moveleft = false;
                     }
                     break;
 
                 case Directions.Right:
                     {
-                        vel.X--;
+                        moveright = false;
                     }
                     break;
             }
+        }
 
-            if (vel == Vector2.Zero)
+        protected void UpdateMoveVec()
+        {
+            var prevVel = vel;
+            vel = Vector2.Zero;
+            var newFacing = Directions.None;
+
+            if (moveup)
             {
-                PlayIdle();
+                vel.Y = -1;
+                newFacing = Directions.Up;
+            }
+            else if (movedown)
+            {
+                vel.Y = 1;
+                newFacing = Directions.Down;
+            }
+
+            if (moveleft)
+            {
+                vel.X = -1;
+                if (newFacing == Directions.None)
+                    newFacing = Directions.Left;
+            }
+            else if (moveright)
+            {
+                vel.X = 1;
+                if (newFacing == Directions.None)
+                    newFacing = Directions.Right;
+            }
+
+            if (newFacing != Directions.None)
+                facing = newFacing;
+
+            if (prevVel != vel)
+            {
+                if (vel == Vector2.Zero)
+                    PlayIdle();
+                else
+                    PlayMoving();
+            }
+        }
+
+        protected void PlayMoving()
+        {
+            switch (facing)
+            {
+                case Directions.Up:
+                    {
+                        Sprite.PlayAnimation(AnimRunUp);
+                    }
+                    break;
+
+                case Directions.Down:
+                    {
+                        Sprite.PlayAnimation(AnimRunDown);
+                    }
+                    break;
+
+                case Directions.Left:
+                    {
+                        Sprite.PlayAnimation(AnimRunLeft);
+                    }
+                    break;
+
+                case Directions.Right:
+                    {
+                        Sprite.PlayAnimation(AnimRunRight);
+                    }
+                    break;
             }
         }
 
@@ -148,6 +206,7 @@ namespace GameCore.Entities
 
         public void Update(GameTime gameTime)
         {
+            UpdateMoveVec();
             pos += vel * speed * gameTime.DeltaTime();
 
             Sprite.Update(gameTime);
