@@ -21,7 +21,7 @@ namespace GameCore.Entities
             
         }
 
-        public Door(int new_next_room_id, int new_posX, int new_posY, int new_next_posX = 0, int new_next_posY = 0)
+        public Door(int new_next_room_id, int new_posX, int new_posY, int new_next_posX = 0, int new_next_posY = 0, bool is_locked = false)
         {
             next_room_id = new_next_room_id;
             pos.X = new_posX;
@@ -29,6 +29,7 @@ namespace GameCore.Entities
 
             next_posX = new_next_posX;
             next_posY = new_next_posY;
+            locked = is_locked;
         }
 
         public void Update(GameTime gameTime)

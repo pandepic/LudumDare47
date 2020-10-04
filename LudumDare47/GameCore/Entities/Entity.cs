@@ -17,8 +17,8 @@ namespace GameCore.Entities
         public Vector2 pos = new Vector2(0);
         public int draw_width = 32;
         public int draw_height = 32;
-        public int col_width = 20;
-        public int col_height = 20;
+        public int col_width = 32;
+        public int col_height = 32;
         public Vector2 vel = new Vector2(0);
         public int speed = 5;
         public bool moveup;
@@ -34,6 +34,7 @@ namespace GameCore.Entities
         public double animation_timer;
         public double animation_speed;
         public float attack_cooldown = 0;
+        public AnimationState animationState = AnimationState.Idle;
 
         public Vector2 Centre()
         {

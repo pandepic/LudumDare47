@@ -132,12 +132,12 @@ namespace GameCore.Entities
         public static Entity NudgeOOB(Room room, Entity entity)
         {
             // Nudge the entity back into bounds if OOB
-            if (entity.pos.X + entity.draw_width > room.room_width)
-                entity.pos.X = room.room_width - entity.draw_width;
+            if (entity.pos.X + entity.col_width > room.room_width)
+                entity.pos.X = room.room_width - entity.col_width;
             if (entity.pos.X < 0)
                 entity.pos.X = 0;
-            if (entity.pos.Y + entity.draw_height > room.room_height)
-                entity.pos.Y = room.room_height - entity.draw_height;
+            if (entity.pos.Y + entity.col_height > room.room_height)
+                entity.pos.Y = room.room_height - entity.col_height;
             if (entity.pos.Y < 0)
                 entity.pos.Y = 0;
             return entity;

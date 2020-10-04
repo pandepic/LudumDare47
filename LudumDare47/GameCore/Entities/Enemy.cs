@@ -29,8 +29,8 @@ namespace GameCore.Entities
 
         public void Update(GameTime gameTime)
         {
-            //pos += speed * vel * gameTime.DeltaTime();
-
+            attack_cooldown -= gameTime.DeltaTime() * 1000;
+            pos += speed * vel * gameTime.DeltaTime();
         }
 
         public override void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)

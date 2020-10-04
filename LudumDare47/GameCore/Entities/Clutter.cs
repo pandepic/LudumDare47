@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GameCore.Entities
 {
-    public class Objects : Entity
+    public class Clutter : Entity
     {
         
         public void update(GameTime gameTime)
@@ -18,7 +18,9 @@ namespace GameCore.Entities
         {
             base.Draw(gameTime, graphics, spriteBatch);
             if (PlaceHolderTexture == null)
-                PlaceholderTextureInit(graphics, Color.Red);
+                PlaceholderTextureInit(graphics, Color.DarkGray);
+
+            base.Draw(gameTime, graphics, spriteBatch);
         }
     }
 

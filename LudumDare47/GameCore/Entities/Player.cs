@@ -31,34 +31,6 @@ namespace GameCore.Entities
         public void Update(GameTime gameTime)
         {
             // Basic movement
-            /*if (moveup && !movedown)
-            {
-                facing = Directions.Up;
-                vel.Y = -1 * speed;
-            }
-            if (!moveup && movedown)
-            {
-                facing = Directions.Down;
-                vel.Y = speed;
-            }
-            if (!(moveup ^ movedown))
-            {
-                vel.Y = 0;
-            }
-            if (moveleft && !moveright) 
-            {
-                facing = Directions.Left;
-                vel.X = -1 * speed;
-            }
-            if (!moveleft && moveright) 
-            {
-                facing = Directions.Right;
-                vel.X = 1 * speed; 
-            }
-            if (!(moveleft ^ moveright)) 
-            { 
-                vel.X = 0; 
-            }*/
             vel = new Vector2(0);
             if (moveup)
             {

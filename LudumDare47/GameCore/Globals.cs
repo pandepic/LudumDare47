@@ -15,6 +15,14 @@ namespace GameCore
 
     }
 
+    public enum AnimationState
+    {
+        Idle,
+        Moving,
+        Attacking,
+        Dead
+    }
+
     public enum Directions
     {
         Up,

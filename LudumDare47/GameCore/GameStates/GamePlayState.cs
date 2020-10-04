@@ -23,11 +23,15 @@ namespace GameCore
         public List<Room> all_rooms;
         public Room current_room;
         public Player player;
-        public Double last_frame_time;
 
         public List<Bullet> Bullets = new List<Bullet>();
         public List<Bullet> EnemyBullets = new List<Bullet>();
+
+        public List<Clutter> Clutter = new List<Clutter>();
+
         Texture2D playerIdle;
+
+        readonly RoomMaps roomMaps = new RoomMaps();
 
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
@@ -35,25 +39,19 @@ namespace GameCore
             playerIdle = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle");
 
             // Rooms
-            RoomMaps roomMaps = new RoomMaps();
-
-            // Placeholder rooms
             all_rooms = new List<Room>();
-            all_rooms.Add(new Room(320, 180, new List<Enemy>(), new List<Door>(), 0, "Test Room 1"));
-            all_rooms[0].enemies.Add(new Enemy(5, 100, 100));
-            all_rooms[0].enemies.Add(new Enemy(5, 20, 20));
-            all_rooms[0].doors.Add(new Door(1,-24, 72, 280, 72));
-            current_room = all_rooms[0];
-            current_room.doors[0].locked = true;
-            all_rooms.Add(new Room(320, 180, new List<Enemy>(), new List<Door>(), 1, "Test Room 2"));
-            all_rooms[1].doors.Add(new Door(0, 312, 72, 40, 72));
-            all_rooms.Add(Room.GetRoomByID(roomMaps.rooms, 100));
-            current_room = all_rooms[2];
+            foreach(var r in roomMaps.rooms)
+            {
+                all_rooms.Add(r);
+            }
+            current_room = Room.GetRoomByID(all_rooms, 100);
 
             // Load the player
             player = new Player();
             player.SetPosCentre(current_room.room_width / 2, current_room.room_height / 2);
             player.playerIdle = playerIdle;
+            player.facing = Directions.Left;
+            player.SetPosCentre(280, 90);
             
             _menu.Load(graphics, "GameplayMenuDefinition", "UITemplates");
         }
@@ -61,20 +59,11 @@ namespace GameCore
         public override int Update(GameTime gameTime)
         {
 
-            //Enemy AI
-            foreach (var e in current_room.enemies)
-            {
-                if (!e.dead)
-                {
-                    if (e.enemyType == EnemyType.Caveman) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
-                }
-            }
-            current_room.Update(gameTime);
-
             // Player
             player.Update(gameTime);
             Room.NudgeOOB(current_room, player);
             // Check for touching doors
+            
             foreach (var d in current_room.doors)
             {
                 if (Entity.Collision(player, d))
@@ -90,10 +79,23 @@ namespace GameCore
                         current_room = Room.GetRoomByID(all_rooms, d.next_room_id);
                         player.SetPos(d.next_posX, d.next_posY);
                         player.vel = new Vector2(0);
+                        Console.WriteLine(current_room.room_id);
                     }
                 }
             }
 
+            
+            foreach (var e in current_room.enemies)
+            {
+                if (!e.dead)
+                {
+                    //Enemy AI
+                    if (e.enemyType == EnemyType.Caveman) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
+                }
+            }
+
+            // Rooms
+            current_room.Update(gameTime);
 
             // Bullets
             foreach (var b in Bullets)
@@ -176,8 +178,9 @@ namespace GameCore
             {
                 b.Draw(gameTime, graphics, spriteBatch);
             }
-
             spriteBatch.End();
+
+
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
             _menu.Draw(spriteBatch);

@@ -16,13 +16,15 @@ namespace GameCore
         {
             var move_vector = player.Centre() - enemy.Centre();
 
+            // Attack if able, the 'swing' is a bullet
             if (enemy.attack_cooldown <= 0 && Vector2.Distance(player.Centre(), enemy.Centre()) < enemy.range){
                 var attack = new Bullet();
                 attack.speed = 0;
                 enemy.attack_cooldown = 2000;
                 attack.duration = 1000;
                 attack.damage = 1;
-
+                
+                // Figure out the direction of the attack
                 if (Vector2.Distance(player.Centre(), enemy.Centre()) < 20)
                 {
                     attack.col_width = attack.draw_width = 30;
@@ -33,42 +35,53 @@ namespace GameCore
                 {
                     attack.col_width = attack.draw_width = 20;
                     attack.col_height = attack.draw_height = 60;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(30, 0));
+                    attack.SetPosCentre(enemy.Centre() + new Vector2(35, 0));
                 }
                 else if (Math.Abs(move_vector.X) > Math.Abs(Math.Abs(move_vector.Y)) && move_vector.X <= 0)
                 {
                     attack.col_width = attack.draw_width = 20;
                     attack.col_height = attack.draw_height = 60;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(-30, 0));
+                    attack.SetPosCentre(enemy.Centre() + new Vector2(-35, 0));
                 }
                 else if (Math.Abs(move_vector.X) <= Math.Abs(move_vector.Y) && move_vector.Y <= 0)
                 {
                     attack.col_width = attack.draw_width = 60;
                     attack.col_height = attack.draw_height = 20;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(0, -30));
+                    attack.SetPosCentre(enemy.Centre() + new Vector2(0, -35));
                 }
                 else if (Math.Abs(move_vector.X) <= move_vector.Y && move_vector.Y > 0)
                 {
                     attack.col_width = attack.draw_width = 60;
                     attack.col_height = attack.draw_height = 20;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(0, 30));
+                    attack.SetPosCentre(enemy.Centre() + new Vector2(0, 35));
                 }
 
 
                 bullets.Add(attack);
             }
-            
-            
+
+            // Move towards player, unless too close or attack is on cooldown
             enemy.vel = new Vector2(0);
-            if (move_vector.X > 0) enemy.vel.X = 1;
-            if (move_vector.X < 0) enemy.vel.X = -1;
-            if (move_vector.Y > 0) enemy.vel.Y = 1;
-            if (move_vector.Y < 0) enemy.vel.Y = -1;
-
-            if (Vector2.Distance(player.pos, enemy.pos) < enemy.range/2 || enemy.attack_cooldown > 0) enemy.vel = new Vector2(0);
-
-            enemy.pos += enemy.speed * enemy.vel * gameTime.DeltaTime();
-            enemy.attack_cooldown -= gameTime.DeltaTime() * 1000;
+            if (move_vector.X > 0)
+            {
+                enemy.vel.X = 1;
+            }
+            else  if (move_vector.X < 0)
+            {
+                enemy.vel.X = -1;
+            }
+            if (move_vector.Y > 0)
+            {
+                enemy.vel.Y = 1;
+            }
+            else if (move_vector.Y < 0)
+            {
+                enemy.vel.Y = -1;
+            }
+            if (Vector2.Distance(player.pos, enemy.pos) < enemy.range / 2 || enemy.attack_cooldown > 0)
+            {
+                enemy.vel = new Vector2(0);
+            }
         }
     }
 }
