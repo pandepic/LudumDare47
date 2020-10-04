@@ -21,9 +21,14 @@ namespace GameCore.Entities
         public int animation_int = 0;
 
         public Animation AnimIdleDown = new Animation(1, 4, 1000);
-        public Animation AnimIdleUp = new Animation(5, 8, 1000);
-        public Animation AnimIdleLeft = new Animation(9, 12, 1000);
-        public Animation AnimIdleRight = new Animation(13, 16, 1000);
+        public Animation AnimIdleUp = new Animation(9, 12, 1000);
+        public Animation AnimIdleLeft = new Animation(17, 20, 1000);
+        public Animation AnimIdleRight = new Animation(25, 28, 1000);
+
+        public Animation AnimRunUp = new Animation(33, 40, 1000);
+        public Animation AnimRunDown = new Animation(41, 48, 1000);
+        public Animation AnimRunLeft = new Animation(49, 56, 1000);
+        public Animation AnimRunRight = new Animation(57, 64, 1000);
 
         public Player()
         {
@@ -33,43 +38,150 @@ namespace GameCore.Entities
             hp = 3;
         }
 
-        public void Update(GameTime gameTime)
+        public void StartMoving(Directions direction)
         {
             var prevFacing = facing;
-            // Basic movement
-            vel = new Vector2(0);
-            if (moveup)
-            {
-                vel.Y--;
-                facing = Directions.Up;
+            facing = direction;
 
-                if (prevFacing != facing)
-                    Sprite.PlayAnimation(AnimIdleUp);
-            }
-            if (movedown)
+            switch (facing)
             {
-                vel.Y++;
-                facing = Directions.Down;
+                case Directions.Up:
+                    {
+                        vel.Y--;
+                        if (facing != prevFacing)
+                            Sprite.PlayAnimation(AnimRunUp);
+                    }
+                    break;
 
-                if (prevFacing != facing)
-                    Sprite.PlayAnimation(AnimIdleDown);
+                case Directions.Down:
+                    {
+                        vel.Y++;
+                        if (facing != prevFacing)
+                            Sprite.PlayAnimation(AnimRunDown);
+                    }
+                    break;
+
+                case Directions.Left:
+                    {
+                        vel.X--;
+                        if (facing != prevFacing)
+                            Sprite.PlayAnimation(AnimRunLeft);
+                    }
+                    break;
+
+                case Directions.Right:
+                    {
+                        vel.X++;
+                        if (facing != prevFacing)
+                            Sprite.PlayAnimation(AnimRunRight);
+                    }
+                    break;
             }
-            if (moveleft)
+        }
+
+        public void StopMoving(Directions direction)
+        {
+            switch (direction)
             {
-                vel.X--;
-                facing = Directions.Left;
+                case Directions.Up:
+                    {
+                        vel.Y++;
+                    }
+                    break;
 
-                if (prevFacing != facing)
-                    Sprite.PlayAnimation(AnimIdleLeft);
+                case Directions.Down:
+                    {
+                        vel.Y--;
+                    }
+                    break;
+
+                case Directions.Left:
+                    {
+                        vel.X++;
+                    }
+                    break;
+
+                case Directions.Right:
+                    {
+                        vel.X--;
+                    }
+                    break;
             }
-            if (moveright)
+
+            if (vel == Vector2.Zero)
             {
-                vel.X++;
-                facing = Directions.Right;
+                switch (facing)
+                {
+                    case Directions.Up:
+                        {
+                            Sprite.PlayAnimation(AnimIdleUp);
+                        }
+                        break;
 
-                if (prevFacing != facing)
-                    Sprite.PlayAnimation(AnimIdleRight);
+                    case Directions.Down:
+                        {
+                            Sprite.PlayAnimation(AnimIdleDown);
+                        }
+                        break;
+
+                    case Directions.Left:
+                        {
+                            Sprite.PlayAnimation(AnimIdleLeft);
+                        }
+                        break;
+
+                    case Directions.Right:
+                        {
+                            Sprite.PlayAnimation(AnimIdleRight);
+                        }
+                        break;
+                }
             }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            //var moving = false;
+            //var prevFacing = facing;
+
+            //// Basic movement
+            //vel = new Vector2(0);
+            //if (moveup)
+            //{
+            //    vel.Y--;
+            //    moving = true;
+            //    facing = Directions.Up;
+
+            //    if (prevFacing != facing)
+            //        Sprite.PlayAnimation(AnimIdleUp);
+            //}
+            //if (movedown)
+            //{
+            //    vel.Y++;
+            //    moving = true;
+            //    facing = Directions.Down;
+
+            //    if (prevFacing != facing)
+            //        Sprite.PlayAnimation(AnimIdleDown);
+            //}
+            //if (moveleft)
+            //{
+            //    vel.X--;
+            //    moving = true;
+            //    facing = Directions.Left;
+
+            //    if (prevFacing != facing)
+            //        Sprite.PlayAnimation(AnimIdleLeft);
+            //}
+            //if (moveright)
+            //{
+            //    vel.X++;
+            //    moving = true;
+            //    facing = Directions.Right;
+
+            //    if (prevFacing != facing)
+            //        Sprite.PlayAnimation(AnimIdleRight);
+            //}
             
             pos += vel * speed * gameTime.DeltaTime();
 
