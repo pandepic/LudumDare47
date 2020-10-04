@@ -19,7 +19,7 @@ namespace GameCore
             Enemy newenemy;
 
             // Room 100
-            newroom = new Room(320, 180, new List<Enemy>(), new List<Door>(), 100, "Caveman 1");
+            newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 100, "Caveman 1");
             newroom.doors.Add(new Door(101, -24, 72, 250, 72)); // Left door
             newroom.doors.Add(new Door(0, 312, 72, 40, 72));    // Right door
             newenemy = RoomMaps.CaveMan();
@@ -139,6 +139,13 @@ namespace GameCore
             newroom = new Room(320, 180, new List<Enemy>(), new List<Door>(), 117, "Caveman 14");
             newroom.doors.Add(new Door(116, 144, -24, 144, 130)); // Top door
             rooms.Add(newroom);
+        }
+
+        public void LoadTileMaps(GraphicsDevice graphics)
+        {
+            Room newroom = Room.GetRoomByID(rooms, 100);
+            TMXMap newmap = new TMXMap(graphics, "TileMap" + Room.GetRoomByID(rooms, 100).room_id.ToString());
+            newroom.tileMap = newmap;   
         }
 
         public static Enemy CaveMan()

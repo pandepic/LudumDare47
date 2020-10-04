@@ -19,6 +19,9 @@ namespace GameCore.Entities
         public List<Door> doors;
         string name;
 
+        public TMXMap tileMap;
+
+
         public Room()
         {
             room_width = 320;
@@ -55,7 +58,7 @@ namespace GameCore.Entities
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             // Draw the room
-            spriteBatch.Draw(
+                spriteBatch.Draw(
                         Globals.PlaceholderTexture,
                         new Vector2(0),
                         new Rectangle(0, 0, room_width, room_height),
@@ -66,6 +69,11 @@ namespace GameCore.Entities
                         SpriteEffects.None,
                         0.0f
                         );
+            if (tileMap != null)
+            { 
+                tileMap.Draw(spriteBatch);
+                
+            }
         }
 
         public void OnEntry()

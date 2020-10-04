@@ -33,4 +33,11 @@
   <!-- Sprites -->
   <Asset Name="PlayerIdle" FilePath = "SoldierIdle.png" />
   
+  <!-- TileMaps -->
+  <Asset Name="TileMap100" FilePath = "Tilemaps/100.tmx" />
+  
+  <!-- TileSheets -->
+  <Asset Name="testsheet" FilePath = "Tilemaps/testsheet.png" />
+  <Asset Name="Lab" FilePath = "Tilemaps/Lab.png" />
+  
 </Assets>

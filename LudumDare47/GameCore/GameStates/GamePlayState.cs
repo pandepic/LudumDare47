@@ -41,6 +41,7 @@ namespace GameCore
             //playerIdle = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle");
 
             // Rooms
+            roomMaps.LoadTileMaps(graphics);
             all_rooms = new List<Room>();
             foreach(var r in roomMaps.rooms)
             {
@@ -50,7 +51,6 @@ namespace GameCore
 
             // Load the player
             player = new Player();
-            player.SetPosCentre(current_room.room_width / 2, current_room.room_height / 2);
             player.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle"), 32, 32);
             player.facing = Directions.None;
             player.Sprite.PlayAnimation(player.AnimIdleLeft);
