@@ -16,6 +16,8 @@ namespace GameCore
 {
     public class GamePlayState : GameState
     {
+        public const float PlayerAttackCooldown = 500.0f;
+
         protected GameStateType _nextState = GameStateType.None;
         protected PUIMenu _menu = new PUIMenu();
         protected Camera _camera = new Camera(new Vector2(160, 90), (320, 160));
@@ -136,8 +138,13 @@ namespace GameCore
             // Shoot a bullet
             if (player.shooting == true)
             {
-                player.shooting = false;
-                Bullets.Add(new Bullet(player));
+                player.attack_cooldown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                if (player.attack_cooldown <= 0)
+                {
+                    player.attack_cooldown = PlayerAttackCooldown;
+                    Bullets.Add(new Bullet(player));
+                }
             }
 
             return (int)_nextState;
@@ -209,6 +216,10 @@ namespace GameCore
             {
                 player.moveright = true;
             }
+            else if (key == Keys.Space)
+            {
+                player.shooting = true;
+            }
         }
 
         public override void OnMouseMoved(Vector2 originalPosition, GameTime gameTime)
@@ -251,7 +262,7 @@ namespace GameCore
 
             if (key == Keys.Space)
             {
-                player.shooting = true;
+                player.shooting = false;
             }
 
             _menu.OnKeyReleased(key, gameTime, currentKeyState);
