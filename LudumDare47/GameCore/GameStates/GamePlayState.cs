@@ -22,6 +22,8 @@ namespace GameCore
         protected PUIMenu _menu = new PUIMenu();
         protected Camera _camera = new Camera(new Vector2(160, 90), (320, 160));
         protected RenderTarget2D _gameTarget;
+        protected RenderTarget2D _rippleTarget;
+        protected RenderTarget2D _windTarget;
         protected bool isRipple = false;
 
         public List<Room> all_rooms;
@@ -63,6 +65,8 @@ namespace GameCore
             _menu.Load(graphics, "GameplayMenuDefinition", "UITemplates");
 
             _gameTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
+            _rippleTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
+            _windTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
         }
 
         public void SetRoom(Room room)
@@ -173,7 +177,8 @@ namespace GameCore
             }
 
             if (isRipple) {
-                Globals.Ripple.Parameters["phase"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 100);
+                Globals.Ripple.Parameters["phase"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 100f);
+                Globals.Wind.Parameters["time"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 1000f);
             }
 
             return (int)_nextState;
@@ -219,19 +224,27 @@ namespace GameCore
             }
             spriteBatch.End();
 
-            graphics.SetRenderTarget(null);
 
             if (isRipple) {
+                graphics.SetRenderTarget(_rippleTarget);
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, effect: Globals.Ripple);
                 spriteBatch.Draw(_gameTarget, Vector2.Zero, Color.White);
                 spriteBatch.End();
+
+                graphics.SetRenderTarget(_windTarget);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, effect: Globals.Wind);
+                spriteBatch.Draw(_rippleTarget, Vector2.Zero, Color.White);
+                spriteBatch.End();
             } else {
+                graphics.SetRenderTarget(_windTarget);
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
                 spriteBatch.Draw(_gameTarget, Vector2.Zero, Color.White);
                 spriteBatch.End();
             }
+            graphics.SetRenderTarget(null);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+            spriteBatch.Draw(_windTarget, Vector2.Zero, Color.White);
             _menu.Draw(spriteBatch);
             spriteBatch.End();
         }
