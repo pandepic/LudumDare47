@@ -18,8 +18,6 @@ namespace GameCore.Entities
         public List<Enemy> enemies;
         public List<Door> doors;
         string name;
-        public Texture2D FloorPlaceHolderTexture = null;
-        
 
         public Room()
         {
@@ -28,9 +26,9 @@ namespace GameCore.Entities
             room_id = -1;
             enemies = new List<Enemy>();
             doors = new List<Door>();
-            name = "Default";            
+            name = "Default";
         }
- 
+
         public Room(int new_width, int new_height, List<Enemy> new_enemies, List<Door> new_doors, int new_id, string new_name = "Default")
         {
             room_width = new_width;
@@ -56,33 +54,23 @@ namespace GameCore.Entities
 
         public void Draw(GameTime gameTime, GraphicsDevice graphics, SpriteBatch spriteBatch)
         {
-            // Placeholder texture
-            if (FloorPlaceHolderTexture == null)
-            {
-                FloorPlaceHolderTexture = new RenderTarget2D(graphics, 1, 1);
-                graphics.SetRenderTarget((RenderTarget2D)FloorPlaceHolderTexture);
-                graphics.Clear(new Color(120, 120, 120, 120));
-                graphics.SetRenderTarget(null);
-            }
-
             // Draw the room
             spriteBatch.Draw(
-                        FloorPlaceHolderTexture,
+                        Globals.PlaceholderTexture,
                         new Vector2(0),
                         new Rectangle(0, 0, room_width, room_height),
-                        Color.Gray,
+                        new Color(60, 60, 60),
                         MathHelper.ToRadians(0.0f),
                         new Vector2(0),
                         new Vector2(1),
                         SpriteEffects.None,
                         0.0f
                         );
-
         }
 
         public void OnEntry()
         {
-            
+
         }
 
         public static Room GetRoomByName(List<Room> all_rooms, string name)
