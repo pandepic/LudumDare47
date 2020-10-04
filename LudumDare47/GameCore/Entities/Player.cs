@@ -18,6 +18,7 @@ namespace GameCore.Entities
 
         public bool shooting = false;
         public int animation_int = 0;
+        public List<Clutter> inventory = new List<Clutter>();
 
         public Player()
         {

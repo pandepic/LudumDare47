@@ -37,6 +37,8 @@
   <Asset Name="Door" FilePath="Door.png" />
   <Asset Name="Crate" FilePath="Crate.png" />
   <Asset Name="Button" FilePath="Button.png" />
+  <Asset Name="Key" FilePath="Key.png" />
+  <Asset Name="Part1" FilePath="Part1.png" />
   
   <!-- TileMaps -->
   <Asset Name="TileMap100" FilePath = "Tilemaps/100.tmx" />

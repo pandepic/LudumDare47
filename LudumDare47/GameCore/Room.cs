@@ -19,6 +19,8 @@ namespace GameCore.Entities
         public List<Door> doors;
         public List<Clutter> clutters = new List<Clutter>();
         string name;
+        public bool trap_room = false;
+        public Door trap_door = new Door();
 
         public TMXMap tileMap;
 
@@ -77,9 +79,12 @@ namespace GameCore.Entities
             }
         }
 
-        public void OnEntry()
+        public void OnEntry(GameTime gameTime)
         {
-
+            if (trap_room)
+            {
+                trap_door.Lock();
+            }
         }
 
         public static Room GetRoomByName(List<Room> all_rooms, string name)
@@ -130,11 +135,11 @@ namespace GameCore.Entities
         {
             // Nudge the entity back into bounds if OOB
             if (entity.pos.X + entity.draw_width > room.room_width)
-                entity.pos.X = room.room_width - entity.col_width;
+                entity.pos.X = room.room_width - entity.draw_width;
             if (entity.pos.X < 0)
                 entity.pos.X = 0;
             if (entity.pos.Y + entity.draw_height > room.room_height)
-                entity.pos.Y = room.room_height - entity.col_height;
+                entity.pos.Y = room.room_height - entity.draw_height;
             if (entity.pos.Y < 0)
                 entity.pos.Y = 0;
             return entity;

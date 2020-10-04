@@ -15,6 +15,9 @@ namespace GameCore.Entities
         public int next_posX;
         public int next_posY;
         public bool locked = false;
+        public int unlock_id = -1;
+        public int open_time = 0;
+        public float open_timer = 0.0f;
 
         public Door()
         {

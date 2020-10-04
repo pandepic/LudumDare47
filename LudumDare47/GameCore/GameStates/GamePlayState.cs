@@ -11,6 +11,7 @@ using System.Threading;
 using GameCore.Entities;
 using System.Linq;
 using Dcrew.Camera;
+using SpriteFontPlus;
 
 namespace GameCore
 {
@@ -37,11 +38,11 @@ namespace GameCore
 
         readonly RoomMaps roomMaps = new RoomMaps();
 
+        float countdown = 60;
+
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
-            // Assets
-            //playerIdle = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle");
-            
+            // Assets            
             Globals.SpawnEffectTexture = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "EnemySpawn");
 
             // Rooms
@@ -88,8 +89,16 @@ namespace GameCore
 
         public override int Update(GameTime gameTime)
         {
+            //Timer
+            countdown -= gameTime.DeltaTime();
+            Console.WriteLine(player.inventory.Capacity);
+
+            // Player
             var oldpos = player.pos;
             player.Update(gameTime);
+            Room.NudgeOOB(current_room, player);
+
+            // Clutters
             foreach (var c in current_room.clutters)
             {
                 if (Entity.Collision(player, c))
@@ -97,15 +106,14 @@ namespace GameCore
                     player.pos = oldpos;
                     //player.StopMoving(player.facing);
                 }
+                if (c.collectable && Entity.Collision(player, c, false)){
+                    player.inventory.Add(c);
+
+                    c.Kill(gameTime);
+                }
             }
-
-            // Player
-            
-            Room.NudgeOOB(current_room, player);
-
-            // Check for collision with 
            
-            // Check for touching doors
+            // Doors
             foreach (var d in current_room.doors)
             {
                 if (Entity.Collision(player, d, false) && !d.locked)
@@ -119,12 +127,27 @@ namespace GameCore
                         //player.vel = new Vector2(0);
                         //player.ResetMoving();
                         SetRoom(current_room);
+                        current_room.OnEntry(gameTime);
 
                         Console.WriteLine(current_room.room_id);
                     }
                 }
             }
-
+            if (current_room.trap_room)
+            {
+                bool enemies_alive = false;
+                foreach (var e in current_room.enemies)
+                {
+                    if (!e.dead)
+                    {
+                        enemies_alive = true;
+                    }
+                }
+                if (!enemies_alive)
+                {
+                    current_room.trap_door.Unlock();
+                }
+            }
 
             foreach (var e in current_room.enemies)
             {
@@ -253,8 +276,15 @@ namespace GameCore
             {
                 b.Draw(gameTime, spriteBatch, Color.White);
             }
+            for (int i = 0; i < player.inventory.Count; i++)
+            {
+                Clutter c = player.inventory[i];
+                c.ignore_collision = true;
+                c.draw_height = 16;
+                c.draw_width = 16;
+                c.pos = new Vector2(300 - i * 20, 162);
+            }
             spriteBatch.End();
-
 
             if (isRipple) {
                 graphics.SetRenderTarget(_rippleTarget);
@@ -312,10 +342,34 @@ namespace GameCore
 
             if (key == Keys.E)
             {
+                // Activate buttons
                 foreach(var c in current_room.clutters)
                 {
                     if (c.button && Vector2.Distance(player.Centre(), c.Centre()) < 30){
                         c.door_unlock.Unlock();
+                        c.button = false;
+                    }
+                }
+
+                // Unlock doors if you have the key
+                foreach (var d in current_room.doors)
+                {
+                    if (d.locked && Vector2.Distance(player.Centre(), d.Centre()) < 100)
+                    {
+                        var i = 0;
+                        for (; i < player.inventory.Count; i++)
+                        {
+                            Clutter c = player.inventory[i];
+                            if (c.keyid > 0 && c.keyid == d.unlock_id)
+                            {
+                                d.Unlock();
+                                break;
+                            }
+                        }
+                        if (!d.locked)
+                        {
+                            player.inventory.RemoveAt(i);
+                        }
                     }
                 }
             }

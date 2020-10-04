@@ -13,8 +13,8 @@ namespace GameCore
     public enum EnemyType
     {
         Null,
-        Caveman
-
+        Caveman,
+        Cyborg
     }
 
     public enum AnimationState
