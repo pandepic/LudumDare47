@@ -25,6 +25,9 @@ namespace GameCore.Entities
             draw_height = 32;
             speed = 100;
             hp = 3;
+            collision_offset = new Vector2(8,17);
+            col_width = 15;
+            col_height = 15;
         }
 
         public void SetAnimations()

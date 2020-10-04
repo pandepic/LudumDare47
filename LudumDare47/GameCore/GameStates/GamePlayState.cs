@@ -41,7 +41,7 @@ namespace GameCore
         {
             // Assets
             //playerIdle = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle");
-
+            
             Globals.SpawnEffectTexture = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "EnemySpawn");
 
             // Rooms
@@ -51,8 +51,10 @@ namespace GameCore
             {
                 all_rooms.Add(r);
             }
-            current_room = Room.GetRoomByID(all_rooms, 100);
+            current_room = Room.GetRoomByID(all_rooms, 102);
             SetRoom(current_room);
+
+            
 
             // Load the player
             player = new Player();
@@ -86,21 +88,29 @@ namespace GameCore
 
         public override int Update(GameTime gameTime)
         {
+            var oldpos = player.pos;
+            player.Update(gameTime);
+            foreach (var c in current_room.clutters)
+            {
+                if (Entity.Collision(player, c))
+                {
+                    player.pos = oldpos;
+                    //player.StopMoving(player.facing);
+                }
+            }
 
             // Player
-            player.Update(gameTime);
+            
             Room.NudgeOOB(current_room, player);
-            // Check for touching doors
 
+            // Check for collision with 
+           
+            // Check for touching doors
             foreach (var d in current_room.doors)
             {
-                if (Entity.Collision(player, d))
+                if (Entity.Collision(player, d, false) && !d.locked)
                 {
-                    if(d.locked == true)
-                    {
-                        player.pos -= player.vel;
-                    }
-                    else if (Room.GetRoomByID(all_rooms, d.next_room_id).room_id != -1)
+                    if (Room.GetRoomByID(all_rooms, d.next_room_id).room_id != -1)
                     {
                         // Transition to next room
                         Bullets.Clear();
@@ -146,6 +156,19 @@ namespace GameCore
                         if (e.hp <= 0) e.Kill(gameTime);
 
                         b.Kill(gameTime);
+                    }
+                }
+                foreach(var c in current_room.clutters)
+                {
+                    if (c.shootable)
+                    {
+                        if (Entity.Collision(c, b))
+                        {
+                            if (!c.invulnerable)
+                                c.hp -= b.damage;
+                            if (c.hp <= 0) c.Kill(gameTime);
+                            b.Kill(gameTime);
+                        }
                     }
                 }
                 b.Update(gameTime);
@@ -200,6 +223,13 @@ namespace GameCore
             foreach (var d in current_room.doors)
             {
                 DrawEntities.Add(d);
+            }
+            foreach (var c in current_room.clutters)
+            {
+                if (c.draw_height!= 0 && c.draw_width!= 0)
+                {
+                    DrawEntities.Add(c);
+                }
             }
             DrawEntities.Sort(delegate (Entity a, Entity b)
             {
@@ -278,6 +308,16 @@ namespace GameCore
 
             if (key == Keys.F1) {
                 isRipple = !isRipple;
+            }
+
+            if (key == Keys.E)
+            {
+                foreach(var c in current_room.clutters)
+                {
+                    if (c.button && Vector2.Distance(player.Centre(), c.Centre()) < 30){
+                        c.door_unlock.Unlock();
+                    }
+                }
             }
         }
 

@@ -34,9 +34,15 @@
   <Asset Name="PlayerIdle" FilePath = "SoldierIdle.png" />
   <Asset Name="EnemySpawn" FilePath="Portal.png" />
   <Asset Name="Caveman" FilePath="Caveman.png" />
+  <Asset Name="Door" FilePath="Door.png" />
+  <Asset Name="Crate" FilePath="Crate.png" />
+  <Asset Name="Button" FilePath="Button.png" />
   
   <!-- TileMaps -->
-  <Asset Name="TileMap100" FilePath = "Tilemaps/100asd.tmx" />
+  <Asset Name="TileMap100" FilePath = "Tilemaps/100.tmx" />
+  <Asset Name="TileMap101" FilePath = "Tilemaps/101.tmx" />
+  <Asset Name="TileMap102" FilePath = "Tilemaps/102.tmx" />
+  <Asset Name="TileMap103" FilePath = "Tilemaps/103.tmx" />
   
   <!-- TileSheets -->
   <Asset Name="testsheet" FilePath = "Tilemaps/testsheet.png" />

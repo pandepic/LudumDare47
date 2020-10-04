@@ -36,6 +36,7 @@ namespace GameCore.Entities
         public double animation_timer;
         public double animation_speed;
         public float attack_cooldown = 0;
+        public Vector2 collision_offset = new Vector2(0);
         public AnimationState animationState = AnimationState.Idle;
 
         public Animation AnimIdleDown;
@@ -103,9 +104,11 @@ namespace GameCore.Entities
 
         public static bool Collision(Entity a, Entity b, bool use_ignore_collisions = true)
         {
+            Vector2 c = a.pos + a.collision_offset;
+            Vector2 d = b.pos + b.collision_offset;
             if (use_ignore_collisions && (a.ignore_collision || b.ignore_collision))
                 return false;
-            return (!((a.pos.X > b.pos.X + b.col_width) || (a.pos.X + a.col_width < b.pos.X)) && !((a.pos.Y > b.pos.Y + b.col_height) || (a.pos.Y + a.col_height < b.pos.Y)));
+            return (!((c.X > d.X + b.col_width) || (c.X + a.col_width < d.X)) && !((c.Y > d.Y + b.col_height) || (c.Y + a.col_height < d.Y)));
         }
 
         public void StartMoving(Directions direction)

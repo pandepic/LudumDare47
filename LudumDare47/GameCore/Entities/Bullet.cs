@@ -12,11 +12,12 @@ namespace GameCore.Entities
     {
         public int damage = 1;
         public float duration = 10000;
+
         public Bullet()
         {
             draw_height = 10;
             draw_width = 10;
-            speed = 10;
+            speed = 5;
         }
 
         public Bullet(Player player)
@@ -24,7 +25,9 @@ namespace GameCore.Entities
             // Shoot the bullet from the player's location in the direction he is facing
             draw_height = 10;
             draw_width = 10;
-            speed = 1000;
+            col_height = 10;
+            col_width = 10;
+            speed = 500;
             Shoot(player);
         }
 
