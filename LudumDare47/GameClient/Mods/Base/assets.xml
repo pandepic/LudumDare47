@@ -32,6 +32,7 @@
 
   <!-- Sprites -->
   <Asset Name="PlayerIdle" FilePath = "SoldierIdle.png" />
+  <Asset Name="EnemySpawn" FilePath="Portal.png" />
   
   <!-- TileMaps -->
   <Asset Name="TileMap100" FilePath = "Tilemaps/100asd.tmx" />

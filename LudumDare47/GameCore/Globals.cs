@@ -53,6 +53,10 @@ namespace GameCore
 
     public static class Globals
     {
+        public static readonly float SpawnEffectDuration = 2000;
+        public static Texture2D SpawnEffectTexture;
+        public static Animation SpawnEffectAnimation = new Animation(1, 21, SpawnEffectDuration);
+
         public static DynamicSpriteFont DefaultFont;
         public static Texture2D PlaceholderTexture;
         public static Effect Ripple;
