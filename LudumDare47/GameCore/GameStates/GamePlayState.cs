@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using GameCore.Entities;
 using System.Linq;
+using Dcrew.Camera;
 
 namespace GameCore
 {
@@ -17,6 +18,7 @@ namespace GameCore
     {
         protected GameStateType _nextState = GameStateType.None;
         protected PUIMenu _menu = new PUIMenu();
+        protected Camera _camera = new Camera(new Vector2(160, 90), (320, 160));
 
         public static GraphicsDevice Graphics;
 
@@ -52,7 +54,7 @@ namespace GameCore
             player.playerIdle = playerIdle;
             player.facing = Directions.Left;
             player.SetPosCentre(280, 90);
-            
+
             _menu.Load(graphics, "GameplayMenuDefinition", "UITemplates");
         }
 
@@ -63,7 +65,7 @@ namespace GameCore
             player.Update(gameTime);
             Room.NudgeOOB(current_room, player);
             // Check for touching doors
-            
+
             foreach (var d in current_room.doors)
             {
                 if (Entity.Collision(player, d))
@@ -84,7 +86,7 @@ namespace GameCore
                 }
             }
 
-            
+
             foreach (var e in current_room.enemies)
             {
                 if (!e.dead)
@@ -149,7 +151,7 @@ namespace GameCore
             List<Entity> DrawEntities = new List<Entity>();
             DrawEntities.Add(player);
             foreach (var e in current_room.enemies)
-            {   
+            {
                 DrawEntities.Add(e);
             }
             foreach (var d in current_room.doors)
@@ -163,13 +165,13 @@ namespace GameCore
             });
 
             // Draw
-            spriteBatch.Begin(sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
+            spriteBatch.Begin(sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp, transformMatrix: _camera.View());
             current_room.Draw(gameTime, graphics, spriteBatch);
             foreach (var e in DrawEntities)
             {
                 e.Draw(gameTime, graphics, spriteBatch);
             }
-            
+
             foreach (var b in Bullets)
             {
                 b.Draw(gameTime, graphics, spriteBatch);
