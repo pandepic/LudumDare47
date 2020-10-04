@@ -20,7 +20,7 @@ namespace GameCore
 
             // Room 100
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 100, "Caveman 1");
-            newroom.doors.Add(new Door(101, -24, 72, 250, 72)); // Left door
+            newroom.doors.Add(new Door(101, -24, 72, 280, 72)); // Left door
             newroom.doors.Add(new Door(0, 312, 72, 40, 72));    // Right door
             newenemy = RoomMaps.CaveMan();
             newenemy.SetPosCentre(160, 90);
@@ -29,7 +29,7 @@ namespace GameCore
 
             // Room 101
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 101, "Caveman 2");
-            newroom.doors.Add(new Door(102, -24, 72, 250, 72)); // Left door
+            newroom.doors.Add(new Door(102, -24, 72, 280, 72)); // Left door
             newroom.doors.Add(new Door(100, 312, 72, 40, 72));  // Right door
             newroom.doors.Add(new Door(106, 144, -24, 144, 110));  // Top door
             newenemy = RoomMaps.CaveMan();
@@ -42,23 +42,23 @@ namespace GameCore
 
             // Room 102
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 102, "Caveman 3");
-            newroom.doors.Add(new Door(103, -24, 72, 250, 72)); // Left door
-            newroom.doors.Add(new Door(101, 312, 72, 40, 72));    // Right door
-            newroom.doors.Add(new Door(107, 144, -24, 144, 10));  // Top door
-            newroom.doors.Add(new Door(112, 144, 150, 144, 10));  // Bottom door
+            //newroom.doors.Add(new Door(103, -24, 72, 280, 72)); // Left door
+            //newroom.doors.Add(new Door(101, 312, 72, 40, 72));    // Right door
+            //newroom.doors.Add(new Door(107, 144, -24, 144, 110));  // Top door
+            //newroom.doors.Add(new Door(112, 144, 150, 144, 10));  // Bottom door
             rooms.Add(newroom);
 
             // Room 103
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 103, "Caveman 4");
-            newroom.doors.Add(new Door(104, -24, 72, 250, 72)); // Left door
+            newroom.doors.Add(new Door(104, -24, 72, 280, 72)); // Left door
             newroom.doors.Add(new Door(102, 312, 72, 40, 72));    // Right door
             rooms.Add(newroom);
 
             // Room 104
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 104, "Caveman 5");
-            newroom.doors.Add(new Door(105, -24, 72, 250, 72)); // Left door
+            newroom.doors.Add(new Door(105, -24, 72, 280, 72)); // Left door
             newroom.doors.Add(new Door(103, 312, 72, 40, 72));    // Right door
-            newroom.doors.Add(new Door(108, 144, -24, 144, 130));  // Top door
+            newroom.doors.Add(new Door(108, 144, -24, 144, 110));  // Top door
             newroom.doors.Add(new Door(114, 144, 150, 144, 10));  // Bottom door
             rooms.Add(newroom);
 
