@@ -40,6 +40,8 @@ namespace GameCore.Entities
         public Vector2 collision_offset = new Vector2(0);
         public AnimationState animationState = AnimationState.Idle;
 
+        public bool floor_collision = false;
+
         public Animation AnimIdleDown;
         public Animation AnimIdleUp;
         public Animation AnimIdleLeft;
@@ -107,11 +109,28 @@ namespace GameCore.Entities
 
         public static bool Collision(Entity a, Entity b, bool use_ignore_collisions = true)
         {
-            Vector2 c = a.pos + a.collision_offset;
-            Vector2 d = b.pos + b.collision_offset;
-            if (use_ignore_collisions && (a.ignore_collision || b.ignore_collision))
-                return false;
-            return (!((c.X > d.X + b.col_width) || (c.X + a.col_width < d.X)) && !((c.Y > d.Y + b.col_height) || (c.Y + a.col_height < d.Y)));
+            Vector2 c;
+            Vector2 d;
+            // !Must put player as a if using floor collision!
+
+            if (!a.floor_collision && !b.floor_collision)
+            {
+                c = a.pos + a.collision_offset;
+                d = b.pos + b.collision_offset;
+                if (use_ignore_collisions && (a.ignore_collision || b.ignore_collision))
+                    return false;
+                return (!((c.X > d.X + b.col_width) || (c.X + a.col_width < d.X)) && !((c.Y > d.Y + b.col_height) || (c.Y + a.col_height < d.Y)));
+            }
+            else
+            {
+                c.X = a.pos.X + a.collision_offset.X;
+                c.Y = a.pos.Y + a.draw_height;
+                d = b.pos + b.collision_offset;
+                if (use_ignore_collisions && (a.ignore_collision || b.ignore_collision))
+                    return false;
+                return (!((c.X > d.X + b.col_width) || (c.X + a.col_width < d.X)) && !((c.Y > d.Y + b.col_height) || (c.Y + 1 < d.Y)));
+
+            }
         }
 
         public void StartMoving(Directions direction)

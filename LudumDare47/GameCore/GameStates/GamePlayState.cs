@@ -70,7 +70,7 @@ namespace GameCore
             }
 
             // SPAWNROOM
-            current_room = Room.GetRoomByID(all_rooms, 101);
+            current_room = Room.GetRoomByID(all_rooms, Globals.spawnroomID);
             SetRoom(current_room);
 
             // Load the player
@@ -79,7 +79,7 @@ namespace GameCore
             player.facing = Directions.None;
             player.SetAnimations();
             player.Sprite.PlayAnimation(player.AnimIdleLeft);
-            player.SetPosCentre(280, 90);
+            player.SetPosCentre(Globals.spawn_location);
             player.active = true;
 
             _menu.Load(graphics, "GameplayMenuDefinition", "UITemplates");
@@ -149,7 +149,7 @@ namespace GameCore
                 roomMaps = new RoomMaps();
                 roomMaps.LoadTileMaps(Globals.GraphicsDevice);
                 all_rooms = roomMaps.rooms;
-                current_room = Room.GetRoomByID(all_rooms, 100);
+                current_room = Room.GetRoomByID(all_rooms, Globals.spawnroomID);
                 SetRoom(current_room);
 
                 player = new Player();
@@ -157,7 +157,7 @@ namespace GameCore
                 player.facing = Directions.None;
                 player.SetAnimations();
                 player.Sprite.PlayAnimation(player.AnimIdleLeft);
-                player.SetPosCentre(280, 90);
+                player.SetPosCentre(Globals.spawn_location);
                 player.active = true;
                 player.dead = false;
                 respawning = false;

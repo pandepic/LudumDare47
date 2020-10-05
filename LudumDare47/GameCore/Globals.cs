@@ -56,6 +56,8 @@ namespace GameCore
         public static GraphicsDevice GraphicsDevice;
 
         public const int countdown_time = 60;
+        public const int spawnroomID = 2;
+        public static Vector2 spawn_location = new Vector2(120, 105);
 
         public static readonly float SpawnEffectDuration = 2000;
         public static Texture2D SpawnEffectTexture;

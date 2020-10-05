@@ -17,10 +17,35 @@ namespace GameCore
             Door newdoor;
             Clutter newclutter;
 
-           // Room 100
+            // Room 2
+            newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 2, "Time Machine");
+            newroom.doors.Add(BasicDoor(100, Directions.Left));
+            newclutter = new Clutter()
+            {
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "TimeMachine"), 128, 112),
+                pos = new Vector2(96, 0),
+                draw_width = 128,
+                col_width = 125,
+                draw_height = 110,
+                col_height = 15,
+                collision_offset = new Vector2(0, 85),
+                invulnerable = true,
+                hp = 1,
+                dead = false,
+                draw = true,
+                shootable = true,
+                ignore_collision = false
+            };
+            newroom.clutters.Add(newclutter);
+            newroom.clutters.Add(FloorCollisionBox(96, 20, new Vector2(96, 128)));
+            newroom.clutters.Add(FloorCollisionBox(1, 30, new Vector2(96, 100)));
+            newroom.clutters.Add(FloorCollisionBox(1, 43, new Vector2(222, 100)));
+            rooms.Add(newroom);
+
+            // Room 100
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 100, "Caveman 1");
             newroom.doors.Add(BasicDoor(101,Directions.Left)); // Left door
-            newroom.doors.Add(BasicDoor(100, Directions.Right));    // Right door
+            newroom.doors.Add(BasicDoor(2, Directions.Right));    // Right door
             newroom.enemies.Add(CaveMan(new Vector2(160, 90)));  
             newroom.clutters.Add(CollisionBox(320, 5, Vector2.Zero));  // Back wall
             newroom.clutters.Add(CollisionBox(44, 15, new Vector2(106,0))); // Left bench
@@ -261,6 +286,25 @@ namespace GameCore
                 ignore_collision = false,
                 pos = position,
                 shootable = true,
+                invulnerable = true
+            };
+
+            return collisionBox;
+        }
+
+        // Collision box that can only collide with player's feet
+        public static Clutter FloorCollisionBox(int width, int height, Vector2 position)
+        {
+            Clutter collisionBox = new Clutter()
+            {
+                col_width = width,
+                col_height = height,
+                draw_height = 0,
+                draw_width = 0,
+                ignore_collision = false,
+                pos = position,
+                shootable = false,
+                floor_collision = true,
                 invulnerable = true
             };
 

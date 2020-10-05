@@ -42,8 +42,10 @@
   <Asset Name="PopupE" FilePath="epopup.png" />
   <Asset Name="ForceField" FilePath="forcefield.png" />
   <Asset Name="Bullet" FilePath="bullet.png" />
+  <Asset Name="TimeMachine" FilePath="TimeMachine.png" />
   
   <!-- TileMaps -->
+  <Asset Name="TileMap2" FilePath = "Tilemaps/2.tmx" />
   <Asset Name="TileMap100" FilePath = "Tilemaps/100.tmx" />
   <Asset Name="TileMap101" FilePath = "Tilemaps/101.tmx" />
   <Asset Name="TileMap102" FilePath = "Tilemaps/102.tmx" />
