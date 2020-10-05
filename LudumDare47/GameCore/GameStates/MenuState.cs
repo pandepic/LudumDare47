@@ -94,7 +94,7 @@ namespace GameCore
             {
                 case MainMenuButton.Play:
                     {
-                        _nextState = GameStateType.GamePlay;
+                        _nextState = GameStateType.GameOver;
                     }
                     break;
 

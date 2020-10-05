@@ -54,6 +54,7 @@
   <Asset Name="Robot" FilePath="Robot.png" />
   <Asset Name="CavemanCyborg" FilePath="CavemanCyborg.png" />
 
+  <Asset Name="YouWinSprite" FilePath="YouWin.png" />
   <Asset Name="TitleMainSprite" FilePath="TitleMainSprite.png" />
   <Asset Name="TitleBackground" FilePath="TitleBackround.png" />
   
