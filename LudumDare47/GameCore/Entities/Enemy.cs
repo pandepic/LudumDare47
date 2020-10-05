@@ -60,6 +60,11 @@ namespace GameCore.Entities
                         AnimRunDown = new Animation(5, 8, 1000);
                         AnimRunLeft = new Animation(9, 12, 1000);
                         AnimRunRight = new Animation(13, 16, 1000);
+
+                        AnimMeleeUp = new Animation(17, 20, 1000);
+                        AnimMeleeDown = new Animation(21, 24, 1000);
+                        AnimMeleeLeft = new Animation(25, 28, 1000);
+                        AnimMeleeRight = new Animation(29, 32, 1000);
                     }
                     break;
             }

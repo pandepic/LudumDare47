@@ -19,11 +19,23 @@ namespace GameCore
             // Attack if able, the 'swing' is a bullet
             if (enemy.attack_cooldown <= 0 && Vector2.Distance(player.Centre(), enemy.Centre()) < enemy.range)
             {
-                var attack = new Bullet();
+                var attack = new Bullet(BulletType.MeleeSwing, enemy.facing);
                 attack.speed = 0;
                 enemy.attack_cooldown = 2000;
                 attack.duration = 1000;
                 attack.damage = 1;
+
+                if (enemy.enemyType == EnemyType.Caveman)
+                {
+                    if (enemy.facing == Directions.Up)
+                        enemy.Sprite.PlayAnimation(enemy.AnimMeleeUp, 1);
+                    if (enemy.facing == Directions.Down)
+                        enemy.Sprite.PlayAnimation(enemy.AnimMeleeDown, 1);
+                    if (enemy.facing == Directions.Left)
+                        enemy.Sprite.PlayAnimation(enemy.AnimMeleeLeft, 1);
+                    if (enemy.facing == Directions.Right)
+                        enemy.Sprite.PlayAnimation(enemy.AnimMeleeRight, 1);
+                }
 
                 // Figure out the direction of the attack
                 if (Vector2.Distance(player.Centre(), enemy.Centre()) < 20)
@@ -56,7 +68,6 @@ namespace GameCore
                     attack.col_height = attack.draw_height = 20;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(0, 35));
                 }
-
 
                 bullets.Add(attack);
             }
