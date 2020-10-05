@@ -46,10 +46,14 @@ namespace GameCore
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 100, "Caveman 1");
             newroom.doors.Add(BasicDoor(101,Directions.Left)); // Left door
             newroom.doors.Add(BasicDoor(2, Directions.Right));    // Right door
-            newroom.enemies.Add(CaveMan(new Vector2(160, 90)));  
-            newroom.clutters.Add(CollisionBox(320, 5, Vector2.Zero));  // Back wall
-            newroom.clutters.Add(CollisionBox(44, 15, new Vector2(106,0))); // Left bench
-            newroom.clutters.Add(CollisionBox(44, 15, new Vector2(224, 0))); // Right bench
+            newroom.enemies.Add(CaveMan(new Vector2(160, 90)));
+            newroom.clutters.Add(CollisionBox(320, 24, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(46, 70, Vector2.Zero));  // Top left
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(0, 114)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(274, 0)));  // Top right
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(274, 114)));  // bottom right
+            newroom.clutters.Add(FloorCollisionBox(61, 15, new Vector2(82, 30))); // Left bench
+            newroom.clutters.Add(FloorCollisionBox(61, 15, new Vector2(177, 30))); // Right bench
             rooms.Add(newroom);
 
             // Room 101
@@ -59,9 +63,16 @@ namespace GameCore
             newroom.doors.Add(BasicDoor(106, Directions.Up));  // Top door
             newroom.enemies.Add(CaveMan(new Vector2(80, 60)));
             newroom.enemies.Add(CaveMan(new Vector2(80, 120)));
-            newroom.clutters.Add(CollisionBox(320, 5, Vector2.Zero));  // Back wall
-            newroom.clutters.Add(CollisionBox(60, 15, new Vector2(16, 0))); // Left bench
-            newroom.clutters.Add(CollisionBox(44, 15, new Vector2(230, 0))); // Right bench
+            newroom.clutters.Add(CollisionBox(140, 24, Vector2.Zero));  // Back wall 1
+            newroom.clutters.Add(CollisionBox(140, 24, new Vector2(180,0)));  // Back wall 2
+            newroom.clutters.Add(CollisionBox(46, 70, Vector2.Zero));  // Top left
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(0, 114)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(274, 0)));  // Top right
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(274, 114)));  // bottom right
+            newroom.clutters.Add(FloorCollisionBox(10, 15, new Vector2(66, 30))); // Left washer
+            newroom.clutters.Add(FloorCollisionBox(9, 15, new Vector2(114, 30))); // Right washer
+            newroom.clutters.Add(FloorCollisionBox(61, 15, new Vector2(193, 30))); // Right bench
+
             rooms.Add(newroom);
 
             // Room 102
@@ -70,7 +81,7 @@ namespace GameCore
             newroom.doors.Add(new Door(101, 305, 72, 10, 72));    // Right door
             newdoor = new Door()
             {
-                pos = new Vector2(144, 32),
+                pos = new Vector2(144, 0),
                 draw_width = 32,
                 draw_height = 32,
                 col_width = 8,
@@ -87,28 +98,31 @@ namespace GameCore
                 next_posY = 110,
                 ignore_collision = true,
                 unlock_id = 1,
-                locked = true,
+                locked = false,
                 animated = true,
                 open_time = 2
             };
             newroom.doors.Add(newdoor);
             newroom.doors.Add(new Door(112, 144, 150, 144, 10));  // Bottom door
-            newroom.clutters.Add(CollisionBox(320, 56, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(127, 54, Vector2.Zero));  // Top left wall
+            newroom.clutters.Add(CollisionBox(140, 54, new Vector2(193, 0)));  // Top right wall
+            newroom.clutters.Add(CollisionBox(320, 24, Vector2.Zero));  // Back wall
             newroom.clutters.Add(CollisionBox(125, 42, new Vector2(0,114)));  // Bottom left wall
-            //newroom.clutters.Add(CollisionBox(320, 40, Vector2.Zero));  // Bottom right wall
+            newroom.clutters.Add(CollisionBox(125, 42, new Vector2(193,114)));  // Bottom right wall
             rooms.Add(newroom);
 
             // Room 103 - Room where a button is hidden in a destructable crate
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 103, "Caveman 4");
             newdoor = BasicDoor(104, Directions.Left, true); // Left door
-            newdoor.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "ForceField"), 32, 32); //todo animate this door
+            newdoor.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "ForceField"), 16, 32); //todo animate this door
             newdoor.openAnimation = new Animation(1, 7, 1000);
             newdoor.animated = true;
             newdoor.anim_is_fade = true;
             newdoor.draw = true;
-            newdoor.pos += new Vector2(10, 8);
+            newdoor.pos += new Vector2(25, 8);
             newdoor.draw_if_unlocked = true;
             newdoor.open_time = 1;
+            newdoor.col_width = 15;
             newroom.doors.Add(newdoor);
             newroom.clutters.Add(Button(new Vector2(55, 119), newdoor));
             newroom.doors.Add(new Door(102, 305, 72, 10, 72));    // Right door
@@ -132,10 +146,10 @@ namespace GameCore
 
             // Room 104
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 104, "Caveman 5");
-            newroom.doors.Add(new Door(105, -24, 72, 275, 72)); // Left door
-            newroom.doors.Add(new Door(103, 305, 72, 10, 72));    // Right door
-            newroom.doors.Add(new Door(108, 144, -15, 144, 110));  // Top door
-            newroom.doors.Add(new Door(114, 144, 150, 144, 10));  // Bottom door
+            newroom.doors.Add(BasicDoor(103,Directions.Right)); 
+            newroom.doors.Add(BasicDoor(105,Directions.Left));  
+            newroom.doors.Add(BasicDoor(108,Directions.Up)); 
+            newroom.doors.Add(BasicDoor(114,Directions.Down));
             newroom.clutters.Add(CollisionBox(142, 55, Vector2.Zero));  // Top left
             newroom.clutters.Add(CollisionBox(142, 55, new Vector2(0, 114)));  // bottom left            
             newroom.clutters.Add(CollisionBox(142, 55, new Vector2(178, 0)));  // Top right
@@ -145,8 +159,9 @@ namespace GameCore
             // Room 105
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 105, "Caveman 6");
             newroom.trap_room = true;
-            newdoor = new Door(104, 305, 72, 10, 72);
+            newdoor = TrapDoor(104, Directions.Right);
             newroom.trap_door = newdoor;
+            newdoor.pos.Y += 8;
             newroom.doors.Add(newdoor);    // Right door
             newenemy = RoomMaps.CaveMan();
             newenemy.SetPosCentre(80, 40);
@@ -157,37 +172,66 @@ namespace GameCore
             newenemy = RoomMaps.CaveMan();
             newenemy.SetPosCentre(80, 120);
             newroom.enemies.Add(newenemy);
-            newroom.clutters.Add(CollisionBox(80, 80, new Vector2(240, 0)));
-            newroom.clutters.Add(CollisionBox(80, 80, new Vector2(240, 113)));
-            newroom.clutters.Add(CollisionBox(320, 5, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(80, 72, new Vector2(242, 0))); //topright
+            newroom.clutters.Add(CollisionBox(80, 80, new Vector2(242, 113)));
+            newroom.clutters.Add(CollisionBox(320, 24, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(15, 180, Vector2.Zero));  //  left wall
+            newroom.clutters.Add(CollisionBox(320, 5, new Vector2(0, 146)));  // bottom    
             rooms.Add(newroom);
 
             // Room 106
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 106, "Caveman 7");
             newroom.trap_room = true;
-            newdoor = new Door(101, 144, 150, 144, 10);
+            newdoor = TrapDoor(101, Directions.Down);
             newroom.trap_door = newdoor;
             newroom.doors.Add(newdoor);  // Bottom door
             newenemy = RoomMaps.CaveMan();
             newenemy.SetPosCentre(80, 30);
             newroom.enemies.Add(newenemy);
+            newroom.clutters.Add(CollisionBox(320, 39, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(95, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(100, 180, new Vector2(224, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(0, 130)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(178, 130)));  // bottom right
             rooms.Add(newroom);
 
             // Room 107
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 107, "BOSS ROOM");
             newroom.doors.Add(new Door(102, 144, 150, 144, 50));  // Bottom door
-            newroom.doors.Add(new Door(109, 144, -15, 144, 100)); // Top door
+            newroom.enemies.Add(CaveMan(new Vector2(160, 90)));
+            newroom.trap_room = true;
+            newdoor = TrapDoor(109, Directions.Up);
+            newroom.trap_door = newdoor;
+            newroom.doors.Add(newdoor);
+            newroom.clutters.Add(CollisionBox(140, 24, Vector2.Zero));  // Back wall 1
+            newroom.clutters.Add(CollisionBox(140, 24, new Vector2(180, 0)));  // Back wall 2
+            newroom.clutters.Add(CollisionBox(15, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(5, 180, new Vector2(306, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(142, 5, new Vector2(0, 146)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(142, 5, new Vector2(178, 146)));  // bottom right
             rooms.Add(newroom);
 
             // Room 108
-            newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 108, "Caveman 8");
-            newroom.doors.Add(new Door(104, 144, 150, 144, 10)); // Bottom door
-            newroom.doors.Add(new Door(110, 144, -15, 144, 110)); // Top door
+            newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 108, "Caveman 9");
+            newroom.doors.Add(BasicDoor(104,Directions.Down));  // Bottom door
+            newroom.enemies.Add(CaveMan(new Vector2(160, 90)));
+            newroom.doors.Add(BasicDoor(110,Directions.Up));
+            newroom.clutters.Add(CollisionBox(140, 24, Vector2.Zero));  // Back wall 1
+            newroom.clutters.Add(CollisionBox(140, 24, new Vector2(180, 0)));  // Back wall 2
+            newroom.clutters.Add(CollisionBox(15, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(5, 180, new Vector2(306, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(142, 5, new Vector2(0, 146)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(142, 5, new Vector2(178, 146)));  // bottom right
             rooms.Add(newroom);
 
             // Room 109
-            newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 109, "PUZZLE ROOM");
-            newroom.doors.Add(new Door(107, 144, 150, 144, 10));  // Bottom door
+            newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 109, "PRIZE ROOM");
+            newroom.doors.Add(BasicDoor(107, Directions.Down));  // Bottom door
+            newroom.clutters.Add(CollisionBox(320, 39, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(95, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(100, 180, new Vector2(224, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(0, 130)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(178, 130)));  // bottom right
             newroom.clutters.Add(new Clutter()
             {
                 Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Part1"), 16, 16),
@@ -203,49 +247,121 @@ namespace GameCore
 
             // Room 110
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 110, "KEY ROOM");
-            newroom.doors.Add(new Door(108, 144, 150, 144, 10));  // Bottom door
+            newroom.doors.Add(BasicDoor(108, Directions.Down));  // Bottom door
+            newroom.clutters.Add(CollisionBox(320, 39, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(95, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(100, 180, new Vector2(224, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(0, 130)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(178, 130)));  // bottom right
             newroom.clutters.Add(Key(new Vector2(100, 100), 1));
 
             rooms.Add(newroom);
 
             // Room 111
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 111, "PASSWORD ROOM");
-            newroom.doors.Add(new Door(115, 144, 150, 144, 10));  // Bottom door
+            newroom.doors.Add(BasicDoor(115, Directions.Down));  // Bottom door
+            newroom.clutters.Add(CollisionBox(320, 39, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(95, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(100, 180, new Vector2(224, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(0, 130)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(178, 130)));  // bottom right
             rooms.Add(newroom);
 
             // Room 112
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 112, "Caveman 9");
-            newroom.doors.Add(new Door(116, 144, 150, 144, 10));  // Bottom door
-            newroom.doors.Add(new Door(102, 144, -15, 144, 110)); // Top door
-            newroom.doors.Add(new Door(113, -24, 72, 250, 72));   // Left door
+            newroom.doors.Add(BasicDoor(113, Directions.Left));
+            newdoor = BasicDoor(102, Directions.Up);
+            newdoor.col_width += 5;
+            newroom.doors.Add(newdoor);
+            newdoor = BasicDoor(116, Directions.Down);
+            newdoor.col_width += 5;
+            newroom.doors.Add(newdoor);
+            newroom.clutters.Add(CollisionBox(142, 55, Vector2.Zero));  // Top left
+            newroom.clutters.Add(CollisionBox(142, 55, new Vector2(0, 114)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(142, 180, new Vector2(194, 0)));  // Top right
             rooms.Add(newroom);
 
             // Room 113
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 113, "Caveman 10");
-            newroom.doors.Add(new Door(112, 305, 72, 10, 72));    // Right door
+            newroom.trap_room = true;
+            newdoor = TrapDoor(112, Directions.Right);
+            newroom.trap_door = newdoor;
+            newdoor.pos.Y += 8;
+            newroom.doors.Add(newdoor);    // Right door
+            newenemy = RoomMaps.CaveMan();
+            newenemy.SetPosCentre(80, 40);
+            newroom.enemies.Add(newenemy);
+            newenemy = RoomMaps.CaveMan();
+            newenemy.SetPosCentre(80, 80);
+            newroom.enemies.Add(newenemy);
+            newenemy = RoomMaps.CaveMan();
+            newenemy.SetPosCentre(80, 120);
+            newroom.enemies.Add(newenemy);
+            newroom.clutters.Add(CollisionBox(80, 72, new Vector2(242, 0))); //topright
+            newroom.clutters.Add(CollisionBox(80, 80, new Vector2(242, 113)));
+            newroom.clutters.Add(CollisionBox(320, 24, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(15, 180, Vector2.Zero));  //  left wall
+            newroom.clutters.Add(CollisionBox(320, 5, new Vector2(0, 146)));  // bottom    
             rooms.Add(newroom);
 
             // Room 114
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 114, "Caveman 11");
-            newroom.doors.Add(new Door(104, 144, -15, 144, 110)); // Top door
+            newroom.trap_room = true;
+            newdoor = TrapDoor(104, Directions.Up);
+            newroom.trap_door = newdoor;
+            newroom.doors.Add(newdoor);  // Bottom door
+            newenemy = RoomMaps.CaveMan();
+            newenemy.SetPosCentre(80, 30);
+            newroom.enemies.Add(newenemy);
+            newroom.clutters.Add(CollisionBox(320, 39, new Vector2(0, 130)));  // Back wall
+            newroom.clutters.Add(CollisionBox(95, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(100, 180, new Vector2(224, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(142, 39, new Vector2(0, 0)));  // top left            
+            newroom.clutters.Add(CollisionBox(142, 39, new Vector2(178, 0)));  // top right
             rooms.Add(newroom);
 
             // Room 115
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 115, "Caveman 12");
-            newroom.doors.Add(new Door(116, -15, 72, 250, 72));   // Left door
-            newroom.doors.Add(new Door(111, 144, -15, 144, 110)); // Top door
-            rooms.Add(newroom);
+            newroom.doors.Add(BasicDoor(116, Directions.Left)); // Left door
+            newroom.doors.Add(BasicDoor(111, Directions.Up));  // Top door
+            newroom.enemies.Add(CaveMan(new Vector2(80, 60)));
+            newroom.enemies.Add(CaveMan(new Vector2(80, 120)));
+            newroom.clutters.Add(CollisionBox(140, 24, Vector2.Zero));  // Back wall 1
+            newroom.clutters.Add(CollisionBox(140, 24, new Vector2(180, 0)));  // Back wall 2
+            newroom.clutters.Add(CollisionBox(46, 70, Vector2.Zero));  // Top left
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(0, 114)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(46, 180, new Vector2(274, 0)));  // Top right
+            //newroom.clutters.Add(FloorCollisionBox(10, 15, new Vector2(66, 30))); // Left washer
+            //newroom.clutters.Add(FloorCollisionBox(9, 15, new Vector2(114, 30))); // Right washer
+            //newroom.clutters.Add(FloorCollisionBox(61, 15, new Vector2(193, 30))); // Right bench
 
             // Room 116
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 116, "Caveman 13");
-            newroom.doors.Add(new Door(117, 144, 150, 144, 10));  // Bottom door
-            newroom.doors.Add(new Door(112, 144, -15, 144, 110)); // Top door
-            newroom.doors.Add(new Door(115, 305, 72, 10, 72));    // Right door
+            newroom.doors.Add(BasicDoor(117, Directions.Down));  // Bottom door
+            newroom.doors.Add(BasicDoor(112, Directions.Up));
+            newroom.clutters.Add(CollisionBox(140, 24, Vector2.Zero));  // Back wall 1
+            newroom.clutters.Add(CollisionBox(140, 24, new Vector2(180, 0)));  // Back wall 2
+            newroom.clutters.Add(CollisionBox(15, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(306, 0)));  // Top right
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(306, 114)));  // bottom right
+            newroom.clutters.Add(CollisionBox(142, 5, new Vector2(0, 146)));  // bottom left            
+            newroom.clutters.Add(CollisionBox(142, 5, new Vector2(178, 146)));  // bottom right
             rooms.Add(newroom);
 
             // Room 117
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 117, "Caveman 14");
-            newroom.doors.Add(new Door(116, 144, -15, 144, 110)); // Top door
+            newroom.trap_room = true;
+            newdoor = TrapDoor(116, Directions.Up);
+            newroom.trap_door = newdoor;
+            newroom.doors.Add(newdoor);  // Bottom door
+            newenemy = RoomMaps.CaveMan();
+            newenemy.SetPosCentre(80, 30);
+            newroom.enemies.Add(newenemy);
+            newroom.clutters.Add(CollisionBox(320, 39, new Vector2(0, 130)));  // Back wall
+            newroom.clutters.Add(CollisionBox(95, 180, Vector2.Zero));  //  left
+            newroom.clutters.Add(CollisionBox(100, 180, new Vector2(224, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(142, 39, new Vector2(0, 0)));  // top left            
+            newroom.clutters.Add(CollisionBox(142, 39, new Vector2(178, 0)));  // top right
             rooms.Add(newroom);
 
         }
@@ -254,7 +370,7 @@ namespace GameCore
         {
             foreach (Room r in rooms)
             {
-                if (r.room_id <= 105)
+                if (r.room_id <= 117)
                 {
                     TMXMap newmap = new TMXMap(graphics, "TileMap" + r.room_id.ToString());
                     r.tileMap = newmap;
@@ -394,13 +510,40 @@ namespace GameCore
             {
                 doorPos = new Vector2(305, 72);
                 playerPos = new Vector2(10, 72);
+
             }
             Door door = new Door(newroomid, (int)doorPos.X, (int)doorPos.Y, (int)playerPos.X, (int)playerPos.Y, locked);
             door.draw = false;
-
             return door;
         }
-    }
+        
+        public static Door TrapDoor(int newroomid, Directions placement, bool locked = false)
+        {
+            Door newdoor;
+            newdoor = BasicDoor(newroomid, placement, false);
 
+            if (placement == Directions.Right || placement == Directions.Left)
+                newdoor.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "ForceField"), 16, 32); //todo animate this door
+            else
+                newdoor.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "ForceFieldRot"), 32, 16); //todo animate this door
+
+
+            newdoor.openAnimation = new Animation(1, 8, 500);
+            newdoor.animated = true;
+            newdoor.anim_is_fade = true;
+            newdoor.draw = true;
+            newdoor.draw_if_unlocked = true;
+            newdoor.open_time = 2;
+
+
+            if (placement == Directions.Up)
+            {
+                newdoor.pos.Y += 20;
+                newdoor.col_height -= 15;
+            }
+                return newdoor;
+        }
+    
+    }
    
 }

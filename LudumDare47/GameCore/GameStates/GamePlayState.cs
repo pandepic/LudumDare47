@@ -244,7 +244,7 @@ namespace GameCore
                         Clutter c = player.inventory[i];
                         if (c.keyid > 0 && c.keyid == d.unlock_id)
                         {
-                            popup_e.SetPosCentre(d.Centre() + (new Vector2(0, -20)));
+                            popup_e.SetPosCentre(d.Centre() + (new Vector2(0, 10)));
                             popup_e.draw = true;
                         }
                     }
