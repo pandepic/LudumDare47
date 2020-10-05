@@ -393,11 +393,55 @@ namespace GameCore
             return caveman;
         }
 
+        public static Enemy Cyborg()
+        {
+            Enemy cyborg = new Enemy
+            {
+                hp = 5,
+                speed = 20,
+                range = 50,
+                enemyType = EnemyType.Cyborg,
+                attack_cooldown = 2000
+            };
+            cyborg.SetSprite();
+            cyborg.SetAnimations();
+            return cyborg;
+        }
+
+        public static Enemy CaveBorg()
+        {
+            Enemy caveborg = new Enemy
+            {
+                hp = 5,
+                speed = 20,
+                range = 50,
+                enemyType = EnemyType.CaveBorg,
+                attack_cooldown = 2000
+            };
+            caveborg.SetSprite();
+            caveborg.SetAnimations();
+            return caveborg;
+        }
+
         public static Enemy CaveMan(Vector2 newpos)
         {
             Enemy caveman = CaveMan();
             caveman.SetPosCentre(newpos);
             return caveman;
+        }
+
+        public static Enemy Cyborg(Vector2 newpos)
+        {
+            Enemy cyborg = Cyborg();
+            cyborg.SetPosCentre(newpos);
+            return cyborg;
+        }
+
+        public static Enemy CaveBorg(Vector2 newpos)
+        {
+            Enemy caveborg = CaveBorg();
+            caveborg.SetPosCentre(newpos);
+            return caveborg;
         }
 
         public static Clutter CollisionBox(int width, int height, Vector2 position)
