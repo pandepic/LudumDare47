@@ -277,7 +277,7 @@ namespace GameCore
                     //Enemy AI
                     if (e.enemyType == EnemyType.Caveman) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
                 }
-
+                if (e.dead) break;
                 e.pos.X += e.speed * e.vel.X * gameTime.DeltaTime();
                 foreach(var e2 in current_room.enemies){
                     if (e2 != e)
