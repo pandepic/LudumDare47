@@ -23,6 +23,9 @@ namespace GameCore.Entities
         public AnimatedSprite SpawnEffectSprite;
         public float SpawnEffectDuration;
 
+        public float AnimExplosionDuration;
+        public Vector2 ExplosionPos;
+
         public Enemy()
         {
             hp = 5;
@@ -117,7 +120,12 @@ namespace GameCore.Entities
 
         public void Update(GameTime gameTime)
         {
+            AnimExplosionDuration -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (AnimExplosionDuration < 0)
+                AnimExplosionDuration = 0;
+
             Sprite.Update(gameTime);
+            ExplosionSprite?.Update(gameTime);
 
             if (dead)
                 return;
@@ -152,6 +160,9 @@ namespace GameCore.Entities
 
             base.Draw(gameTime, spriteBatch, Color.White);
             //if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
+
+            if (AnimExplosionDuration > 0)
+                ExplosionSprite?.Draw(spriteBatch, pos);
         }
 
         public void Kill(GameTime gameTime)

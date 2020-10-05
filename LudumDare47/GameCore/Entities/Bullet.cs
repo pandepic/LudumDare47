@@ -33,7 +33,7 @@ namespace GameCore.Entities
         public Animation AnimMeleeSwingLeft = new Animation(9, 12, 500);
         public Animation AnimMeleeSwingRight = new Animation(13, 16, 500);
 
-        public Animation AnimLightningBullet = new Animation(1, 2, 500);
+        public Animation AnimLightningBullet = new Animation(1, 2, 200);
 
         public Bullet(BulletType type = BulletType.None, Directions direction = Directions.None)
         {
@@ -91,15 +91,16 @@ namespace GameCore.Entities
             }
             else if (Type == BulletType.Cyborg || Type == BulletType.CaveBorg)
             {
-                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Hit"), 32, 32);
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "LightningBullet"), 16, 16);
+                Sprite.PlayAnimation(AnimLightningBullet);
             }
         }
 
-        public void Shoot(Player player)
+        public void Shoot(Entity entity)
         {
-            SetPosCentre(player.Centre());
+            SetPosCentre(entity.Centre());
             vel = new Vector2(0);
-            var playerFacing = player.facing;
+            var playerFacing = entity.facing;
             if (playerFacing == Directions.None)
                 playerFacing = Directions.Left;
 
