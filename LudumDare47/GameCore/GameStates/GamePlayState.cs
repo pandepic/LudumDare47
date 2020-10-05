@@ -275,7 +275,11 @@ namespace GameCore
                 if (!e.dead && e.spawnFinished)
                 {
                     //Enemy AI
-                    if (e.enemyType == EnemyType.Caveman) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
+                    //if (e.enemyType == EnemyType.Caveman) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
+                    //else if (e.enemyType == EnemyType.Cyborg) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
+                    //else if (e.enemyType == EnemyType.CaveBorg) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
+
+                    EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
                 }
                 if (e.dead) break;
                 e.pos.X += e.speed * e.vel.X * gameTime.DeltaTime();

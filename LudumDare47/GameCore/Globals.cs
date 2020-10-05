@@ -13,7 +13,8 @@ namespace GameCore
     {
         Null,
         Caveman,
-        Cyborg
+        Cyborg,
+        CaveBorg,
     }
 
     public enum AnimationState

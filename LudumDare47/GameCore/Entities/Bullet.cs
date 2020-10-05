@@ -13,6 +13,8 @@ namespace GameCore.Entities
         None,
         PlayerBullet,
         MeleeSwing,
+        Cyborg,
+        CaveBorg,
     }
 
     public class Bullet : Entity
@@ -21,15 +23,17 @@ namespace GameCore.Entities
         public float duration = 10000;
         public BulletType Type { get; set; }
 
-        public Animation PlayerBulletUp = new Animation(1, 2, 500);
-        public Animation PlayerBulletDown = new Animation(3, 4, 500);
-        public Animation PlayerBulletLeft = new Animation(5, 6, 500);
-        public Animation PlayerBulletRight = new Animation(7, 8, 500);
+        public Animation AnimPlayerBulletUp = new Animation(1, 2, 500);
+        public Animation AnimPlayerBulletDown = new Animation(3, 4, 500);
+        public Animation AnimPlayerBulletLeft = new Animation(5, 6, 500);
+        public Animation AnimPlayerBulletRight = new Animation(7, 8, 500);
 
-        public Animation MeleeSwingUp = new Animation(1, 4, 500);
-        public Animation MeleeSwingDown = new Animation(5, 8, 500);
-        public Animation MeleeSwingLeft = new Animation(9, 12, 500);
-        public Animation MeleeSwingRight = new Animation(13, 16, 500);
+        public Animation AnimMeleeSwingUp = new Animation(1, 4, 500);
+        public Animation AnimMeleeSwingDown = new Animation(5, 8, 500);
+        public Animation AnimMeleeSwingLeft = new Animation(9, 12, 500);
+        public Animation AnimMeleeSwingRight = new Animation(13, 16, 500);
+
+        public Animation AnimLightningBullet = new Animation(1, 2, 500);
 
         public Bullet(BulletType type = BulletType.None, Directions direction = Directions.None)
         {
@@ -64,26 +68,30 @@ namespace GameCore.Entities
                 Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Bullet"), 16, 16);
 
                 if (direction == Directions.Left)
-                    Sprite.PlayAnimation(PlayerBulletLeft);
+                    Sprite.PlayAnimation(AnimPlayerBulletLeft);
                 else if (direction == Directions.Right)
-                    Sprite.PlayAnimation(PlayerBulletRight);
+                    Sprite.PlayAnimation(AnimPlayerBulletRight);
                 else if (direction == Directions.Up)
-                    Sprite.PlayAnimation(PlayerBulletUp);
+                    Sprite.PlayAnimation(AnimPlayerBulletUp);
                 else if (direction == Directions.Down)
-                    Sprite.PlayAnimation(PlayerBulletDown);
+                    Sprite.PlayAnimation(AnimPlayerBulletDown);
             }
             else if (Type == BulletType.MeleeSwing)
             {
                 Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Hit"), 32, 32);
 
                 if (direction == Directions.Left)
-                    Sprite.PlayAnimation(MeleeSwingLeft);
+                    Sprite.PlayAnimation(AnimMeleeSwingLeft);
                 else if (direction == Directions.Right)
-                    Sprite.PlayAnimation(MeleeSwingRight);
+                    Sprite.PlayAnimation(AnimMeleeSwingRight);
                 else if (direction == Directions.Up)
-                    Sprite.PlayAnimation(MeleeSwingUp);
+                    Sprite.PlayAnimation(AnimMeleeSwingUp);
                 else if (direction == Directions.Down)
-                    Sprite.PlayAnimation(MeleeSwingDown);
+                    Sprite.PlayAnimation(AnimMeleeSwingDown);
+            }
+            else if (Type == BulletType.Cyborg || Type == BulletType.CaveBorg)
+            {
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Hit"), 32, 32);
             }
         }
 

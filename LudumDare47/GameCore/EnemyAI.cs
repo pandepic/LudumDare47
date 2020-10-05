@@ -11,7 +11,6 @@ namespace GameCore
 {
     public class EnemyAI
     {
-
         public static void CaveManAI(Enemy enemy, Player player, Room room, List<Bullet> bullets, GameTime gameTime)
         {
             var move_vector = player.Centre() - enemy.Centre();
@@ -35,6 +34,10 @@ namespace GameCore
                         enemy.Sprite.PlayAnimation(enemy.AnimMeleeLeft, 1);
                     if (enemy.facing == Directions.Right)
                         enemy.Sprite.PlayAnimation(enemy.AnimMeleeRight, 1);
+                }
+                else
+                {
+                    // ranged shot
                 }
 
                 // Figure out the direction of the attack
@@ -112,6 +115,6 @@ namespace GameCore
                     enemy.moveup = true;
                 }
             }
-        }
+        } // CaveManAI
     }
 }
