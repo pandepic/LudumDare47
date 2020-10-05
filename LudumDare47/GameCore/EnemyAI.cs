@@ -11,19 +11,20 @@ namespace GameCore
 {
     public class EnemyAI
     {
-        
+
         public static void CaveManAI(Enemy enemy, Player player, Room room, List<Bullet> bullets, GameTime gameTime)
         {
             var move_vector = player.Centre() - enemy.Centre();
 
             // Attack if able, the 'swing' is a bullet
-            if (enemy.attack_cooldown <= 0 && Vector2.Distance(player.Centre(), enemy.Centre()) < enemy.range){
+            if (enemy.attack_cooldown <= 0 && Vector2.Distance(player.Centre(), enemy.Centre()) < enemy.range)
+            {
                 var attack = new Bullet();
                 attack.speed = 0;
                 enemy.attack_cooldown = 2000;
                 attack.duration = 1000;
                 attack.damage = 1;
-                
+
                 // Figure out the direction of the attack
                 if (Vector2.Distance(player.Centre(), enemy.Centre()) < 20)
                 {
@@ -61,27 +62,13 @@ namespace GameCore
             }
 
             // Move towards player, unless too close or attack is on cooldown
-            enemy.vel = new Vector2(0);
-            if (move_vector.X > 0)
-            {
-                //enemy.vel.X = 1;
-                enemy.moveright = true;
-            }
-            else  if (move_vector.X < 0)
-            {
-                //enemy.vel.X = -1;
-                enemy.moveleft = true;
-            }
-            if (move_vector.Y > 0)
-            {
-                //enemy.vel.Y = 1;
-                enemy.movedown = true;
-            }
-            else if (move_vector.Y < 0)
-            {
-                //enemy.vel.Y = -1;
-                enemy.moveup = true;
-            }
+            //enemy.vel = new Vector2(0);
+
+            var playerCenter = player.Centre();
+            var enemyCenter = enemy.Centre();
+            int xDiff = (int)(playerCenter.X - enemyCenter.X);
+            var yDiff = (int)(playerCenter.Y - enemyCenter.Y);
+
             if (Vector2.Distance(player.pos, enemy.pos) < enemy.range / 2 || enemy.attack_cooldown > 0)
             {
                 enemy.vel = new Vector2(0);
@@ -89,6 +76,30 @@ namespace GameCore
                 enemy.movedown = false;
                 enemy.moveleft = false;
                 enemy.moveright = false;
+            }
+            else
+            {
+                enemy.moveup = false;
+                enemy.movedown = false;
+                enemy.moveleft = false;
+                enemy.moveright = false;
+
+                if (xDiff > 0)
+                {
+                    enemy.moveright = true;
+                }
+                else if (xDiff < 0)
+                {
+                    enemy.moveleft = true;
+                }
+                if (yDiff > 0)
+                {
+                    enemy.movedown = true;
+                }
+                else if (yDiff < 0)
+                {
+                    enemy.moveup = true;
+                }
             }
         }
     }

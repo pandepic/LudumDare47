@@ -54,8 +54,8 @@ namespace GameCore.Entities
                     {
                         AnimIdleUp = new Animation(1, 4, 1000);
                         AnimIdleDown = new Animation(5, 8, 1000);
-                        AnimIdleLeft = new Animation(9, 12, 1000);
-                        AnimIdleRight = new Animation(13, 16, 1000);
+                        AnimIdleRight = new Animation(9, 12, 1000);
+                        AnimIdleLeft = new Animation(13, 16, 1000);
                         AnimRunUp = new Animation(1, 4, 1000);
                         AnimRunDown = new Animation(5, 8, 1000);
                         AnimRunLeft = new Animation(9, 12, 1000);
@@ -83,6 +83,8 @@ namespace GameCore.Entities
                     active = true;
                 }
             }
+
+            Sprite.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
