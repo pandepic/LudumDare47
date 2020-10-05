@@ -50,6 +50,8 @@ namespace GameCore
                     ranged = true;
                 }
 
+                var rangedOffset = new Vector2(7, 25);
+
                 // Figure out the direction of the attack
                 Vector2 offset = Vector2.Zero;
                 if (Vector2.Distance(player.Centre(), enemy.Centre()) < 20)
@@ -57,7 +59,7 @@ namespace GameCore
                     attack.col_width = attack.draw_width = 30;
                     attack.col_height = attack.draw_height = 30;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(0, 0));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + new Vector2(0, 10));
+                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
 
                     if (ranged)
                         attack.vel.X++;
@@ -69,7 +71,7 @@ namespace GameCore
                     attack.col_width = attack.draw_width = 20;
                     attack.col_height = attack.draw_height = 60;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(35, 0));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + new Vector2(0, 10));
+                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
                     attack.pos += offset;
                     attack.collision_offset = -1 * offset;
 
@@ -83,7 +85,7 @@ namespace GameCore
                     attack.col_width = attack.draw_width = 20;
                     attack.col_height = attack.draw_height = 60;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(-35, 0));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + new Vector2(0, 10));
+                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
                     attack.pos += offset;
                     attack.collision_offset = -1 * offset;
 
@@ -97,7 +99,7 @@ namespace GameCore
                     attack.col_width = attack.draw_width = 60;
                     attack.col_height = attack.draw_height = 20;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(0, -35));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + new Vector2(0, 10));
+                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
                     attack.pos += offset;
                     attack.collision_offset = -1 * offset;
 
@@ -111,7 +113,7 @@ namespace GameCore
                     attack.col_width = attack.draw_width = 60;
                     attack.col_height = attack.draw_height = 20;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(0, 35));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + new Vector2(0, 10));
+                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
                     attack.pos += offset;
                     attack.collision_offset = -1 * offset;
 

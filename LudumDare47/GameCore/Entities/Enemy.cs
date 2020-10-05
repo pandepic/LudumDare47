@@ -161,8 +161,14 @@ namespace GameCore.Entities
             base.Draw(gameTime, spriteBatch, Color.White);
             //if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
 
+            var offset = Vector2.Zero;
+            if (enemyType == EnemyType.Cyborg)
+                offset = new Vector2(0, 0);
+            else if (enemyType == EnemyType.CaveBorg)
+                offset = new Vector2(0, 13);
+
             if (AnimExplosionDuration > 0)
-                ExplosionSprite?.Draw(spriteBatch, pos);
+                ExplosionSprite?.Draw(spriteBatch, pos + offset);
         }
 
         public void Kill(GameTime gameTime)
