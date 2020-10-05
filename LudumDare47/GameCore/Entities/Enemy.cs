@@ -157,7 +157,7 @@ namespace GameCore.Entities
                 SpawnEffectSprite.Draw(spriteBatch, pos - new Vector2(draw_width / 2, draw_height / 2));
                 return;
             }
-
+            
             base.Draw(gameTime, spriteBatch, Color.White);
             //if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
 
