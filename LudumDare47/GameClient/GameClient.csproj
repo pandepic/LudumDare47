@@ -21,6 +21,7 @@
     <None Remove="Mods\Base\UI\gameplay_menu.xml" />
     <None Remove="Mods\Base\UI\settings_menu.py" />
     <None Remove="Mods\Base\UI\settings_menu.xml" />
+    <None Remove="Mods\Base\UI\VT323-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,8 @@
 
 <Assets>
   <!-- Fonts -->
-  <Asset Name="LatoBlack" FilePath="UI/Lato-Bold.ttf" />
+  <!--<Asset Name="LatoBlack" FilePath="UI/Lato-Bold.ttf" />-->
+  <Asset Name="LatoBlack" FilePath="UI/VT323-Regular.ttf" />
 
   <!-- UI Definitions -->
   <Asset Name="UITemplates" FilePath="UI/ui_templates.xml" />
