@@ -166,7 +166,11 @@ namespace GameCore
 
             if (ripple_timer > 0f) {
                 float rippleBounce = Math.Abs(3f - ripple_timer);
-                Globals.Ripple.Parameters["center"].SetValue((player.Centre() + new Vector2(0, -16)) / new Vector2(320, 160));
+                if (ripple_timer < 3f) {
+                    Globals.Ripple.Parameters["center"].SetValue(new Vector2(0.5f));
+                } else {
+                    Globals.Ripple.Parameters["center"].SetValue((player.Centre() + new Vector2(0, -16)) / new Vector2(320, 160));
+                }
                 Globals.Ripple.Parameters["amplitude"].SetValue((3f - rippleBounce) * 0.003f);
                 Globals.Ripple.Parameters["frequency"].SetValue((6f - ripple_timer) * 30f);
                 Globals.Ripple.Parameters["size"].SetValue(6f - ripple_timer);
