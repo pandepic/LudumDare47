@@ -72,6 +72,11 @@ namespace GameCore.Entities
 
         public void Update(GameTime gameTime)
         {
+            Sprite.Update(gameTime);
+
+            if (dead)
+                return;
+
             UpdateMoveVec();
             attack_cooldown -= gameTime.DeltaTime() * 1000;
             pos += speed * vel * gameTime.DeltaTime();
@@ -88,8 +93,6 @@ namespace GameCore.Entities
                     active = true;
                 }
             }
-
-            Sprite.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
@@ -103,7 +106,8 @@ namespace GameCore.Entities
                 return;
             }
 
-            if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
+            base.Draw(gameTime, spriteBatch, Color.White);
+            //if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
         }
 
         public void Kill(GameTime gameTime)
@@ -113,6 +117,8 @@ namespace GameCore.Entities
             vel.Y = 0;
             dead = true;
             ignore_collision = true;
+
+            Sprite.BeginFadeEffect(0f, 2000f);
         }
     }
 }
