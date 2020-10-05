@@ -15,9 +15,11 @@ namespace GameCore.Entities
         public int next_posX;
         public int next_posY;
         public bool locked = false;
+        public bool unlocking = false;
         public int unlock_id = -1;
-        public int open_time = 0;
+        public float open_time = 0.0f;
         public float open_timer = 0.0f;
+        public bool draw_if_unlocked = true;
 
         public Door()
         {
@@ -38,6 +40,23 @@ namespace GameCore.Entities
         public void Update(GameTime gameTime)
         {
 
+            // Doors don't unlock until the opening animation plays, the duration is open_time
+            if (unlocking)
+            {
+                open_timer += gameTime.DeltaTime();
+                if(open_timer >= open_time)
+                {
+                    locked = false;
+                    unlocking = false;
+                    open_timer = 0.0f;
+                    if (!draw_if_unlocked)
+                    {
+                        draw = false;
+                    }
+                    //play open animation
+                }
+            }
+            
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
@@ -47,12 +66,14 @@ namespace GameCore.Entities
 
         public void Unlock()
         {
-            locked = false;
+            unlocking = true;
+            //play open animation
         }
 
         public void Lock()
         {
             locked = true;
+            //play closing animation
         }
     }
 }

@@ -30,6 +30,7 @@ namespace GameCore.Entities
         public bool ignore_collision = false;
         public bool invulnerable = false;
         public bool dead = false;
+        public bool draw = true;
         public Directions facing = Directions.Down;
         public Directions moving = Directions.None;
         public Texture2D draw_texture;
@@ -81,6 +82,8 @@ namespace GameCore.Entities
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
         {
+            if (!draw) return;
+
             if (Sprite == null)
             {
                 if (draw_texture == null) draw_texture = Globals.PlaceholderTexture;

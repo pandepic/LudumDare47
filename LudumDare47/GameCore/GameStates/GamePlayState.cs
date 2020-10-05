@@ -36,6 +36,8 @@ namespace GameCore
 
         public List<Clutter> Clutter = new List<Clutter>();
 
+        public Clutter popup_e;
+
         readonly RoomMaps roomMaps = new RoomMaps();
 
         float countdown = 60;
@@ -45,6 +47,16 @@ namespace GameCore
             // Assets            
             Globals.SpawnEffectTexture = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "EnemySpawn");
 
+            // A letter E that pops up when you are near a button
+            popup_e = new Clutter()
+            {
+                draw = true,
+                ignore_collision = true,
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "PopupE"), 16, 16),
+                draw_height = 16,
+                draw_width = 16
+            };
+
             // Rooms
             roomMaps.LoadTileMaps(graphics);
             all_rooms = new List<Room>();
@@ -52,7 +64,9 @@ namespace GameCore
             {
                 all_rooms.Add(r);
             }
-            current_room = Room.GetRoomByID(all_rooms, 102);
+
+            // SPAWNROOM
+            current_room = Room.GetRoomByID(all_rooms, 103);
             SetRoom(current_room);
 
             
@@ -91,7 +105,6 @@ namespace GameCore
         {
             //Timer
             countdown -= gameTime.DeltaTime();
-            Console.WriteLine(player.inventory.Capacity);
 
             // Player
             var oldpos = player.pos;
@@ -99,17 +112,27 @@ namespace GameCore
             Room.NudgeOOB(current_room, player);
 
             // Clutters
+            popup_e.draw = false;
             foreach (var c in current_room.clutters)
             {
                 if (Entity.Collision(player, c))
                 {
                     player.pos = oldpos;
-                    //player.StopMoving(player.facing);
+                    player.StopMoving(player.facing);
                 }
                 if (c.collectable && Entity.Collision(player, c, false)){
                     player.inventory.Add(c);
 
                     c.Kill(gameTime);
+                }
+
+                // Popup E button if near enough
+                if (c.button && Vector2.Distance(player.Centre(), c.Centre()) < 30)
+                {
+                    popup_e.SetPosCentre(c.Centre() + (new Vector2(0, -20)));
+                    popup_e.draw = true;
+                    Console.WriteLine(popup_e.pos);
+                    Console.WriteLine(countdown);
                 }
             }
            
@@ -149,6 +172,7 @@ namespace GameCore
                 }
             }
 
+            // Enemies
             foreach (var e in current_room.enemies)
             {
                 if (!e.dead && e.spawnFinished)
@@ -284,6 +308,11 @@ namespace GameCore
                 c.draw_width = 16;
                 c.pos = new Vector2(300 - i * 20, 162);
             }
+
+            // E popup when near a button
+            if (popup_e.draw)
+                popup_e.Draw(gameTime, spriteBatch, Color.White);
+
             spriteBatch.End();
 
             if (isRipple) {
@@ -354,7 +383,7 @@ namespace GameCore
                 // Unlock doors if you have the key
                 foreach (var d in current_room.doors)
                 {
-                    if (d.locked && Vector2.Distance(player.Centre(), d.Centre()) < 100)
+                    if (d.locked && Vector2.Distance(player.Centre(), d.Centre()) < 30)
                     {
                         var i = 0;
                         for (; i < player.inventory.Count; i++)
