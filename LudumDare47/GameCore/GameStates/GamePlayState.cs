@@ -167,11 +167,14 @@ namespace GameCore
             if (ripple_timer > 0f) {
                 float rippleBounce = Math.Abs(3f - ripple_timer);
                 Globals.Ripple.Parameters["center"].SetValue((player.Centre() + new Vector2(0, -16)) / new Vector2(320, 160));
-                Globals.Ripple.Parameters["amplitude"].SetValue((3f - rippleBounce) * 0.002f);
+                Globals.Ripple.Parameters["amplitude"].SetValue((3f - rippleBounce) * 0.003f);
                 Globals.Ripple.Parameters["frequency"].SetValue((3f - rippleBounce) * 40f);
-                Globals.Ripple.Parameters["size"].SetValue((3f - rippleBounce) / 3f);
+                Globals.Ripple.Parameters["size"].SetValue((3f - rippleBounce) / 2f);
 
-                Globals.Wind.Parameters["wind_strength"].SetValue((3f - rippleBounce) * 0.001f);
+                Globals.Wind.Parameters["wind_strength"].SetValue((3f - rippleBounce) * 0.002f);
+
+                Globals.Ripple.Parameters["phase"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 100f);
+                Globals.Wind.Parameters["time"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 1000f);
             }
 
             // Clutters
@@ -334,11 +337,6 @@ namespace GameCore
                 c.draw_width = 16;
                 c.draw = true;
                 c.pos = new Vector2(300 - i * 20, 162);
-            }
-
-            if (isRipple) {
-                Globals.Ripple.Parameters["phase"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 100f);
-                Globals.Wind.Parameters["time"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 1000f);
             }
 
             return (int)_nextState;
