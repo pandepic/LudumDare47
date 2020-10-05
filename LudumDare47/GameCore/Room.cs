@@ -110,7 +110,8 @@ namespace GameCore.Entities
 
             foreach(var c in clutters)
             {
-                if (c.animated)
+                if (c.dead) c.draw = false;
+                if (c.animated && !c.dead)
                 {
                     c.Sprite.PlayAnimation(c.idleAnimation);
                 }

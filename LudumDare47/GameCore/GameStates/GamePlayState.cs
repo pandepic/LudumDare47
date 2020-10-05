@@ -112,7 +112,7 @@ namespace GameCore
             // Load the player
             player = new Player();
             player.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(graphics, "PlayerIdle"), 32, 32);
-            player.facing = Directions.None;
+            player.facing = Directions.Left;
             player.SetAnimations();
             player.Sprite.PlayAnimation(player.AnimIdleLeft);
             player.SetPosCentre(Globals.spawn_location);
@@ -234,7 +234,7 @@ namespace GameCore
 
                 player = new Player();
                 player.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "PlayerIdle"), 32, 32);
-                player.facing = Directions.None;
+                player.facing = Directions.Left;
                 player.SetAnimations();
                 player.Sprite.PlayAnimation(player.AnimIdleLeft);
                 player.SetPosCentre(Globals.spawn_location);
@@ -245,7 +245,7 @@ namespace GameCore
 
                 foreach(var item in clock_hands_keep)
                 {
-                    player.inventory.Add(item);
+                    //player.inventory.Add(item);
                 }
             }
 
@@ -706,7 +706,7 @@ namespace GameCore
             }
 
             if (key == Keys.F1) {
-                player.hp = -10;
+                //player.hp = -10;
             }
 
             if (key == Keys.E)

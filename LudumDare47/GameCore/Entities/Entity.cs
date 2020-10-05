@@ -279,8 +279,8 @@ namespace GameCore.Entities
 
         public void PlayIdle()
         {
-            if (attack_cooldown > 0)
-                return;
+            //if (attack_cooldown > 0)
+                //return;
 
             switch (facing)
             {

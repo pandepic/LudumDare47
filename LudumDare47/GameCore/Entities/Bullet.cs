@@ -98,12 +98,36 @@ namespace GameCore.Entities
 
         public void Shoot(Entity entity)
         {
-            SetPosCentre(entity.Centre());
+
             vel = new Vector2(0);
             var playerFacing = entity.facing;
+            Vector2 offset = new Vector2(0, 0);
+
             if (playerFacing == Directions.None)
                 playerFacing = Directions.Left;
 
+            if (playerFacing == Directions.Up)
+            {
+                offset = new Vector2(-3, -29);
+            }
+            if (playerFacing == Directions.Down)
+            {
+                offset = new Vector2(-1, 22);
+            }
+            if (playerFacing == Directions.Left)
+            {
+                offset = new Vector2(-30, 0);
+            }
+            if (playerFacing == Directions.Right)
+            {
+                offset = new Vector2(22, 1);
+            }
+
+            SetPosCentre(entity.Centre() + offset);
+            
+            if (playerFacing == Directions.None)
+                playerFacing = Directions.Left;
+            
             if (playerFacing == Directions.Up)
             {
                 vel.Y--;

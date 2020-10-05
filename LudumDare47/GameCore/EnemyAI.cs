@@ -14,7 +14,7 @@ namespace GameCore
         public static void CaveManAI(Enemy enemy, Player player, Room room, List<Bullet> bullets, GameTime gameTime)
         {
             var move_vector = player.Centre() - enemy.Centre();
-
+            var offset = Vector2.Zero;
             // Attack if able, the 'swing' is a bullet
             if (enemy.attack_cooldown <= 0 && Vector2.Distance(player.Centre(), enemy.Centre()) < enemy.range)
             {
@@ -42,90 +42,131 @@ namespace GameCore
                 else
                 {
                     attack = new Bullet(BulletType.Cyborg, enemy.facing);
-                    attack.speed = 250;
-                    enemy.attack_cooldown = 2000;
+                    if (enemy.enemyType == EnemyType.Cyborg)
+                    {
+                        enemy.attack_cooldown = 2000;
+                    }
+                    else
+                        enemy.attack_cooldown = 2000;
+                    attack.speed = 200;
                     attack.duration = 1000;
                     attack.damage = 1;
+                    attack.col_width = 16;
+                    attack.col_height = 16;
 
                     ranged = true;
                 }
 
                 var rangedOffset = new Vector2(7, 25);
 
-                // Figure out the direction of the attack
-                Vector2 offset = Vector2.Zero;
-                if (Vector2.Distance(player.Centre(), enemy.Centre()) < 20)
+                if (enemy.enemyType == EnemyType.Caveman)
                 {
-                    attack.col_width = attack.draw_width = 30;
-                    attack.col_height = attack.draw_height = 30;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(0, 0));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
+                    // Figure out the direction of the attack
+                    offset = Vector2.Zero;
+                    if (Vector2.Distance(player.Centre(), enemy.Centre()) < 20)
+                    {
+                        attack.col_width = attack.draw_width = 30;
+                        attack.col_height = attack.draw_height = 30;
+                        attack.SetPosCentre(enemy.Centre() + new Vector2(0, 0));
+                        if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
 
-                    if (ranged)
-                        attack.vel.X++;
+                        if (ranged)
+                            attack.vel.X++;
+                    }
+                    else if (move_vector.X > Math.Abs(move_vector.Y) && move_vector.X >= 0)
+                    {
+                        offset = new Vector2(-5, 14);
+                        if (ranged) offset = Vector2.Zero;
+                        attack.col_width = attack.draw_width = 20;
+                        attack.col_height = attack.draw_height = 60;
+                        attack.SetPosCentre(enemy.Centre() + new Vector2(35, 0));
+                        if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
+                        attack.pos += offset;
+                        attack.collision_offset = -1 * offset;
+
+                        if (ranged)
+                            attack.vel.X++;
+                    }
+                    else if (Math.Abs(move_vector.X) > Math.Abs(Math.Abs(move_vector.Y)) && move_vector.X <= 0)
+                    {
+                        offset = new Vector2(5, 14);
+                        if (ranged) offset = Vector2.Zero;
+                        attack.col_width = attack.draw_width = 20;
+                        attack.col_height = attack.draw_height = 60;
+                        attack.SetPosCentre(enemy.Centre() + new Vector2(-35, 0));
+                        if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
+                        attack.pos += offset;
+                        attack.collision_offset = -1 * offset;
+
+                        if (ranged)
+                            attack.vel.X--;
+                    }
+                    else if (Math.Abs(move_vector.X) <= Math.Abs(move_vector.Y) && move_vector.Y <= 0)
+                    {
+                        offset = new Vector2(14, 5);
+                        if (ranged) offset = Vector2.Zero;
+                        attack.col_width = attack.draw_width = 60;
+                        attack.col_height = attack.draw_height = 20;
+                        attack.SetPosCentre(enemy.Centre() + new Vector2(0, -35));
+                        if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
+                        attack.pos += offset;
+                        attack.collision_offset = -1 * offset;
+
+                        if (ranged)
+                            attack.vel.Y--;
+                    }
+                    else if (Math.Abs(move_vector.X) <= move_vector.Y && move_vector.Y > 0)
+                    {
+                        offset = new Vector2(14, -5);
+                        if (ranged) offset = Vector2.Zero;
+                        attack.col_width = attack.draw_width = 60;
+                        attack.col_height = attack.draw_height = 20;
+                        attack.SetPosCentre(enemy.Centre() + new Vector2(0, 35));
+                        if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
+                        attack.pos += offset;
+                        attack.collision_offset = -1 * offset;
+
+                        if (ranged)
+                            attack.vel.Y++;
+                    }
+
                 }
-                else if (move_vector.X > Math.Abs(move_vector.Y) && move_vector.X >= 0)
+                else
                 {
-                    offset = new Vector2(-5, 14);
-                    if (ranged) offset = Vector2.Zero;
-                    attack.col_width = attack.draw_width = 20;
-                    attack.col_height = attack.draw_height = 60;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(35, 0));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
-                    attack.pos += offset;
-                    attack.collision_offset = -1 * offset;
-
-                    if (ranged)
+                    offset = Vector2.Zero;
+                    if (move_vector.X > Math.Abs(move_vector.Y) && move_vector.X >= 0) //right
+                    {
+                        offset = Vector2.Zero;
+                        attack.SetPosCentre(enemy.Centre() + offset);
                         attack.vel.X++;
-                }
-                else if (Math.Abs(move_vector.X) > Math.Abs(Math.Abs(move_vector.Y)) && move_vector.X <= 0)
-                {
-                    offset = new Vector2(5, 14);
-                    if (ranged) offset = Vector2.Zero;
-                    attack.col_width = attack.draw_width = 20;
-                    attack.col_height = attack.draw_height = 60;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(-35, 0));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
-                    attack.pos += offset;
-                    attack.collision_offset = -1 * offset;
-
-                    if (ranged)
+                    }
+                    else if (Math.Abs(move_vector.X) > Math.Abs(Math.Abs(move_vector.Y)) && move_vector.X <= 0)//left
+                    {
+                        //offset = new Vector2(-5, 14);
+                        offset = Vector2.Zero;
+                        attack.SetPosCentre(enemy.Centre() + offset);
                         attack.vel.X--;
-                }
-                else if (Math.Abs(move_vector.X) <= Math.Abs(move_vector.Y) && move_vector.Y <= 0)
-                {
-                    offset = new Vector2(14, 5);
-                    if (ranged) offset = Vector2.Zero;
-                    attack.col_width = attack.draw_width = 60;
-                    attack.col_height = attack.draw_height = 20;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(0, -35));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
-                    attack.pos += offset;
-                    attack.collision_offset = -1 * offset;
-
-                    if (ranged)
+                    }
+                    else if (Math.Abs(move_vector.X) <= Math.Abs(move_vector.Y) && move_vector.Y <= 0)//up
+                    {
+                        //offset = new Vector2(-5, 14);
+                        offset = Vector2.Zero;
+                        attack.SetPosCentre(enemy.Centre() + offset);
                         attack.vel.Y--;
-                }
-                else if (Math.Abs(move_vector.X) <= move_vector.Y && move_vector.Y > 0)
-                {
-                    offset = new Vector2(14, -5);
-                    if (ranged) offset = Vector2.Zero;
-                    attack.col_width = attack.draw_width = 60;
-                    attack.col_height = attack.draw_height = 20;
-                    attack.SetPosCentre(enemy.Centre() + new Vector2(0, 35));
-                    if (ranged) attack.SetPosCentre(enemy.Centre() + rangedOffset);
-                    attack.pos += offset;
-                    attack.collision_offset = -1 * offset;
-
-                    if (ranged)
+                    }
+                    else if (Math.Abs(move_vector.X) <= move_vector.Y && move_vector.Y > 0)//down
+                    {
+                        //offset = new Vector2(-5, 14);
+                        offset = Vector2.Zero;
+                        attack.SetPosCentre(enemy.Centre() + offset);
                         attack.vel.Y++;
+                    }
                 }
-
                 if (ranged)
                 {
                     enemy.ExplosionSprite.PlayAnimation(enemy.AnimLightningExplosion, 1);
                     enemy.AnimExplosionDuration = enemy.AnimLightningExplosion.Duration;
-                    enemy.ExplosionPos = attack.Centre();
+                    enemy.ExplosionPos = attack.Centre() + offset;
                 }
 
                 bullets.Add(attack);

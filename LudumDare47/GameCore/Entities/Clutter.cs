@@ -33,7 +33,7 @@ namespace GameCore.Entities
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
         {
-            base.Draw(gameTime, spriteBatch, Color.DarkGray);
+                base.Draw(gameTime, spriteBatch, Color.DarkGray);
         }
 
         public void Kill(GameTime gameTime)
@@ -47,6 +47,7 @@ namespace GameCore.Entities
             else
             {
                   Sprite.PlayAnimation(destroyAnimation, 1);
+                Sprite.BeginFadeEffect(0, 2000);
             }
         }
         
