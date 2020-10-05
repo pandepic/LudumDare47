@@ -25,7 +25,7 @@ namespace GameClient
         TimeSpan _frameCounterElapsedTime = TimeSpan.Zero;
         int _frameCounter = 0;
         long _drawMS, _updateMS;
-        readonly string _windowTitle = "Game Client";
+        readonly string _windowTitle = "Justin Time";
 #endif
 
         public GameClient()
