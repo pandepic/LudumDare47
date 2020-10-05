@@ -22,7 +22,7 @@
 
       <Widgets>
         <Label Name="lblTitle">
-          <Text>Broken Time Machine</Text>
+          <Text>Justin Time</Text>
           <FontName>LatoBlack</FontName>
           <FontSize>60</FontSize>
           <Position>
