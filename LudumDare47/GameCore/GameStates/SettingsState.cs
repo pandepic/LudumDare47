@@ -98,6 +98,18 @@ namespace GameCore
         public override void OnKeyPressed(Keys key, GameTime gameTime, CurrentKeyState currentKeyState)
         {
             _menu.OnKeyPressed(key, gameTime, currentKeyState);
+
+            switch (key)
+            {
+                case Keys.Escape:
+                case Keys.Space:
+                case Keys.Enter:
+                case Keys.Back:
+                    {
+                        _nextState = GameStateType.Menu;
+                    }
+                    break;
+            }
         }
 
         public override void OnKeyReleased(Keys key, GameTime gameTime, CurrentKeyState currentKeyState)
