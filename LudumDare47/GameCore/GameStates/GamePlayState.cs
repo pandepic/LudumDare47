@@ -91,6 +91,8 @@ namespace GameCore
             _gameTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
             _rippleTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
             _windTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
+
+            ModManager.Instance.SoundManager.PlaySound("MusicIngame", (int)SoundType.Music, true);
         }
 
         public void SetRoom(Room room)
@@ -336,6 +338,7 @@ namespace GameCore
                 {
                     player.attack_cooldown = PlayerAttackCooldown;
                     Bullets.Add(new Bullet(player));
+                    ModManager.Instance.SoundManager.PlaySound("SFXShoot", (int)SoundType.SoundEffect, false);
                 }
             }
 

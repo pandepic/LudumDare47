@@ -6,7 +6,7 @@
     <Setting Name="height" Value="900" />
   </Section>
   <Section Name="sound">
-    <Setting Name="musicvolume" Value="0" />
+    <Setting Name="musicvolume" Value="0.5" />
     <Setting Name="sfxvolume" Value="0.5" />
     <Setting Name="uivolume" Value="0.5" />
   </Section>

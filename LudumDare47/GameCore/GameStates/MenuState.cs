@@ -38,6 +38,8 @@ namespace GameCore
             _menu.AddMethod(Settings);
             _menu.AddMethod(Exit);
             _menu.Load(graphics, "MainMenuDefinition", "UITemplates");
+
+            ModManager.Instance.SoundManager.PlaySound("MusicMenu", (int)SoundType.Music, true);
         }
 
         public override int Update(GameTime gameTime)

@@ -50,6 +50,16 @@ namespace GameCore
             _menu.AddMethod(UpdateUIVolume);
             _menu.AddMethod(BackToMenu);
             _menu.Load(graphics, "SettingsMenuDefinition", "UITemplates");
+
+            ModManager.Instance.SoundManager.PlaySound("MusicMenu", (int)SoundType.Music, true);
+
+            var musicVolume = SettingsManager.Instance.GetSetting<float>("sound", "musicvolume");
+            var sfxVolume = SettingsManager.Instance.GetSetting<float>("sound", "sfxvolume");
+            var uiVolume = SettingsManager.Instance.GetSetting<float>("sound", "uivolume");
+
+            _menu.GetWidget<PUIWHScrollBar>("scrlMusicVolume").FValue = musicVolume;
+            _menu.GetWidget<PUIWHScrollBar>("scrlSFXVolume").FValue = sfxVolume;
+            _menu.GetWidget<PUIWHScrollBar>("scrlUIVolume").FValue = uiVolume;
         }
 
         public override int Update(GameTime gameTime)

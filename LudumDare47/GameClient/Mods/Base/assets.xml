@@ -30,6 +30,9 @@
 
   <!-- Audio -->
   <Asset Name="SFXButtonClick" FilePath="Audio/buttonclick.wav" />
+  <Asset Name="SFXShoot" FilePath="Audio/shoot.wav" />
+  <Asset Name="MusicMenu" FilePath="Audio/menu.wav" />
+  <Asset Name="MusicIngame" FilePath="Audio/ingame.wav" />
 
   <!-- Sprites -->
   <Asset Name="PlayerIdle" FilePath = "SoldierIdle.png" />
