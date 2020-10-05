@@ -27,6 +27,8 @@ namespace GameCore
         protected RenderTarget2D _gameTarget;
         protected RenderTarget2D _rippleTarget;
         protected RenderTarget2D _windTarget;
+        protected RenderTarget2D _deathTarget;
+        protected RenderTarget2D _finalTarget;
         protected bool isRipple = false;
 
         public List<Room> all_rooms;
@@ -37,6 +39,8 @@ namespace GameCore
         public List<Bullet> EnemyBullets = new List<Bullet>();
 
         public List<Clutter> Clutter = new List<Clutter>();
+
+        public List<DeathEffect> DeathEffects = new List<DeathEffect>();
 
         public Clutter popup_e;
 
@@ -91,6 +95,8 @@ namespace GameCore
             _gameTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
             _rippleTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
             _windTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
+            _deathTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+            _finalTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 
             ModManager.Instance.SoundManager.StopAll();
             ModManager.Instance.SoundManager.PlaySound("MusicIngame", (int)SoundType.Music, true);
@@ -124,6 +130,15 @@ namespace GameCore
             if (respawn_timer <= 0)
             {
                 respawn_timer = 0;
+            }
+
+            for (int i = DeathEffects.Count - 1; i >= 0; i--)
+            {
+                DeathEffects[i].TTL -= gameTime.DeltaTime();
+
+                if (DeathEffects[i].TTL <= 0) {
+                    DeathEffects.RemoveAt(i);
+                }
             }
 
             if (countdown < 0)
@@ -290,7 +305,7 @@ namespace GameCore
                             {
                             e.pos.X = oldpos.X;
                             }
-                        
+
                     }
                 }
                 e.pos.Y += e.speed * e.vel.Y * gameTime.DeltaTime();
@@ -347,7 +362,7 @@ namespace GameCore
 
                 }
             }
-            
+
 
             // Rooms
             current_room.Update(gameTime);
@@ -367,7 +382,11 @@ namespace GameCore
                     if (Entity.Collision(e, b))
                     {
                         e.hp -= b.damage;
-                        if (e.hp <= 0) e.Kill(gameTime);
+                        if (e.hp <= 0)
+                        {
+                            e.Kill(gameTime);
+                            DeathEffects.Add(new DeathEffect(e.Centre(), 1f));
+                        }
 
                         b.Kill(gameTime);
                     }
@@ -499,7 +518,30 @@ namespace GameCore
                 spriteBatch.Draw(_gameTarget, Vector2.Zero, Color.White);
                 spriteBatch.End();
             }
-            graphics.SetRenderTarget(null);
+
+            graphics.SetRenderTarget(_finalTarget);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+            spriteBatch.Draw(_windTarget, Vector2.Zero, Color.White);
+            spriteBatch.End();
+
+            foreach (DeathEffect de in DeathEffects) {
+                float rippleBounce = Math.Abs(0.5f - de.TTL);
+                Globals.RippleDeath.Parameters["center"].SetValue(de.Pos / new Vector2(320, 160));
+                Globals.RippleDeath.Parameters["amplitude"].SetValue((0.5f - rippleBounce) * 0.1f);
+                Globals.RippleDeath.Parameters["frequency"].SetValue((0.5f - rippleBounce) * 120f);
+                Globals.RippleDeath.Parameters["size"].SetValue(1f - de.TTL);
+
+                graphics.SetRenderTarget(_deathTarget);
+                graphics.Clear(Color.Transparent);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, effect: Globals.RippleDeath);
+                spriteBatch.Draw(_finalTarget, Vector2.Zero, Color.White);
+                spriteBatch.End();
+
+                graphics.SetRenderTarget(_finalTarget);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+                spriteBatch.Draw(_deathTarget, Vector2.Zero, Color.White);
+                spriteBatch.End();
+            }
 
             // Todo draw bottom bar inc health, ammo, inventory, timer
             spriteBatch.Begin(sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp, transformMatrix: _camera.View());
@@ -510,8 +552,10 @@ namespace GameCore
             }
             spriteBatch.End();
 
+            graphics.SetRenderTarget(null);
+
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
-            spriteBatch.Draw(_windTarget, Vector2.Zero, Color.White);
+            spriteBatch.Draw(_finalTarget, Vector2.Zero, Color.White);
             _menu.Draw(spriteBatch);
             spriteBatch.End();
         }

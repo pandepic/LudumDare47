@@ -2,7 +2,7 @@
 
 <Assets>
   <!-- Fonts -->
-  <Asset Name="LatoBlack" FilePath="UI/Lato-Bold.ttf" />
+  <Asset Name="LatoBlack" FilePath="UI/VT323-Regular.ttf" />
 
   <!-- UI Definitions -->
   <Asset Name="UITemplates" FilePath="UI/ui_templates.xml" />
@@ -53,6 +53,9 @@
   <Asset Name="LightningExplosion" FilePath="LightningExplosion.png" />
   <Asset Name="Robot" FilePath="Robot.png" />
   <Asset Name="CavemanCyborg" FilePath="CavemanCyborg.png" />
+
+  <Asset Name="TitleMainSprite" FilePath="TitleMainSprite.png" />
+  <Asset Name="TitleBackground" FilePath="TitleBackround.png" />
   
   <!-- TileMaps -->
   <Asset Name="TileMap2" FilePath = "Tilemaps/2.tmx" />

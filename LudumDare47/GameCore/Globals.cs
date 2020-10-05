@@ -67,6 +67,7 @@ namespace GameCore
         public static Texture2D PlaceholderTexture;
         public static Effect Ripple;
         public static Effect Wind;
+        public static Effect RippleDeath;
 
         public static void Load(GraphicsDevice graphics, ContentManager content)
         {
@@ -94,6 +95,12 @@ namespace GameCore
             Wind.Parameters["wind_strength"].SetValue(0.01f);
             Wind.Parameters["magic_number"].SetValue(20f);
             Wind.Parameters["wind_direction"].SetValue(new Vector2(1f, 1f));
+
+            RippleDeath = content.Load<Effect>("Ripple");
+            RippleDeath.Parameters["center"].SetValue(new Vector2(0.5f, 0.5f));
+            RippleDeath.Parameters["amplitude"].SetValue(0.005f);
+            RippleDeath.Parameters["frequency"].SetValue(100f);
+            RippleDeath.Parameters["size"].SetValue(1f);
         }
     }
 }
