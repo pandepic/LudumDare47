@@ -61,6 +61,11 @@
   <Asset Name="TileMap110" FilePath = "Tilemaps/110.tmx" />
   <Asset Name="TileMap111" FilePath = "Tilemaps/111.tmx" />
   <Asset Name="TileMap112" FilePath = "Tilemaps/112.tmx" />
+  <Asset Name="TileMap113" FilePath = "Tilemaps/113.tmx" />
+  <Asset Name="TileMap114" FilePath = "Tilemaps/114.tmx" />
+  <Asset Name="TileMap115" FilePath = "Tilemaps/115.tmx" />
+  <Asset Name="TileMap116" FilePath = "Tilemaps/116.tmx" />
+  <Asset Name="TileMap117" FilePath = "Tilemaps/117.tmx" />
   
   <!-- TileSheets -->
   <Asset Name="Lab" FilePath = "Tilemaps/Lab.png" />
