@@ -8,19 +8,35 @@ using System.Text;
 
 namespace GameCore.Entities
 {
+    public enum BulletType
+    {
+        None,
+        PlayerBullet,
+    }
+
     public class Bullet : Entity
     {
         public int damage = 1;
         public float duration = 10000;
+        public BulletType Type { get; set; }
 
-        public Bullet()
+        public Animation PlayerBulletUp = new Animation(1, 2, 500);
+        public Animation PlayerBulletDown = new Animation(3, 4, 500);
+        public Animation PlayerBulletLeft = new Animation(5, 6, 500);
+        public Animation PlayerBulletRight = new Animation(7, 8, 500);
+
+        public Bullet(BulletType type = BulletType.None)
         {
             draw_height = 10;
             draw_width = 10;
             speed = 5;
+
+            Type = type;
+
+            SetSprite(Directions.None);
         }
 
-        public Bullet(Player player)
+        public Bullet(Player player, BulletType type = BulletType.PlayerBullet)
         {
             // Shoot the bullet from the player's location in the direction he is facing
             draw_height = 10;
@@ -28,7 +44,28 @@ namespace GameCore.Entities
             col_height = 10;
             col_width = 10;
             speed = 500;
+
+            Type = type;
+            SetSprite(player.facing);
+
             Shoot(player);
+        }
+
+        public void SetSprite(Directions direction)
+        {
+            if (Type == BulletType.PlayerBullet)
+            {
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Bullet"), 16, 16);
+
+                if (direction == Directions.Left)
+                    Sprite.PlayAnimation(PlayerBulletLeft);
+                else if (direction == Directions.Right)
+                    Sprite.PlayAnimation(PlayerBulletRight);
+                else if (direction == Directions.Up)
+                    Sprite.PlayAnimation(PlayerBulletUp);
+                else if (direction == Directions.Down)
+                    Sprite.PlayAnimation(PlayerBulletDown);
+            }
         }
 
         public void Shoot(Player player)
