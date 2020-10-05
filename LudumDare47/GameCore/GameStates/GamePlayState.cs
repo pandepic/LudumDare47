@@ -525,6 +525,7 @@ namespace GameCore
                     player.hp -= b.damage;
                     // If player.hp <= 0
                     b.ignore_collision = true;
+                    //ModManager.Instance.SoundManager.PlaySound("SFXHurt", (int)SoundType.SoundEffect, false);
                     Console.WriteLine(player.hp);
                 }
                 b.Update(gameTime);

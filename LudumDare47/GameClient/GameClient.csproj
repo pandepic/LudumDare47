@@ -22,7 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Mods\Base\Audio\hurt.wav" />
     <None Remove="Mods\Base\Audio\ingame.wav" />
+    <None Remove="Mods\Base\Audio\laser.wav" />
+    <None Remove="Mods\Base\Audio\melee.wav" />
     <None Remove="Mods\Base\Audio\menu.wav" />
     <None Remove="Mods\Base\Audio\shoot.wav" />
     <None Remove="Mods\Base\UI\gameover_menu.py" />

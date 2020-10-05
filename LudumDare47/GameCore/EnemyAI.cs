@@ -170,6 +170,19 @@ namespace GameCore
                 }
 
                 bullets.Add(attack);
+
+                if (enemy.enemyType == EnemyType.Caveman)
+                {
+                    ModManager.Instance.SoundManager.PlaySound("SFXMelee", (int)SoundType.SoundEffect, false);
+                }
+                else if (enemy.enemyType == EnemyType.Cyborg)
+                {
+                    ModManager.Instance.SoundManager.PlaySound("SFXLaser", (int)SoundType.SoundEffect, false);
+                }
+                else if (enemy.enemyType == EnemyType.CaveBorg)
+                {
+                    ModManager.Instance.SoundManager.PlaySound("SFXLaser", (int)SoundType.SoundEffect, false);
+                }
             }
 
             // Move towards player, unless too close or attack is on cooldown

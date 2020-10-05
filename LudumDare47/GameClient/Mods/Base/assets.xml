@@ -30,6 +30,9 @@
   <!-- Audio -->
   <Asset Name="SFXButtonClick" FilePath="Audio/buttonclick.wav" />
   <Asset Name="SFXShoot" FilePath="Audio/shoot.wav" />
+  <Asset Name="SFXLaser" FilePath="Audio/laser.wav" />
+  <Asset Name="SFXHurt" FilePath="Audio/hurt.wav" />
+  <Asset Name="SFXMelee" FilePath="Audio/melee.wav" />
   <Asset Name="MusicMenu" FilePath="Audio/menu.wav" />
   <Asset Name="MusicIngame" FilePath="Audio/ingame.wav" />
 
