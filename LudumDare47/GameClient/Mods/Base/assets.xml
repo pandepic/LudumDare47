@@ -2,8 +2,7 @@
 
 <Assets>
   <!-- Fonts -->
-  <!--<Asset Name="LatoBlack" FilePath="UI/Lato-Bold.ttf" />-->
-  <Asset Name="LatoBlack" FilePath="UI/VT323-Regular.ttf" />
+  <Asset Name="LatoBlack" FilePath="UI/Lato-Bold.ttf" />
 
   <!-- UI Definitions -->
   <Asset Name="UITemplates" FilePath="UI/ui_templates.xml" />
@@ -42,6 +41,7 @@
   <Asset Name="Part1" FilePath="Part1.png" />
   <Asset Name="PopupE" FilePath="epopup.png" />
   <Asset Name="ForceField" FilePath="forcefield.png" />
+  <Asset Name="ForceFieldRot" FilePath="forcefieldrot.png" />
   <Asset Name="Bullet" FilePath="bullet.png" />
   <Asset Name="TimeMachine" FilePath="TimeMachine.png" />
   <Asset Name="lowerui" FilePath="lowerui.png" />
@@ -54,9 +54,15 @@
   <Asset Name="TileMap103" FilePath = "Tilemaps/103.tmx" />
   <Asset Name="TileMap104" FilePath = "Tilemaps/104.tmx" />
   <Asset Name="TileMap105" FilePath = "Tilemaps/105.tmx" />
+  <Asset Name="TileMap106" FilePath = "Tilemaps/106.tmx" />
+  <Asset Name="TileMap107" FilePath = "Tilemaps/107.tmx" />
+  <Asset Name="TileMap108" FilePath = "Tilemaps/108.tmx" />
+  <Asset Name="TileMap109" FilePath = "Tilemaps/109.tmx" />
+  <Asset Name="TileMap110" FilePath = "Tilemaps/110.tmx" />
+  <Asset Name="TileMap111" FilePath = "Tilemaps/111.tmx" />
+  <Asset Name="TileMap112" FilePath = "Tilemaps/112.tmx" />
   
   <!-- TileSheets -->
-  <Asset Name="testsheet" FilePath = "Tilemaps/testsheet.png" />
   <Asset Name="Lab" FilePath = "Tilemaps/Lab.png" />
   
 </Assets>

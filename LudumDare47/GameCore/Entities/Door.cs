@@ -27,6 +27,8 @@ namespace GameCore.Entities
         public Animation openAnimation;
         public Animation closedAnimation;
 
+        //Animated doors should have all 4 animations set, unless anim_is_fade is true then the door only needs an openAnimation
+
         public Door()
         {
 
@@ -84,7 +86,6 @@ namespace GameCore.Entities
             {
                 Sprite.PlayAnimation(unlockAnimation, 1);
             }
-            //play open animation
         }
 
         public void Lock()
@@ -92,7 +93,8 @@ namespace GameCore.Entities
             locked = true;
             if (anim_is_fade && animated)
             {
-                Sprite.BeginFadeEffect(1, 1000);
+                Sprite.SetTransparency(0);
+                Sprite.BeginFadeEffect(255, 1000);
             }
             else if (animated)
             {
