@@ -240,7 +240,7 @@ namespace GameCore.Entities
             }
         }
 
-        protected void PlayMoving()
+        public void PlayMoving()
         {
             switch (facing)
             {
@@ -270,7 +270,7 @@ namespace GameCore.Entities
             }
         }
 
-        protected void PlayIdle()
+        public void PlayIdle()
         {
             switch (facing)
             {

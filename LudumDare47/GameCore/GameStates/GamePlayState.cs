@@ -270,12 +270,80 @@ namespace GameCore
             // Enemies
             foreach (var e in current_room.enemies)
             {
+                oldpos = e.pos;
+
                 if (!e.dead && e.spawnFinished)
                 {
                     //Enemy AI
                     if (e.enemyType == EnemyType.Caveman) EnemyAI.CaveManAI(e, player, current_room, EnemyBullets, gameTime);
                 }
+
+                e.pos.X += e.speed * e.vel.X * gameTime.DeltaTime();
+                foreach(var e2 in current_room.enemies){
+                    if (e2 != e)
+                    {
+                        if (Entity.Collision(e, e2))
+                            {
+                            e.pos.X = oldpos.X;
+                            }
+                        
+                    }
+                }
+                e.pos.Y += e.speed * e.vel.Y * gameTime.DeltaTime();
+                foreach (var e2 in current_room.enemies)
+                {
+                    if (e2 != e)
+                    {
+                        if (Entity.Collision(e, e2))
+                        {
+                            e.pos.Y = oldpos.Y;
+                        }
+
+                    }
+                }
+
+                // Changing the priority for cavemen
+                if(e.enemyType == EnemyType.Caveman)
+                {
+                    var prevVel = e.vel;
+                    var newFacing = Directions.None;
+
+                    if (e.moveup)
+                    {
+                        e.vel.Y = -1;
+                        newFacing = Directions.Up;
+                    }
+                    else if (e.movedown)
+                    {
+                        e.vel.Y = 1;
+                        newFacing = Directions.Down;
+                    }
+
+                    if (e.moveleft)
+                    {
+                        e.vel.X = -1;
+                            newFacing = Directions.Left;
+                    }
+                    else if (e.moveright)
+                    {
+                        e.vel.X = 1;
+                            newFacing = Directions.Right;
+                    }
+
+                    if (newFacing != Directions.None)
+                        e.facing = newFacing;
+
+                    if (prevVel != e.vel)
+                    {
+                        if (e.vel == Vector2.Zero)
+                            e.PlayIdle();
+                        else
+                            e.PlayMoving();
+                    }
+
+                }
             }
+            
 
             // Rooms
             current_room.Update(gameTime);
