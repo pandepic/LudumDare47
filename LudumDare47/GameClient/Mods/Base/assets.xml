@@ -38,16 +38,19 @@
   <Asset Name="EnemySpawn" FilePath="Portal.png" />
   <Asset Name="Caveman" FilePath="Caveman.png" />
   <Asset Name="Door" FilePath="Door.png" />
-  <Asset Name="Crate" FilePath="Crate.png" />
+  <Asset Name="Crate" FilePath="Box.png" />
   <Asset Name="Button" FilePath="Button.png" />
   <Asset Name="Key" FilePath="Key.png" />
   <Asset Name="Part1" FilePath="ClockBigHand.png" />
+  <Asset Name="Part2" FilePath="ClockLittleHand.png" />
+  <Asset Name="Part1icon" FilePath="ClockSmallIcon.png" />
+  <Asset Name="Part2icon" FilePath="ClockBigIcon.png" />
   <Asset Name="PopupE" FilePath="epopup.png" />
   <Asset Name="ForceField" FilePath="forcefield.png" />
   <Asset Name="ForceFieldRot" FilePath="forcefieldrot.png" />
   <Asset Name="Bullet" FilePath="bullet.png" />
   <Asset Name="TimeMachine" FilePath="TimeMachine.png" />
-  <Asset Name="lowerui" FilePath="lowerui.png" />
+  <Asset Name="lowerui" FilePath="BottomUI.png" />
   <Asset Name="Hit" FilePath="Hit.png" />
   <Asset Name="LightningBullet" FilePath="LightningBullet.png" />
   <Asset Name="LightningExplosion" FilePath="LightningExplosion.png" />

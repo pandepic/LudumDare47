@@ -20,6 +20,64 @@ namespace GameCore
             // Room 2
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 2, "Time Machine");
             newroom.doors.Add(BasicDoor(100, Directions.Left));
+
+            newclutter = new Clutter() // Big hand graphic
+            {
+                is_big_hand = true,
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Part2"), 32, 32),
+                pos = new Vector2(147, 54),
+                draw = false,
+                ignore_collision = true,
+                draw_height = 200
+            };
+            newroom.clutters.Add(newclutter);
+            newclutter = new Clutter() // Small hand graphic
+            {
+                is_small_hand = true,
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Part1"), 32, 32),
+                pos = new Vector2(128, 37),
+                draw = false,
+                ignore_collision = true,
+                draw_height = 200
+            };
+            newroom.clutters.Add(newclutter);
+
+            newclutter = new Clutter() // Clock repairer
+            {
+                Sprite = null,
+                draw = false,
+                col_width = 1,
+                col_height = 1,
+                clock_repair = true,
+                pos = new Vector2(130, 60)
+            };
+            newroom.clutters.Add(newclutter);
+            newroom.clutters.Add(new Clutter() // Cheat big hand
+            {
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Part1icon"), 16, 16),
+                pos = new Vector2(20, 20),
+                collectable = true,
+                ignore_collision = true,
+                draw_height = 16,
+                draw_width = 16,
+                col_height = 16,
+                col_width = 16,
+                clock_handle = 1
+            });
+
+            newroom.clutters.Add(new Clutter() // Cheat small hand
+            {
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Part2icon"), 16, 16),
+                pos = new Vector2(60, 20),
+                collectable = true,
+                ignore_collision = true,
+                draw_height = 16,
+                draw_width = 16,
+                col_height = 16,
+                col_width = 16,
+                clock_handle = 2
+            });
+
             newclutter = new Clutter()
             {
                 Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "TimeMachine"), 128, 112),
@@ -40,6 +98,10 @@ namespace GameCore
             newroom.clutters.Add(FloorCollisionBox(96, 20, new Vector2(96, 128)));
             newroom.clutters.Add(FloorCollisionBox(1, 30, new Vector2(96, 100)));
             newroom.clutters.Add(FloorCollisionBox(1, 43, new Vector2(222, 100)));
+            newroom.clutters.Add(CollisionBox(320, 24, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(5, 180, new Vector2(306, 0)));  //  right
+            newroom.clutters.Add(CollisionBox(15, 70, Vector2.Zero));  // Top left
+            newroom.clutters.Add(CollisionBox(15, 70, new Vector2(0, 114)));  // bottom left 
             rooms.Add(newroom);
 
             // Room 100
@@ -47,7 +109,7 @@ namespace GameCore
             newroom.doors.Add(BasicDoor(101,Directions.Left)); // Left door
             newroom.doors.Add(BasicDoor(2, Directions.Right));    // Right door
             newroom.enemies.Add(CaveMan(new Vector2(160, 90)));
-            newroom.clutters.Add(CollisionBox(320, 24, Vector2.Zero));  // Back wall
+            newroom.clutters.Add(CollisionBox(320, 30, Vector2.Zero));  // Back wall
             newroom.clutters.Add(CollisionBox(46, 70, Vector2.Zero));  // Top left
             newroom.clutters.Add(CollisionBox(46, 70, new Vector2(0, 114)));  // bottom left            
             newroom.clutters.Add(CollisionBox(46, 70, new Vector2(274, 0)));  // Top right
@@ -98,7 +160,7 @@ namespace GameCore
                 next_posY = 110,
                 ignore_collision = true,
                 unlock_id = 1,
-                locked = false,
+                locked = true,
                 animated = true,
                 open_time = 2
             };
@@ -234,14 +296,15 @@ namespace GameCore
             newroom.clutters.Add(CollisionBox(142, 55, new Vector2(178, 130)));  // bottom right
             newroom.clutters.Add(new Clutter()
             {
-                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Part1"), 16, 16),
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Part1icon"), 16, 16),
                 pos = new Vector2(100, 100),
                 collectable = true,
                 ignore_collision = true,
                 draw_height = 16,
                 draw_width = 16,
                 col_height = 16,
-                col_width = 16
+                col_width = 16,
+                clock_handle = 1
             });
             rooms.Add(newroom);
 
@@ -334,16 +397,18 @@ namespace GameCore
             //newroom.clutters.Add(FloorCollisionBox(10, 15, new Vector2(66, 30))); // Left washer
             //newroom.clutters.Add(FloorCollisionBox(9, 15, new Vector2(114, 30))); // Right washer
             //newroom.clutters.Add(FloorCollisionBox(61, 15, new Vector2(193, 30))); // Right bench
+            rooms.Add(newroom);
 
             // Room 116
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 116, "Caveman 13");
             newroom.doors.Add(BasicDoor(117, Directions.Down));  // Bottom door
             newroom.doors.Add(BasicDoor(112, Directions.Up));
+            newroom.doors.Add(BasicDoor(115, Directions.Right));
             newroom.clutters.Add(CollisionBox(140, 24, Vector2.Zero));  // Back wall 1
             newroom.clutters.Add(CollisionBox(140, 24, new Vector2(180, 0)));  // Back wall 2
             newroom.clutters.Add(CollisionBox(15, 180, Vector2.Zero));  //  left
             newroom.clutters.Add(CollisionBox(46, 70, new Vector2(306, 0)));  // Top right
-            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(306, 114)));  // bottom right
+            newroom.clutters.Add(CollisionBox(46, 70, new Vector2(306, 99)));  // bottom right
             newroom.clutters.Add(CollisionBox(142, 5, new Vector2(0, 146)));  // bottom left            
             newroom.clutters.Add(CollisionBox(142, 5, new Vector2(178, 146)));  // bottom right
             rooms.Add(newroom);
@@ -412,7 +477,7 @@ namespace GameCore
         {
             Enemy caveborg = new Enemy
             {
-                hp = 20,
+                hp = 1,
                 speed = 30,
                 range = 50,
                 enemyType = EnemyType.CaveBorg,
@@ -485,6 +550,9 @@ namespace GameCore
             Clutter crate = new Clutter()
             {
                 Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Crate"), 32, 32),
+                idleAnimation = new Animation(1, 8, 500),
+                destroyAnimation = new Animation(1, 8, 500),
+                animated = true,
                 pos = position,
                 draw_width = 32,
                 col_width = 32,

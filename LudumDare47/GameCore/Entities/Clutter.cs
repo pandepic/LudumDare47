@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using PandaMonogame;
 
 namespace GameCore.Entities
 {
@@ -14,9 +15,20 @@ namespace GameCore.Entities
         public bool collectable = false;
         public int keyid = 0;
         public bool floor_tile = false;
+        public bool clock_repair = false;
+        public int clock_handle = 0;
+        public bool is_big_hand = false;
+        public bool is_small_hand = false;
+
+        public bool animated = false;
+
+        public Animation idleAnimation = new Animation();
+        public Animation destroyAnimation = new Animation();
+
         public void update(GameTime gameTime)
         {
-
+            if(animated)
+                Sprite.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
@@ -28,7 +40,15 @@ namespace GameCore.Entities
         {
             ignore_collision = true;
             //draw_width = 0;
-            draw = false;
+            if (!animated)
+            {
+                draw = false;
+            }
+            else
+            {
+                  Sprite.PlayAnimation(destroyAnimation, 1);
+                  Sprite.BeginFadeEffect(0, 500);
+            }
         }
         
     }

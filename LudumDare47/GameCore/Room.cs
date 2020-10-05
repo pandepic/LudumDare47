@@ -107,6 +107,14 @@ namespace GameCore.Entities
                     }
                 }
             }
+
+            foreach(var c in clutters)
+            {
+                if (c.animated)
+                {
+                    c.Sprite.PlayAnimation(c.destroyAnimation);
+                }
+            }
         }
 
         public static Room GetRoomByName(List<Room> all_rooms, string name)

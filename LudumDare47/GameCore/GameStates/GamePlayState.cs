@@ -52,6 +52,9 @@ namespace GameCore
 
         public bool respawning = false;
 
+        public bool clock_repair_big = false;
+        public bool clock_repair_small = false;
+
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
             // Assets
@@ -146,9 +149,14 @@ namespace GameCore
             _timerLabel.Text = countdown.ToString("0.0");
 
             // Player
-            var oldpos = player.pos;
+            Vector2 oldpos = new Vector2(0);
+            Vector2 newpos = new Vector2(0);
+            oldpos.X = player.pos.X;
+            oldpos.Y = player.pos.Y;
             player.Update(gameTime);
             Room.NudgeOOB(current_room, player);
+            newpos.X = player.pos.X;
+            newpos.Y = player.pos.Y;
 
             // Death and respawning
             if (player.hp <= 0 && respawn_timer <= 0)
@@ -178,6 +186,15 @@ namespace GameCore
                 current_room = Room.GetRoomByID(all_rooms, Globals.spawnroomID);
                 SetRoom(current_room);
 
+                List<Clutter> clock_hands_keep = new List<Clutter>();
+                foreach (var item in player.inventory)
+                {
+                    if(item.clock_handle > 0)
+                    {
+                        clock_hands_keep.Add(item);
+                    }
+                }
+
                 player = new Player();
                 player.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "PlayerIdle"), 32, 32);
                 player.facing = Directions.None;
@@ -188,6 +205,11 @@ namespace GameCore
                 player.dead = false;
                 respawning = false;
                 countdown = Globals.countdown_time;
+
+                foreach(var item in clock_hands_keep)
+                {
+                    player.inventory.Add(item);
+                }
             }
 
             if (ripple_timer > 0f) {
@@ -209,8 +231,12 @@ namespace GameCore
 
             // Clutters
             popup_e.draw = false;
-            foreach (var c in current_room.clutters)
+            bool delete = false;
+            int delete_index = 0;
+
+            for (int i = 0; i < current_room.clutters.Count; i++)
             {
+                Clutter c = (Clutter)current_room.clutters[i];
                 if (Entity.Collision(player, c))
                 {
                     player.pos = oldpos;
@@ -222,13 +248,55 @@ namespace GameCore
                     c.Kill(gameTime);
                 }
 
+                
                 // Popup E button if near enough
                 if (c.button && Vector2.Distance(player.Centre(), c.Centre()) < 30)
                 {
                     popup_e.SetPosCentre(c.Centre() + (new Vector2(0, -20)));
                     popup_e.draw = true;
                 }
+
+                // Clock repair 
+                if (c.clock_repair)
+                {
+                    foreach (var item in player.inventory)
+                    {
+                        if (item.clock_handle > 0 && Vector2.Distance(player.Centre(), c.Centre()) < 30)
+                        {
+                            popup_e.SetPosCentre(c.Centre());
+                            popup_e.draw = true;
+                        }
+                    }
+                }
+
+                // Delete clockhands if they have been used
+                foreach(var item in player.inventory)
+                {
+                    if ((item.clock_handle == 1 && c.clock_handle == 1) || (item.clock_handle == 2 && c.clock_handle == 2))
+                    {
+                        delete = true;
+                        delete_index = i;
+                    }
+                }
+                if ((c.clock_handle == 1 && clock_repair_big) || (c.clock_handle == 2 && clock_repair_small))
+                {
+                    delete = true;
+                    delete_index = i;
+                }
+
+                // Repair clockhands
+                if (c.is_big_hand && clock_repair_big)
+                {
+                    c.draw = true;
+                }
+                else if (c.is_small_hand && clock_repair_small)
+                {
+                    c.draw = true;
+                }
             }
+            if (delete)
+                current_room.clutters.RemoveAt(delete_index);
+
 
             // Doors
             foreach (var d in current_room.doors)
@@ -592,16 +660,45 @@ namespace GameCore
 
             if (key == Keys.E)
             {
-                // Activate buttons
+                bool hand_delete = false;
+                int hand_delete_index = 0;
                 foreach(var c in current_room.clutters)
                 {
+
+                    // Activate buttons
                     if (c.button && Vector2.Distance(player.Centre(), c.Centre()) < 30){
                         c.door_unlock.Unlock();
                         c.button = false;
                     }
+
+                    // Repair the clock
+                    if (c.clock_repair && Vector2.Distance(player.Centre(), c.Centre()) < 30)
+                    {
+                        for (int i = 0; i < player.inventory.Count; i++)
+                        {
+                            Clutter item = player.inventory[i];
+                            if (item.clock_handle == 1)
+                            {
+                                clock_repair_big = true;
+                                hand_delete = true;
+                                hand_delete_index = i;
+                            }
+                            else if(item.clock_handle == 2)
+                            {
+                                clock_repair_small = true;
+                                hand_delete = true;
+                                hand_delete_index = i;
+                            }
+                        }
+                        
+                    }
                 }
+                if (hand_delete)
+                    player.inventory.RemoveAt(hand_delete_index);
 
                 // Unlock doors if you have the key
+                bool delete_key = false;
+                int delete_index = 0;
                 foreach (var d in current_room.doors)
                 {
                     if (d.unlocking) break;
@@ -614,15 +711,19 @@ namespace GameCore
                             if (c.keyid > 0 && c.keyid == d.unlock_id)
                             {
                                 d.Unlock();
+                                delete_key = true;
+                                delete_index = i;
                                 break;
                             }
                         }
-                        if (!d.locked)
-                        {
-                            player.inventory.RemoveAt(i);
-                        }
+                        
                     }
                 }
+                if (delete_key)
+                {
+                    player.inventory.RemoveAt(delete_index);
+                }
+                
             }
         }
 
