@@ -247,7 +247,7 @@ namespace GameCore.Entities
             }
         }
 
-        protected void PlayMoving()
+        public void PlayMoving()
         {
             switch (facing)
             {
@@ -277,7 +277,7 @@ namespace GameCore.Entities
             }
         }
 
-        protected void PlayIdle()
+        public void PlayIdle()
         {
             if (attack_cooldown > 0)
                 return;

@@ -124,7 +124,6 @@ namespace GameCore.Entities
 
             UpdateMoveVec();
             attack_cooldown -= gameTime.DeltaTime() * 1000;
-            pos += speed * vel * gameTime.DeltaTime();
 
             if (spawned && !spawnFinished)
             {
