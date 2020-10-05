@@ -9,7 +9,6 @@ using System.Text;
 
 namespace GameCore
 {
-    
     public enum EnemyType
     {
         Null,
@@ -86,7 +85,7 @@ namespace GameCore
         {
             Ripple = content.Load<Effect>("Ripple");
             Ripple.Parameters["center"].SetValue(new Vector2(0.5f, 0.5f));
-            Ripple.Parameters["amplitude"].SetValue(0.05f);
+            Ripple.Parameters["amplitude"].SetValue(0.005f);
             Ripple.Parameters["frequency"].SetValue(100f);
             Ripple.Parameters["size"].SetValue(1f);
 
