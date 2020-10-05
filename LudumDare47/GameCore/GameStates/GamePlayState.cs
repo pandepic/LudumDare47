@@ -38,9 +38,13 @@ namespace GameCore
 
         public Clutter popup_e;
 
-        readonly RoomMaps roomMaps = new RoomMaps();
+        public RoomMaps roomMaps = new RoomMaps();
 
-        float countdown = 60;
+        public float countdown = Globals.countdown_time;
+        public float ripple_timer = 0.0f;
+        public float respawn_timer = 0.0f;
+
+        public bool respawning = false;
 
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
@@ -66,10 +70,8 @@ namespace GameCore
             }
 
             // SPAWNROOM
-            current_room = Room.GetRoomByID(all_rooms, 103);
+            current_room = Room.GetRoomByID(all_rooms, 101);
             SetRoom(current_room);
-
-            
 
             // Load the player
             player = new Player();
@@ -103,13 +105,64 @@ namespace GameCore
 
         public override int Update(GameTime gameTime)
         {
-            //Timer
+            // Timers
             countdown -= gameTime.DeltaTime();
+            ripple_timer -= gameTime.DeltaTime();
+            if(ripple_timer <= 0)
+            {
+                isRipple = false;
+                ripple_timer = 0;
+            }
+            respawn_timer -= gameTime.DeltaTime();
+            if (respawn_timer <= 0)
+            {
+                respawn_timer = 0;
+            }
 
             // Player
             var oldpos = player.pos;
             player.Update(gameTime);
             Room.NudgeOOB(current_room, player);
+            
+            // Death and respawning
+            if (player.hp <= 0 && respawn_timer <= 0)
+                if (!respawning)
+                {
+                    player.dead = true;
+                    // todo Play death animation
+                    respawn_timer = 3;
+                    respawning = true;
+
+                    ripple_timer = 6;
+                    isRipple = true;
+                }
+            if (countdown < 0 && !respawning)
+            {
+                respawn_timer = 3;
+                respawning = true;
+                ripple_timer = 6;
+                isRipple = true;
+            }
+            if (respawning && respawn_timer <= 0)
+            {
+                // todo make this cleaner
+                roomMaps = new RoomMaps();
+                roomMaps.LoadTileMaps(Globals.GraphicsDevice);
+                all_rooms = roomMaps.rooms;
+                current_room = Room.GetRoomByID(all_rooms, 100);
+                SetRoom(current_room);
+
+                player = new Player();
+                player.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "PlayerIdle"), 32, 32);
+                player.facing = Directions.None;
+                player.SetAnimations();
+                player.Sprite.PlayAnimation(player.AnimIdleLeft);
+                player.SetPosCentre(280, 90);
+                player.active = true;
+                player.dead = false;
+                respawning = false;
+                countdown = Globals.countdown_time;
+            }
 
             // Clutters
             popup_e.draw = false;
@@ -131,11 +184,9 @@ namespace GameCore
                 {
                     popup_e.SetPosCentre(c.Centre() + (new Vector2(0, -20)));
                     popup_e.draw = true;
-                    Console.WriteLine(popup_e.pos);
-                    Console.WriteLine(countdown);
                 }
             }
-           
+
             // Doors
             foreach (var d in current_room.doors)
             {
@@ -153,6 +204,22 @@ namespace GameCore
                         current_room.OnEntry(gameTime);
 
                         Console.WriteLine(current_room.room_id);
+                    }
+                }
+
+                // Draw popup button if door is unlockable
+                if (d.locked && Vector2.Distance(player.Centre(), d.Centre()) < 30)
+                {
+                    if (d.unlocking) break;
+                    var i = 0;
+                    for (; i < player.inventory.Count; i++)
+                    {
+                        Clutter c = player.inventory[i];
+                        if (c.keyid > 0 && c.keyid == d.unlock_id)
+                        {
+                            popup_e.SetPosCentre(d.Centre() + (new Vector2(0, -20)));
+                            popup_e.draw = true;
+                        }
                     }
                 }
             }
@@ -247,6 +314,18 @@ namespace GameCore
                 }
             }
 
+            // Inventory
+            // todo fix inventory being invis on leaving the room you picked it up in
+            for (int i = 0; i < player.inventory.Count; i++)
+            {
+                Clutter c = player.inventory[i];
+                c.ignore_collision = true;
+                c.draw_height = 16;
+                c.draw_width = 16;
+                c.draw = true;
+                c.pos = new Vector2(300 - i * 20, 162);
+            }
+
             if (isRipple) {
                 Globals.Ripple.Parameters["phase"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 100f);
                 Globals.Wind.Parameters["time"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds / 1000f);
@@ -300,14 +379,7 @@ namespace GameCore
             {
                 b.Draw(gameTime, spriteBatch, Color.White);
             }
-            for (int i = 0; i < player.inventory.Count; i++)
-            {
-                Clutter c = player.inventory[i];
-                c.ignore_collision = true;
-                c.draw_height = 16;
-                c.draw_width = 16;
-                c.pos = new Vector2(300 - i * 20, 162);
-            }
+            
 
             // E popup when near a button
             if (popup_e.draw)
@@ -332,6 +404,15 @@ namespace GameCore
                 spriteBatch.End();
             }
             graphics.SetRenderTarget(null);
+
+            // Todo draw bottom bar inc health, ammo, inventory, timer
+            spriteBatch.Begin(sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp, transformMatrix: _camera.View());
+
+            foreach (var i in player.inventory)
+            {
+                i.Draw(gameTime, spriteBatch, Color.White);
+            }
+            spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
             spriteBatch.Draw(_windTarget, Vector2.Zero, Color.White);
@@ -383,6 +464,7 @@ namespace GameCore
                 // Unlock doors if you have the key
                 foreach (var d in current_room.doors)
                 {
+                    if (d.unlocking) break;
                     if (d.locked && Vector2.Distance(player.Centre(), d.Centre()) < 30)
                     {
                         var i = 0;
@@ -459,5 +541,8 @@ namespace GameCore
         {
             _menu.OnTextInput(e, gameTime, currentKeyState);
         }
+
     }
+        
+        
 }

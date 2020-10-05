@@ -13,7 +13,7 @@ namespace GameCore.Entities
         public Door door_unlock = new Door();
         public bool collectable = false;
         public int keyid = 0;
-
+        public bool floor_tile = false;
         public void update(GameTime gameTime)
         {
 
@@ -27,13 +27,10 @@ namespace GameCore.Entities
         public void Kill(GameTime gameTime)
         {
             ignore_collision = true;
-            draw_width = 0;
+            //draw_width = 0;
+            draw = false;
         }
         
-        public Clutter ShallowCopy()
-        {
-            return (Clutter)this.MemberwiseClone();
-        }
     }
 
 }

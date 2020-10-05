@@ -9,7 +9,7 @@ using System.Text;
 
 namespace GameCore
 {
-
+    
     public enum EnemyType
     {
         Null,
@@ -54,6 +54,8 @@ namespace GameCore
     public static class Globals
     {
         public static GraphicsDevice GraphicsDevice;
+
+        public const int countdown_time = 60;
 
         public static readonly float SpawnEffectDuration = 2000;
         public static Texture2D SpawnEffectTexture;

@@ -116,6 +116,9 @@ namespace GameCore.Entities
 
         public void StartMoving(Directions direction)
         {
+            // Dead things can't move
+            if (dead) return;
+
             facing = direction;
 
             switch (facing)
