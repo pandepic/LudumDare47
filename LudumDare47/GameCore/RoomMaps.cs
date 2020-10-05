@@ -77,13 +77,19 @@ namespace GameCore
                 col_height = 30,
                 collision_offset = new Vector2(11, 0),
                 Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Door"), 32, 32), //todo animate this door, ?add lock symbol
+                openAnimation = new Animation(18, 18, 1),
+                unlockAnimation = new Animation(1, 18, 2000),
+                closedAnimation = new Animation(1, 1, 1),
+                lockAnimation = new Animation(1, 18, 2000),
+                anim_is_fade = false,
                 next_room_id = 107,
                 next_posX = 144,
                 next_posY = 110,
                 ignore_collision = true,
                 unlock_id = 1,
                 locked = true,
-                open_time = 1
+                animated = true,
+                open_time = 2
             };
             newroom.doors.Add(newdoor);
             newroom.doors.Add(new Door(112, 144, 150, 144, 10));  // Bottom door
@@ -96,10 +102,13 @@ namespace GameCore
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 103, "Caveman 4");
             newdoor = BasicDoor(104, Directions.Left, true); // Left door
             newdoor.Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "ForceField"), 32, 32); //todo animate this door
+            newdoor.openAnimation = new Animation(1, 7, 1000);
+            newdoor.animated = true;
+            newdoor.anim_is_fade = true;
             newdoor.draw = true;
             newdoor.pos += new Vector2(10, 8);
-            newdoor.draw_if_unlocked = false;
-            newdoor.open_time = 2;
+            newdoor.draw_if_unlocked = true;
+            newdoor.open_time = 1;
             newroom.doors.Add(newdoor);
             newroom.clutters.Add(Button(new Vector2(55, 119), newdoor));
             newroom.doors.Add(new Door(102, 305, 72, 10, 72));    // Right door

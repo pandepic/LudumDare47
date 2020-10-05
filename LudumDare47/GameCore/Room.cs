@@ -85,6 +85,28 @@ namespace GameCore.Entities
             {
                 trap_door.Lock();
             }
+
+
+            // Play door animations on entry
+            foreach(var d in doors)
+            {
+                if (d.animated)
+                {
+                    if (d.anim_is_fade)
+                    {
+                        d.Sprite.PlayAnimation(d.openAnimation);
+                    }
+                    else
+                    {
+                        if (d.locked)
+                        {
+                            d.Sprite.PlayAnimation(d.closedAnimation);
+                        }
+                        else
+                            d.Sprite.PlayAnimation(d.openAnimation);
+                    }
+                }
+            }
         }
 
         public static Room GetRoomByName(List<Room> all_rooms, string name)

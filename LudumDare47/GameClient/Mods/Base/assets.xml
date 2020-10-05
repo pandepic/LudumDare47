@@ -43,6 +43,7 @@
   <Asset Name="ForceField" FilePath="forcefield.png" />
   <Asset Name="Bullet" FilePath="bullet.png" />
   <Asset Name="TimeMachine" FilePath="TimeMachine.png" />
+  <Asset Name="lowerui" FilePath="lowerui.png" />
   
   <!-- TileMaps -->
   <Asset Name="TileMap2" FilePath = "Tilemaps/2.tmx" />

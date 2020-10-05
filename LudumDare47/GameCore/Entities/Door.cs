@@ -20,6 +20,12 @@ namespace GameCore.Entities
         public float open_time = 0.0f;
         public float open_timer = 0.0f;
         public bool draw_if_unlocked = true;
+        public bool animated = false;
+        public bool anim_is_fade = true;
+        public Animation lockAnimation;
+        public Animation unlockAnimation;
+        public Animation openAnimation;
+        public Animation closedAnimation;
 
         public Door()
         {
@@ -53,10 +59,13 @@ namespace GameCore.Entities
                     {
                         draw = false;
                     }
-                    //play open animation
+                    
                 }
             }
-            
+
+            if (animated)
+                Sprite.Update(gameTime);
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
@@ -67,13 +76,28 @@ namespace GameCore.Entities
         public void Unlock()
         {
             unlocking = true;
+            if (anim_is_fade && animated)
+            {
+                Sprite.BeginFadeEffect(0, 1000);
+            }
+            else if(animated)
+            {
+                Sprite.PlayAnimation(unlockAnimation, 1);
+            }
             //play open animation
         }
 
         public void Lock()
         {
             locked = true;
-            //play closing animation
+            if (anim_is_fade && animated)
+            {
+                Sprite.BeginFadeEffect(1, 1000);
+            }
+            else if (animated)
+            {
+                Sprite.PlayAnimation(lockAnimation, 1);
+            }
         }
     }
 }
