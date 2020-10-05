@@ -25,7 +25,7 @@ namespace GameCore.Entities
             draw_width = 32;
             draw_height = 32;
             speed = 100;
-            hp = 3;
+            hp = 5;
             collision_offset = new Vector2(8,17);
             col_width = 15;
             col_height = 15;
