@@ -50,7 +50,7 @@ namespace PandaMonogame
                 foreach (var asset in assetElements)
                 {
                     string assetName = asset.Attribute("Name").Value;
-                    string assetPath = (modPath.Length > 0 ? (modPath + "\\") : "") + asset.Attribute("FilePath").Value;
+                    string assetPath = Path.Combine(modPath, asset.Attribute("FilePath").Value);
 
                     if (_assets.ContainsKey(assetName) == false)
                     {

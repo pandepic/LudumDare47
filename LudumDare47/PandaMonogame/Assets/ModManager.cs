@@ -72,7 +72,7 @@ namespace PandaMonogame
         {
             _loadedMods.Clear();
 
-            using (var fs = AssetManager.GetFileStream(modDirectory + "\\" + modListFileName))
+            using (var fs = AssetManager.GetFileStream(Path.Combine(modDirectory, modListFileName)))
             {
                 XDocument modList = XDocument.Load(fs);
 
@@ -93,7 +93,7 @@ namespace PandaMonogame
                     if (mod.Ignore)
                         continue;
 
-                    _assetManager.Import(_modDirectory + "\\" + mod.Name + "\\" + _assetsFileName, _modDirectory + "\\" + mod.Path);
+                    _assetManager.Import(Path.Combine(_modDirectory, mod.Name, _assetsFileName), Path.Combine(_modDirectory, mod.Path));
                     _loadedMods.Add(mod);
                 }
             }
@@ -118,7 +118,7 @@ namespace PandaMonogame
                 modListFile.Root.Add(modElement);
             } // foreach
 
-            modListFile.Save(_modDirectory + "\\" + _modListFileName);
+            modListFile.Save(Path.Combine(_modDirectory, _modListFileName));
         }
 
         public void ImportAssets()
@@ -128,7 +128,7 @@ namespace PandaMonogame
 
             foreach (var mod in _loadedMods.Where(m => m.Ignore == false))
             {
-                _assetManager.Import(_modDirectory + "\\" + mod.Name + "\\" + _assetsFileName, _modDirectory + "\\" + mod.Name);
+                _assetManager.Import(Path.Combine(_modDirectory, mod.Name, _assetsFileName), Path.Combine(_modDirectory, mod.Name));
                 if (PandaMonogameConfig.Logging)
                     Console.WriteLine("Mod imported: " + mod.Name);
             } // foreach
