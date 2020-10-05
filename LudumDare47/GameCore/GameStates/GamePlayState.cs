@@ -543,8 +543,6 @@ namespace GameCore
                 spriteBatch.End();
             }
 
-            graphics.SetRenderTarget(null);
-
             // Todo draw bottom bar inc health, ammo, inventory, timer
             spriteBatch.Begin(sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp, transformMatrix: _camera.View());
 
@@ -553,6 +551,8 @@ namespace GameCore
                 i.Draw(gameTime, spriteBatch, Color.White);
             }
             spriteBatch.End();
+
+            graphics.SetRenderTarget(null);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
             spriteBatch.Draw(_finalTarget, Vector2.Zero, Color.White);
