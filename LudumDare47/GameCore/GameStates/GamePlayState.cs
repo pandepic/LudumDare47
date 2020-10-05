@@ -48,7 +48,7 @@ namespace GameCore
 
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
-            // Assets            
+            // Assets
             Globals.SpawnEffectTexture = ModManager.Instance.AssetManager.LoadTexture2D(graphics, "EnemySpawn");
 
             // A letter E that pops up when you are near a button
@@ -123,7 +123,7 @@ namespace GameCore
             var oldpos = player.pos;
             player.Update(gameTime);
             Room.NudgeOOB(current_room, player);
-            
+
             // Death and respawning
             if (player.hp <= 0 && respawn_timer <= 0)
                 if (!respawning)
@@ -162,6 +162,16 @@ namespace GameCore
                 player.dead = false;
                 respawning = false;
                 countdown = Globals.countdown_time;
+            }
+
+            if (ripple_timer > 0f) {
+                float rippleBounce = Math.Abs(3f - ripple_timer);
+                Globals.Ripple.Parameters["center"].SetValue((player.Centre() + new Vector2(0, -16)) / new Vector2(320, 160));
+                Globals.Ripple.Parameters["amplitude"].SetValue((3f - rippleBounce) * 0.002f);
+                Globals.Ripple.Parameters["frequency"].SetValue((3f - rippleBounce) * 40f);
+                Globals.Ripple.Parameters["size"].SetValue((3f - rippleBounce) / 3f);
+
+                Globals.Wind.Parameters["wind_strength"].SetValue((3f - rippleBounce) * 0.001f);
             }
 
             // Clutters
@@ -379,7 +389,7 @@ namespace GameCore
             {
                 b.Draw(gameTime, spriteBatch, Color.White);
             }
-            
+
 
             // E popup when near a button
             if (popup_e.draw)
@@ -447,7 +457,7 @@ namespace GameCore
             }
 
             if (key == Keys.F1) {
-                isRipple = !isRipple;
+                player.hp = -10;
             }
 
             if (key == Keys.E)
@@ -543,6 +553,6 @@ namespace GameCore
         }
 
     }
-        
-        
+
+
 }
