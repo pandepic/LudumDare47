@@ -85,31 +85,31 @@ namespace GameCore.Entities
 
                 case EnemyType.Cyborg:
                     {
-                        AnimIdleUp = new Animation(1, 1, 1000);
-                        AnimIdleDown = new Animation(9, 9, 1000);
-                        AnimIdleRight = new Animation(17, 17, 1000);
-                        AnimIdleLeft = new Animation(25, 25, 1000);
-                        AnimRunUp = new Animation(1, 8, 1000);
-                        AnimRunDown = new Animation(9, 16, 1000);
-                        AnimRunRight = new Animation(17, 24, 1000);
-                        AnimRunLeft = new Animation(25, 32, 1000);
+                        AnimIdleUp = new Animation(1, 1, 500);
+                        AnimIdleDown = new Animation(9, 9, 500);
+                        AnimIdleRight = new Animation(17, 17, 500);
+                        AnimIdleLeft = new Animation(25, 25, 500);
+                        AnimRunUp = new Animation(1, 8, 500);
+                        AnimRunDown = new Animation(9, 16, 500);
+                        AnimRunRight = new Animation(17, 24, 500);
+                        AnimRunLeft = new Animation(25, 32, 500);
 
-                        AnimLightningExplosion = new Animation(1, 8, 1000);
+                        AnimLightningExplosion = new Animation(1, 8, 500);
                     }
                     break;
 
                 case EnemyType.CaveBorg:
                     {
-                        AnimIdleUp = new Animation(1, 1, 1000);
-                        AnimIdleDown = new Animation(9, 9, 1000);
-                        AnimIdleRight = new Animation(17, 17, 1000);
-                        AnimIdleLeft = new Animation(25, 25, 1000);
-                        AnimRunUp = new Animation(1, 8, 1000);
-                        AnimRunDown = new Animation(9, 16, 1000);
-                        AnimRunRight = new Animation(17, 24, 1000);
-                        AnimRunLeft = new Animation(25, 32, 1000);
+                        AnimIdleUp = new Animation(1, 1, 500);
+                        AnimIdleDown = new Animation(9, 9, 500);
+                        AnimIdleRight = new Animation(17, 17, 500);
+                        AnimIdleLeft = new Animation(25, 25, 500);
+                        AnimRunUp = new Animation(1, 8, 500);
+                        AnimRunDown = new Animation(9, 16, 500);
+                        AnimRunRight = new Animation(17, 24, 500);
+                        AnimRunLeft = new Animation(25, 32, 500);
 
-                        AnimLightningExplosion = new Animation(1, 8, 1000);
+                        AnimLightningExplosion = new Animation(1, 8, 500);
                     }
                     break;
             }

@@ -198,7 +198,7 @@ namespace GameCore
             // Room 107
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 107, "BOSS ROOM");
             newroom.doors.Add(new Door(102, 144, 150, 144, 50));  // Bottom door
-            newroom.enemies.Add(CaveMan(new Vector2(160, 90)));
+            newroom.enemies.Add(CaveBorg(new Vector2(160, 90)));
             newroom.trap_room = true;
             newdoor = TrapDoor(109, Directions.Up);
             newroom.trap_door = newdoor;
@@ -288,13 +288,13 @@ namespace GameCore
             newroom.trap_door = newdoor;
             newdoor.pos.Y += 8;
             newroom.doors.Add(newdoor);    // Right door
-            newenemy = RoomMaps.CaveMan();
+            newenemy = RoomMaps.Cyborg();
             newenemy.SetPosCentre(80, 40);
             newroom.enemies.Add(newenemy);
-            newenemy = RoomMaps.CaveMan();
+            newenemy = RoomMaps.Cyborg();
             newenemy.SetPosCentre(80, 80);
             newroom.enemies.Add(newenemy);
-            newenemy = RoomMaps.CaveMan();
+            newenemy = RoomMaps.Cyborg(); 
             newenemy.SetPosCentre(80, 120);
             newroom.enemies.Add(newenemy);
             newroom.clutters.Add(CollisionBox(80, 72, new Vector2(242, 0))); //topright
@@ -412,11 +412,11 @@ namespace GameCore
         {
             Enemy caveborg = new Enemy
             {
-                hp = 5,
-                speed = 20,
+                hp = 20,
+                speed = 30,
                 range = 50,
                 enemyType = EnemyType.CaveBorg,
-                attack_cooldown = 2000
+                attack_cooldown = 1000
             };
             caveborg.SetSprite();
             caveborg.SetAnimations();

@@ -41,7 +41,7 @@
   <Asset Name="Crate" FilePath="Crate.png" />
   <Asset Name="Button" FilePath="Button.png" />
   <Asset Name="Key" FilePath="Key.png" />
-  <Asset Name="Part1" FilePath="Part1.png" />
+  <Asset Name="Part1" FilePath="ClockBigHand.png" />
   <Asset Name="PopupE" FilePath="epopup.png" />
   <Asset Name="ForceField" FilePath="forcefield.png" />
   <Asset Name="ForceFieldRot" FilePath="forcefieldrot.png" />
