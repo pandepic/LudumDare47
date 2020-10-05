@@ -43,6 +43,7 @@ namespace GameCore
         public List<DeathEffect> DeathEffects = new List<DeathEffect>();
 
         public Clutter popup_e;
+        public Clutter lowerUI;
 
         public RoomMaps roomMaps = new RoomMaps();
 
@@ -55,6 +56,10 @@ namespace GameCore
         public bool clock_repair_big = false;
         public bool clock_repair_small = false;
 
+        public Clutter heart;
+
+        public float winning_timer = 5;
+
         public override void Load(ContentManager Content, GraphicsDevice graphics)
         {
             // Assets
@@ -66,6 +71,28 @@ namespace GameCore
                 draw = true,
                 ignore_collision = true,
                 Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "PopupE"), 16, 16),
+                draw_height = 16,
+                draw_width = 16
+            };
+
+            lowerUI = new Clutter()
+            {
+                draw = true,
+                ignore_collision = true,
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "lowerui"), 320, 20),
+                idleAnimation = new Animation(1, 2, 1000),
+                animated = true,
+                invulnerable = true,
+                draw_width = 320,
+                draw_height = 20,
+                pos = new Vector2(0, 160)
+            };
+
+            heart = new Clutter()
+            {
+                draw = true,
+                ignore_collision = true,
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Heart"), 16, 16),
                 draw_height = 16,
                 draw_width = 16
             };
@@ -142,6 +169,16 @@ namespace GameCore
                 if (DeathEffects[i].TTL <= 0) {
                     DeathEffects.RemoveAt(i);
                 }
+            }
+
+            if (clock_repair_big && clock_repair_small)
+            {
+                player.inventory.Clear();
+                winning_timer -= gameTime.DeltaTime();
+            }
+            if(winning_timer < 0)
+            {
+                return (int)GameStateType.GameOver;
             }
 
             if (countdown < 0)
@@ -236,7 +273,12 @@ namespace GameCore
 
             for (int i = 0; i < current_room.clutters.Count; i++)
             {
+
+                
                 Clutter c = (Clutter)current_room.clutters[i];
+
+                c.Update(gameTime);
+                
                 if (Entity.Collision(player, c))
                 {
                     player.pos = oldpos;
@@ -612,11 +654,21 @@ namespace GameCore
 
             // Todo draw bottom bar inc health, ammo, inventory, timer
             spriteBatch.Begin(sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp, transformMatrix: _camera.View());
+            
+            lowerUI.Draw(gameTime, spriteBatch, Color.White);
 
             foreach (var i in player.inventory)
             {
                 i.Draw(gameTime, spriteBatch, Color.White);
             }
+
+            Vector2 heartPos = new Vector2(10, 160);
+            for(int i = 0; i < player.hp; i++)
+            {
+                heart.pos = heartPos + (new Vector2(20, 0)) * i;
+                heart.Draw(gameTime,spriteBatch,Color.White);
+            }
+
             spriteBatch.End();
 
             graphics.SetRenderTarget(null);

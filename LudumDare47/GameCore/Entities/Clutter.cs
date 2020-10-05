@@ -25,7 +25,7 @@ namespace GameCore.Entities
         public Animation idleAnimation = new Animation();
         public Animation destroyAnimation = new Animation();
 
-        public void update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if(animated)
                 Sprite.Update(gameTime);
@@ -47,7 +47,6 @@ namespace GameCore.Entities
             else
             {
                   Sprite.PlayAnimation(destroyAnimation, 1);
-                  Sprite.BeginFadeEffect(0, 500);
             }
         }
         

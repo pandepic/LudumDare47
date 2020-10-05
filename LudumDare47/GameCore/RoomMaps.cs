@@ -186,7 +186,11 @@ namespace GameCore
             newdoor.open_time = 1;
             newdoor.col_width = 15;
             newroom.doors.Add(newdoor);
-            newroom.clutters.Add(Button(new Vector2(55, 119), newdoor));
+            newclutter = Button(new Vector2(55, 119), newdoor);
+            var offset = new Vector2(10, 10);
+            newclutter.pos += offset;
+            newclutter.collision_offset -= offset;
+            newroom.clutters.Add(newclutter);
             newroom.doors.Add(new Door(102, 305, 72, 10, 72));    // Right door
             newroom.clutters.Add(CollisionBox(320, 24, Vector2.Zero));  // Back wall
             newroom.clutters.Add(CollisionBox(46, 70, Vector2.Zero));  // Top left
@@ -322,6 +326,18 @@ namespace GameCore
 
             // Room 111
             newroom = new Room(320, 160, new List<Enemy>(), new List<Door>(), 111, "PASSWORD ROOM");
+            newroom.clutters.Add(new Clutter() // Cheat small hand
+            {
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Part2icon"), 16, 16),
+                pos = new Vector2(140, 50),
+                collectable = true,
+                ignore_collision = true,
+                draw_height = 16,
+                draw_width = 16,
+                col_height = 16,
+                col_width = 16,
+                clock_handle = 2
+            });
             newroom.doors.Add(BasicDoor(115, Directions.Down));  // Bottom door
             newroom.clutters.Add(CollisionBox(320, 39, Vector2.Zero));  // Back wall
             newroom.clutters.Add(CollisionBox(95, 180, Vector2.Zero));  //  left
@@ -550,7 +566,7 @@ namespace GameCore
             Clutter crate = new Clutter()
             {
                 Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Crate"), 32, 32),
-                idleAnimation = new Animation(1, 8, 500),
+                idleAnimation = new Animation(1, 1, 500),
                 destroyAnimation = new Animation(1, 8, 500),
                 animated = true,
                 pos = position,
@@ -571,10 +587,12 @@ namespace GameCore
         {
             Clutter button = new Clutter()
             {
-                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Button"), 32, 32),
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Button"), 16, 16),
                 button = true,
                 pos = position,
                 door_unlock = unlockdoor,
+                draw_height = 16,
+                draw_width = 16,
                 col_width= 15,
                 col_height= 9,
                 collision_offset = new Vector2(7,11)

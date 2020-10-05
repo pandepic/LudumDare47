@@ -56,6 +56,7 @@
   <Asset Name="LightningExplosion" FilePath="LightningExplosion.png" />
   <Asset Name="Robot" FilePath="Robot.png" />
   <Asset Name="CavemanCyborg" FilePath="CavemanCyborg.png" />
+  <Asset Name="Heart" FilePath="Heart.png" />
 
   <Asset Name="YouWinSprite" FilePath="YouWin.png" />
   <Asset Name="TitleMainSprite" FilePath="TitleMainSprite.png" />

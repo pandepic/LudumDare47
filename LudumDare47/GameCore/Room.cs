@@ -112,7 +112,7 @@ namespace GameCore.Entities
             {
                 if (c.animated)
                 {
-                    c.Sprite.PlayAnimation(c.destroyAnimation);
+                    c.Sprite.PlayAnimation(c.idleAnimation);
                 }
             }
         }
