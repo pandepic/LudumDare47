@@ -5,6 +5,7 @@ using PandaMonogame;
 using PandaMonogame.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace GameClient
@@ -38,6 +39,8 @@ namespace GameClient
 
         protected override void Initialize()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
             Globals.GraphicsDevice = GraphicsDevice;
 
             Content.RootDirectory = "Content";
