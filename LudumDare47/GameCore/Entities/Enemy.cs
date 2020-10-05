@@ -179,7 +179,7 @@ namespace GameCore.Entities
             dead = true;
             ignore_collision = true;
 
-            Sprite.BeginFadeEffect(0f, 2000f);
+            Sprite.BeginFadeEffect(0f, 1000f);
         }
     }
 }
