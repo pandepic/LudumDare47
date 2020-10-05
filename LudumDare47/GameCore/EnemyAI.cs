@@ -24,6 +24,7 @@ namespace GameCore
                 attack.duration = 1000;
                 attack.damage = 1;
 
+
                 if (enemy.enemyType == EnemyType.Caveman)
                 {
                     if (enemy.facing == Directions.Up)
@@ -41,6 +42,7 @@ namespace GameCore
                 }
 
                 // Figure out the direction of the attack
+                Vector2 offset = Vector2.Zero;
                 if (Vector2.Distance(player.Centre(), enemy.Centre()) < 20)
                 {
                     attack.col_width = attack.draw_width = 30;
@@ -49,27 +51,39 @@ namespace GameCore
                 }
                 else if (move_vector.X > Math.Abs(move_vector.Y) && move_vector.X >= 0)
                 {
+                    offset = new Vector2(-5, 14);
                     attack.col_width = attack.draw_width = 20;
                     attack.col_height = attack.draw_height = 60;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(35, 0));
+                    attack.pos += offset;
+                    attack.collision_offset = -1 * offset;
                 }
                 else if (Math.Abs(move_vector.X) > Math.Abs(Math.Abs(move_vector.Y)) && move_vector.X <= 0)
                 {
+                    offset = new Vector2(5, 14);
                     attack.col_width = attack.draw_width = 20;
                     attack.col_height = attack.draw_height = 60;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(-35, 0));
+                    attack.pos += offset;
+                    attack.collision_offset = -1 * offset;
                 }
                 else if (Math.Abs(move_vector.X) <= Math.Abs(move_vector.Y) && move_vector.Y <= 0)
                 {
+                    offset = new Vector2(14, 5);
                     attack.col_width = attack.draw_width = 60;
                     attack.col_height = attack.draw_height = 20;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(0, -35));
+                    attack.pos += offset;
+                    attack.collision_offset = -1 * offset;
                 }
                 else if (Math.Abs(move_vector.X) <= move_vector.Y && move_vector.Y > 0)
                 {
+                    offset = new Vector2(14, -5);
                     attack.col_width = attack.draw_width = 60;
                     attack.col_height = attack.draw_height = 20;
                     attack.SetPosCentre(enemy.Centre() + new Vector2(0, 35));
+                    attack.pos += offset;
+                    attack.collision_offset = -1 * offset;
                 }
 
                 bullets.Add(attack);
