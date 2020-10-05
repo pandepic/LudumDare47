@@ -168,8 +168,8 @@ namespace GameCore
                 float rippleBounce = Math.Abs(3f - ripple_timer);
                 Globals.Ripple.Parameters["center"].SetValue((player.Centre() + new Vector2(0, -16)) / new Vector2(320, 160));
                 Globals.Ripple.Parameters["amplitude"].SetValue((3f - rippleBounce) * 0.003f);
-                Globals.Ripple.Parameters["frequency"].SetValue((3f - rippleBounce) * 40f);
-                Globals.Ripple.Parameters["size"].SetValue((3f - rippleBounce) / 2f);
+                Globals.Ripple.Parameters["frequency"].SetValue((6f - ripple_timer) * 30f);
+                Globals.Ripple.Parameters["size"].SetValue(6f - ripple_timer);
 
                 Globals.Wind.Parameters["wind_strength"].SetValue((3f - rippleBounce) * 0.002f);
 
