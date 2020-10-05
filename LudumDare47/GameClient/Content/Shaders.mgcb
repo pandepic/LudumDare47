@@ -19,6 +19,12 @@
 /processorParam:DebugMode=Auto
 /build:Ripple.fx
 
+#begin RippleDeath.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:RippleDeath.fx
+
 #begin Wind.fx
 /importer:EffectImporter
 /processor:EffectProcessor

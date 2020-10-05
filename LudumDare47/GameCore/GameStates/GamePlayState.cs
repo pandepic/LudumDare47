@@ -595,12 +595,11 @@ namespace GameCore
             foreach (DeathEffect de in DeathEffects) {
                 float rippleBounce = Math.Abs(0.5f - de.TTL);
                 Globals.RippleDeath.Parameters["center"].SetValue(de.Pos / new Vector2(320, 160));
-                Globals.RippleDeath.Parameters["amplitude"].SetValue((0.5f - rippleBounce) * 0.1f);
+                Globals.RippleDeath.Parameters["amplitude"].SetValue((0.5f - rippleBounce) * 1f);
                 Globals.RippleDeath.Parameters["frequency"].SetValue((0.5f - rippleBounce) * 120f);
-                Globals.RippleDeath.Parameters["size"].SetValue(1f - de.TTL);
+                Globals.RippleDeath.Parameters["size"].SetValue((1f - de.TTL) / 2);
 
                 graphics.SetRenderTarget(_deathTarget);
-                graphics.Clear(Color.Transparent);
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, effect: Globals.RippleDeath);
                 spriteBatch.Draw(_finalTarget, Vector2.Zero, Color.White);
                 spriteBatch.End();

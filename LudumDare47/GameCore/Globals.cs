@@ -96,7 +96,7 @@ namespace GameCore
             Wind.Parameters["magic_number"].SetValue(20f);
             Wind.Parameters["wind_direction"].SetValue(new Vector2(1f, 1f));
 
-            RippleDeath = content.Load<Effect>("Ripple");
+            RippleDeath = content.Load<Effect>("RippleDeath");
             RippleDeath.Parameters["center"].SetValue(new Vector2(0.5f, 0.5f));
             RippleDeath.Parameters["amplitude"].SetValue(0.005f);
             RippleDeath.Parameters["frequency"].SetValue(100f);

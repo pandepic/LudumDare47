@@ -24,7 +24,7 @@
         <Label Name="lblTimer">
           <Text>Timer</Text>
           <FontName>LatoBlack</FontName>
-          <FontSize>40</FontSize>
+          <FontSize>60</FontSize>
           <Position>
             <X>center</X>
             <Y>bottom</Y>

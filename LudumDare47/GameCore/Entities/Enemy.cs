@@ -23,6 +23,9 @@ namespace GameCore.Entities
         public AnimatedSprite SpawnEffectSprite;
         public float SpawnEffectDuration;
 
+        public float AnimExplosionDuration;
+        public Vector2 ExplosionPos;
+
         public Enemy()
         {
             hp = 5;
@@ -117,7 +120,12 @@ namespace GameCore.Entities
 
         public void Update(GameTime gameTime)
         {
+            AnimExplosionDuration -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (AnimExplosionDuration < 0)
+                AnimExplosionDuration = 0;
+
             Sprite.Update(gameTime);
+            ExplosionSprite?.Update(gameTime);
 
             if (dead)
                 return;
@@ -149,9 +157,18 @@ namespace GameCore.Entities
                 SpawnEffectSprite.Draw(spriteBatch, pos - new Vector2(draw_width / 2, draw_height / 2));
                 return;
             }
-
+            
             base.Draw(gameTime, spriteBatch, Color.White);
             //if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
+
+            var offset = Vector2.Zero;
+            if (enemyType == EnemyType.Cyborg)
+                offset = new Vector2(0, 0);
+            else if (enemyType == EnemyType.CaveBorg)
+                offset = new Vector2(0, 13);
+
+            if (AnimExplosionDuration > 0)
+                ExplosionSprite?.Draw(spriteBatch, pos + offset);
         }
 
         public void Kill(GameTime gameTime)
@@ -162,7 +179,7 @@ namespace GameCore.Entities
             dead = true;
             ignore_collision = true;
 
-            Sprite.BeginFadeEffect(0f, 2000f);
+            Sprite.BeginFadeEffect(0f, 1000f);
         }
     }
 }

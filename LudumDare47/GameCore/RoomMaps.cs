@@ -464,7 +464,7 @@ namespace GameCore
             {
                 hp = 5,
                 speed = 20,
-                range = 50,
+                range = 75,
                 enemyType = EnemyType.Cyborg,
                 attack_cooldown = 2000
             };
@@ -479,7 +479,7 @@ namespace GameCore
             {
                 hp = 1,
                 speed = 30,
-                range = 50,
+                range = 75,
                 enemyType = EnemyType.CaveBorg,
                 attack_cooldown = 1000
             };
