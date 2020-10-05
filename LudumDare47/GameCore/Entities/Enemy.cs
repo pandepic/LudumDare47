@@ -54,7 +54,7 @@ namespace GameCore.Entities
 
                 case EnemyType.CaveBorg:
                     {
-                        Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "CavemanCyborg"), 32, 32);
+                        Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "CavemanCyborg"), 32, 48);
                         ExplosionSprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "LightningExplosion"), 32, 32);
                     }
                     break;
@@ -91,8 +91,8 @@ namespace GameCore.Entities
                         AnimIdleLeft = new Animation(25, 25, 1000);
                         AnimRunUp = new Animation(1, 8, 1000);
                         AnimRunDown = new Animation(9, 16, 1000);
-                        AnimRunLeft = new Animation(17, 24, 1000);
-                        AnimRunRight = new Animation(25, 32, 1000);
+                        AnimRunRight = new Animation(17, 24, 1000);
+                        AnimRunLeft = new Animation(25, 32, 1000);
 
                         AnimLightningExplosion = new Animation(1, 8, 1000);
                     }
@@ -106,8 +106,8 @@ namespace GameCore.Entities
                         AnimIdleLeft = new Animation(25, 25, 1000);
                         AnimRunUp = new Animation(1, 8, 1000);
                         AnimRunDown = new Animation(9, 16, 1000);
-                        AnimRunLeft = new Animation(17, 24, 1000);
-                        AnimRunRight = new Animation(25, 32, 1000);
+                        AnimRunRight = new Animation(17, 24, 1000);
+                        AnimRunLeft = new Animation(25, 32, 1000);
 
                         AnimLightningExplosion = new Animation(1, 8, 1000);
                     }
