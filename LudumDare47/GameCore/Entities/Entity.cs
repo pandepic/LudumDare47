@@ -52,6 +52,11 @@ namespace GameCore.Entities
         public Animation AnimRunLeft;
         public Animation AnimRunRight;
 
+        public Animation AnimMeleeUp;
+        public Animation AnimMeleeDown;
+        public Animation AnimMeleeLeft;
+        public Animation AnimMeleeRight;
+
         /// <summary>
         /// If this is false ignore collisions etc.
         /// </summary>
@@ -272,6 +277,9 @@ namespace GameCore.Entities
 
         public void PlayIdle()
         {
+            if (attack_cooldown > 0)
+                return;
+
             switch (facing)
             {
                 case Directions.Up:

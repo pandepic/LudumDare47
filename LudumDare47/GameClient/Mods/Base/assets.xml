@@ -48,6 +48,7 @@
   <Asset Name="Bullet" FilePath="bullet.png" />
   <Asset Name="TimeMachine" FilePath="TimeMachine.png" />
   <Asset Name="lowerui" FilePath="lowerui.png" />
+  <Asset Name="Hit" FilePath="Hit.png" />
   
   <!-- TileMaps -->
   <Asset Name="TileMap2" FilePath = "Tilemaps/2.tmx" />

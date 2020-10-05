@@ -12,6 +12,7 @@ namespace GameCore.Entities
     {
         None,
         PlayerBullet,
+        MeleeSwing,
     }
 
     public class Bullet : Entity
@@ -25,7 +26,12 @@ namespace GameCore.Entities
         public Animation PlayerBulletLeft = new Animation(5, 6, 500);
         public Animation PlayerBulletRight = new Animation(7, 8, 500);
 
-        public Bullet(BulletType type = BulletType.None)
+        public Animation MeleeSwingUp = new Animation(1, 4, 500);
+        public Animation MeleeSwingDown = new Animation(5, 8, 500);
+        public Animation MeleeSwingLeft = new Animation(9, 12, 500);
+        public Animation MeleeSwingRight = new Animation(13, 16, 500);
+
+        public Bullet(BulletType type = BulletType.None, Directions direction = Directions.None)
         {
             draw_height = 10;
             draw_width = 10;
@@ -33,7 +39,7 @@ namespace GameCore.Entities
 
             Type = type;
 
-            SetSprite(Directions.None);
+            SetSprite(direction);
         }
 
         public Bullet(Player player, BulletType type = BulletType.PlayerBullet)
@@ -65,6 +71,19 @@ namespace GameCore.Entities
                     Sprite.PlayAnimation(PlayerBulletUp);
                 else if (direction == Directions.Down)
                     Sprite.PlayAnimation(PlayerBulletDown);
+            }
+            else if (Type == BulletType.MeleeSwing)
+            {
+                Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Hit"), 32, 32);
+
+                if (direction == Directions.Left)
+                    Sprite.PlayAnimation(MeleeSwingLeft);
+                else if (direction == Directions.Right)
+                    Sprite.PlayAnimation(MeleeSwingRight);
+                else if (direction == Directions.Up)
+                    Sprite.PlayAnimation(MeleeSwingUp);
+                else if (direction == Directions.Down)
+                    Sprite.PlayAnimation(MeleeSwingDown);
             }
         }
 
@@ -108,6 +127,8 @@ namespace GameCore.Entities
                 vel = new Vector2(0);
                 ignore_collision = true;
             }
+
+            Sprite.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)

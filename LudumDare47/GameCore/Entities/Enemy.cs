@@ -60,6 +60,11 @@ namespace GameCore.Entities
                         AnimRunDown = new Animation(5, 8, 1000);
                         AnimRunLeft = new Animation(9, 12, 1000);
                         AnimRunRight = new Animation(13, 16, 1000);
+
+                        AnimMeleeUp = new Animation(17, 20, 1000);
+                        AnimMeleeDown = new Animation(21, 24, 1000);
+                        AnimMeleeLeft = new Animation(25, 28, 1000);
+                        AnimMeleeRight = new Animation(29, 32, 1000);
                     }
                     break;
             }
@@ -67,6 +72,11 @@ namespace GameCore.Entities
 
         public void Update(GameTime gameTime)
         {
+            Sprite.Update(gameTime);
+
+            if (dead)
+                return;
+
             UpdateMoveVec();
             attack_cooldown -= gameTime.DeltaTime() * 1000;
 
@@ -82,8 +92,6 @@ namespace GameCore.Entities
                     active = true;
                 }
             }
-
-            Sprite.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
@@ -97,7 +105,8 @@ namespace GameCore.Entities
                 return;
             }
 
-            if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
+            base.Draw(gameTime, spriteBatch, Color.White);
+            //if (!dead) base.Draw(gameTime, spriteBatch, Color.Red);
         }
 
         public void Kill(GameTime gameTime)
@@ -107,6 +116,8 @@ namespace GameCore.Entities
             vel.Y = 0;
             dead = true;
             ignore_collision = true;
+
+            Sprite.BeginFadeEffect(0f, 2000f);
         }
     }
 }
