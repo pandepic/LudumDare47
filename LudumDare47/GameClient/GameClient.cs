@@ -156,7 +156,7 @@ namespace GameClient
 
         private void ChangeGameState(int newState)
         {
-            ModManager.Instance.AssetManager.Clear();
+            //ModManager.Instance.AssetManager.Clear();
 
             switch (newState)
             {

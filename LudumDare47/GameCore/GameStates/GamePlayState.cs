@@ -92,6 +92,7 @@ namespace GameCore
             _rippleTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
             _windTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
 
+            ModManager.Instance.SoundManager.StopAll();
             ModManager.Instance.SoundManager.PlaySound("MusicIngame", (int)SoundType.Music, true);
         }
 
