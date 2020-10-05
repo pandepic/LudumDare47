@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/LudumDare47/GameClient/bin/Debug/netcoreapp3.1/GameClient.dll",
+            "program": "${workspaceFolder}/LudumDare47/GameClient/bin/Debug/netcoreapp3.1/JustinTime.dll",
             "args": [],
             "cwd": "${workspaceFolder}/LudumDare47/GameClient",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
