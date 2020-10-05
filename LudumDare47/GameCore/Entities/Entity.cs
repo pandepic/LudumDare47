@@ -57,6 +57,8 @@ namespace GameCore.Entities
         public Animation AnimMeleeLeft;
         public Animation AnimMeleeRight;
 
+        public Animation AnimLightningExplosion;
+
         /// <summary>
         /// If this is false ignore collisions etc.
         /// </summary>

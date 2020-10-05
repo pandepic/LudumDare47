@@ -19,6 +19,7 @@ namespace GameCore.Entities
         public bool spawned = false;
         public bool spawnFinished = false;
 
+        public AnimatedSprite ExplosionSprite;
         public AnimatedSprite SpawnEffectSprite;
         public float SpawnEffectDuration;
 
@@ -43,6 +44,20 @@ namespace GameCore.Entities
                         Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Caveman"), 32, 32);
                     }
                     break;
+
+                case EnemyType.Cyborg:
+                    {
+                        Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "Robot"), 32, 32);
+                        ExplosionSprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "LightningExplosion"), 32, 32);
+                    }
+                    break;
+
+                case EnemyType.CaveBorg:
+                    {
+                        Sprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "CavemanCyborg"), 32, 32);
+                        ExplosionSprite = new AnimatedSprite(ModManager.Instance.AssetManager.LoadTexture2D(Globals.GraphicsDevice, "LightningExplosion"), 32, 32);
+                    }
+                    break;
             }
         }
 
@@ -65,6 +80,36 @@ namespace GameCore.Entities
                         AnimMeleeDown = new Animation(21, 24, 1000);
                         AnimMeleeLeft = new Animation(25, 28, 1000);
                         AnimMeleeRight = new Animation(29, 32, 1000);
+                    }
+                    break;
+
+                case EnemyType.Cyborg:
+                    {
+                        AnimIdleUp = new Animation(1, 1, 1000);
+                        AnimIdleDown = new Animation(9, 9, 1000);
+                        AnimIdleRight = new Animation(17, 17, 1000);
+                        AnimIdleLeft = new Animation(25, 25, 1000);
+                        AnimRunUp = new Animation(1, 8, 1000);
+                        AnimRunDown = new Animation(9, 16, 1000);
+                        AnimRunLeft = new Animation(17, 24, 1000);
+                        AnimRunRight = new Animation(25, 32, 1000);
+
+                        AnimLightningExplosion = new Animation(1, 8, 1000);
+                    }
+                    break;
+
+                case EnemyType.CaveBorg:
+                    {
+                        AnimIdleUp = new Animation(1, 1, 1000);
+                        AnimIdleDown = new Animation(9, 9, 1000);
+                        AnimIdleRight = new Animation(17, 17, 1000);
+                        AnimIdleLeft = new Animation(25, 25, 1000);
+                        AnimRunUp = new Animation(1, 8, 1000);
+                        AnimRunDown = new Animation(9, 16, 1000);
+                        AnimRunLeft = new Animation(17, 24, 1000);
+                        AnimRunRight = new Animation(25, 32, 1000);
+
+                        AnimLightningExplosion = new Animation(1, 8, 1000);
                     }
                     break;
             }
