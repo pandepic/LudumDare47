@@ -17,10 +17,12 @@ namespace GameCore
 {
     public class GamePlayState : GameState
     {
+        protected PUIMenu _menu = new PUIMenu();
+        protected PUIWLabel _timerLabel;
+
         public const float PlayerAttackCooldown = 300.0f;
 
         protected GameStateType _nextState = GameStateType.None;
-        protected PUIMenu _menu = new PUIMenu();
         protected Camera _camera = new Camera(new Vector2(160, 90), (320, 160));
         protected RenderTarget2D _gameTarget;
         protected RenderTarget2D _rippleTarget;
@@ -84,6 +86,8 @@ namespace GameCore
 
             _menu.Load(graphics, "GameplayMenuDefinition", "UITemplates");
 
+            _timerLabel = _menu.GetWidget<PUIWLabel>("lblTimer");
+
             _gameTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
             _rippleTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
             _windTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
@@ -119,6 +123,10 @@ namespace GameCore
                 respawn_timer = 0;
             }
 
+            if (countdown < 0)
+                countdown = 0;
+            _timerLabel.Text = countdown.ToString("0.0");
+
             // Player
             var oldpos = player.pos;
             player.Update(gameTime);
@@ -136,7 +144,7 @@ namespace GameCore
                     ripple_timer = 6;
                     isRipple = true;
                 }
-            if (countdown < 0 && !respawning)
+            if (countdown <= 0 && !respawning)
             {
                 respawn_timer = 3;
                 respawning = true;

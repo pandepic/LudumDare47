@@ -21,6 +21,21 @@
       </Size>
 
       <Widgets>
+        <Label Name="lblTimer">
+          <Text>Timer</Text>
+          <FontName>LatoBlack</FontName>
+          <FontSize>40</FontSize>
+          <Position>
+            <X>center</X>
+            <Y>bottom</Y>
+          </Position>
+          <Offset>
+            <X>0</X>
+            <Y>-25</Y>
+          </Offset>
+          <Color>#FFFFFF</Color>
+          <UpdateMethod></UpdateMethod>
+        </Label>
       </Widgets>
     </Frame>
   </Scene>
