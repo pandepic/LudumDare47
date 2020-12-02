@@ -5,6 +5,11 @@ on:
     tags:
     - 'v*'
 
+env:
+  ITCH_GAME_NAME: justin-in
+  ITCH_USER_NAME: pandepic
+  BUILD_PATH: LudumDare47/GameClient
+
 jobs:
   build:
 
@@ -32,11 +37,11 @@ jobs:
         sudo apt-get install --install-recommends winehq-stable
         wget -qO- https://raw.githubusercontent.com/MonoGame/MonoGame/develop/Tools/MonoGame.Effect.Compiler/mgfxc_wine_setup.sh | sh
     - name: Build Windows
-      run: dotnet publish LudumDare47/GameClient -r win-x64 -c Release --output build-windows
+      run: dotnet publish ${{ env.BUILD_PATH }} -r win-x64 -c Release --output build-windows
     - name: Build Osx
-      run: dotnet publish LudumDare47/GameClient -r osx-x64 -c Release --output build-osx
+      run: dotnet publish ${{ env.BUILD_PATH }} -r osx-x64 -c Release --output build-osx
     - name: Build Linux
-      run: dotnet publish LudumDare47/GameClient -r linux-x64 -c Release --output build-linux
+      run: dotnet publish ${{ env.BUILD_PATH }} -r linux-x64 -c Release --output build-linux
     - name: Clean NetCoreBeauty
       run: find . -name 'NetCoreBeauty' -type f -delete
     - name: Publish Windows build to itch.io
@@ -44,22 +49,22 @@ jobs:
       env:
         BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
         CHANNEL: windows
-        ITCH_GAME: justin-time
-        ITCH_USER: pandepic
+        ITCH_GAME: ${{ env.ITCH_GAME_NAME }}
+        ITCH_USER: ${{ env.ITCH_USER_NAME }}
         PACKAGE: build-windows
     - name: Publish OSX build to itch.io
       uses: josephbmanley/butler-publish-itchio-action@master
       env:
         BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
         CHANNEL: osx
-        ITCH_GAME: justin-time
-        ITCH_USER: pandepic
+        ITCH_GAME: ${{ env.ITCH_GAME_NAME }}
+        ITCH_USER: ${{ env.ITCH_USER_NAME }}
         PACKAGE: build-osx
     - name: Publish Linux build to itch.io
       uses: josephbmanley/butler-publish-itchio-action@master
       env:
         BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
         CHANNEL: linux
-        ITCH_GAME: justin-time
-        ITCH_USER: pandepic
+        ITCH_GAME: ${{ env.ITCH_GAME_NAME }}
+        ITCH_USER: ${{ env.ITCH_USER_NAME }}
         PACKAGE: build-linux
